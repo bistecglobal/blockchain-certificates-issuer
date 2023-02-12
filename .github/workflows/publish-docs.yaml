@@ -1,3 +1,13 @@
+name: Deploy docs to github pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
 jobs:
   publish-docs:
     runs-on: ubuntu-latest
@@ -13,7 +23,7 @@ jobs:
     - run: docfx docs/docfx.json
 
     - name: Deploy
-    uses: peaceiris/actions-gh-pages@v3
-    with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: docs/_site
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_site
