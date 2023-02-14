@@ -12,7 +12,6 @@
           "hash": "jUOAQfmSd5MFo9QJjqVr+uLyYYxoym7vi1iSEOICWx0="
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -24,7 +23,6 @@
           "hash": "wFfIQ3DMJx7oWlYhkFU6qUI4BNmVLSPaCcniG3w4j10="
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -36,7 +34,6 @@
           "hash": "+FPCLcvmNhVb9VLasYr6Tnep0PZtIA6V/UOJ0u+1RmE="
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -48,7 +45,6 @@
           "hash": "SYN1fd9toOho0ZNOQkQKqAI45A0nc9bg/D9RtjFqeLE="
         }
       },
-      "is_incremental": false,
       "version": ""
     },
     {
@@ -60,45 +56,7 @@
           "hash": "26gkccrz4bulFa5TDgPGGYSnO8DBoYI8llSnyzOuhgk="
         }
       },
-      "is_incremental": false,
       "version": ""
-    }
-  ],
-  "incremental_info": [
-    {
-      "status": {
-        "can_incremental": false,
-        "details": "Cannot build incrementally because last build info is missing.",
-        "incrementalPhase": "build",
-        "total_file_count": 0,
-        "skipped_file_count": 0,
-        "full_build_reason_code": "NoAvailableBuildCache"
-      },
-      "processors": {
-        "ConceptualDocumentProcessor": {
-          "can_incremental": false,
-          "incrementalPhase": "build",
-          "total_file_count": 3,
-          "skipped_file_count": 0
-        },
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        }
-      }
-    },
-    {
-      "status": {
-        "can_incremental": false,
-        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
-        "incrementalPhase": "postProcessing",
-        "total_file_count": 0,
-        "skipped_file_count": 0
-      },
-      "processors": {}
     }
   ],
   "version_info": {},
