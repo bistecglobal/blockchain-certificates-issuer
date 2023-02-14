@@ -10,24 +10,37 @@ using Newtonsoft.Json;
 
 namespace BlockchainCertificatesIssuer
 {
-    public static class Function1
+     public static class loginAsAdmin
     {
-        [FunctionName("Function1")]
+        [FunctionName("login")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
+            string name = req.Query["Email"];
+            string password = req.Query["Password"];
+
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            name = name ?? data?.Email;
+            password = password ?? data?.Password;
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            string userPassword = "abc@123";
+            string responseMessage;
+
+
+            if (userPassword == password && name == "admin@bistecglobal.com")
+            {
+                responseMessage = "You can access admin page ";
+            }
+            else
+            {
+                responseMessage = $"Hello, {name} you can't access admin page , {password}";
+            }
+
 
             return new OkObjectResult(responseMessage);
         }
