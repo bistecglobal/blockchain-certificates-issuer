@@ -41,7 +41,7 @@ export function CartSidemenu(props: CartSidemenuProps) {
           },
           {
             label: "Courses",
-            key: "/cart/Courses",
+            key: "/page/Courses",
             icon: <ShopOutlined />,
           },
           {
