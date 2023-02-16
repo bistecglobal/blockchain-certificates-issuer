@@ -6,7 +6,7 @@ export interface CartFooterProps {}
 export function CartFooter(props: CartFooterProps) {
   return (
     <div className={styles['container']}>
-      <h1>Welcome to CartFooter!</h1>
+      <h1>Welcome to Footer!</h1>
     </div>
   );
 }

@@ -22,15 +22,13 @@ export function Details(props: DetailsProps) {
   const setPassVal = (value:any) =>{
     setpassval(value);
 };
-const handleSave =( e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
-  e.preventDefault();
-  
+const handleSave =()=>{
   const data ={
     Email : emailval,
     Password : passval
   };
-console.log("abc",data)
-  const url ='http://localhost:7010/api/login';
+
+  const url ='';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 
@@ -63,7 +61,7 @@ console.log("abc",data)
                              value={passval} onChange={(e)=>{setPassVal(e.target.value)}}
                            
                              id={styles["pwd1"]}/>
-                            <button type="submit" id={styles["sub_butt"]} onClick={(e)=> handleSave(e)}>Login</button>
+                            <button type="submit" id={styles["sub_butt"]} onClick={()=> handleSave()}>Login</button>
                             {/* <Link className={styles['link']} to='/Register'>Login</Link> */}
                          </form>
 
