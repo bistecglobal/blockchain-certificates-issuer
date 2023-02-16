@@ -10,7 +10,7 @@ export function App() {
     <>
       <Routes>
         <Route path="/" element={<Details />}></Route>
-        <Route path="/cart" element={<Cart />}></Route>
+        <Route path="/cart/*" element={<Cart />}></Route>
       </Routes>
     </>
   );

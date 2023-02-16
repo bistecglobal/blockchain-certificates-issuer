@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockchainCertificatesIssuer", "BlockchainCertificatesIssuer\BlockchainCertificatesIssuer.csproj", "{628C5659-4760-410E-A234-BE4B4CBE5498}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockchainCertificatesIssuer.API", "BlockchainCertificatesIssuer\BlockchainCertificatesIssuer.API.csproj", "{B5ABB82F-754D-4810-BA23-61E69983D52D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockchainCertificatesIssuer.Infrastructure", "BlockchainCertificatesIssuer-Infrastructure\BlockchainCertificatesIssuer.Infrastructure.csproj", "{AA3EA3E0-E622-4125-B5BC-F964CE889219}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{628C5659-4760-410E-A234-BE4B4CBE5498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{628C5659-4760-410E-A234-BE4B4CBE5498}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{628C5659-4760-410E-A234-BE4B4CBE5498}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{628C5659-4760-410E-A234-BE4B4CBE5498}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5ABB82F-754D-4810-BA23-61E69983D52D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5ABB82F-754D-4810-BA23-61E69983D52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5ABB82F-754D-4810-BA23-61E69983D52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5ABB82F-754D-4810-BA23-61E69983D52D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA3EA3E0-E622-4125-B5BC-F964CE889219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA3EA3E0-E622-4125-B5BC-F964CE889219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA3EA3E0-E622-4125-B5BC-F964CE889219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA3EA3E0-E622-4125-B5BC-F964CE889219}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3389E524-2AB5-49A3-A51F-A03DEA6A9C21}
+		SolutionGuid = {62EF33AD-43EC-4911-BFBD-4E8C618230EF}
 	EndGlobalSection
 EndGlobal
