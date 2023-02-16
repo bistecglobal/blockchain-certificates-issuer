@@ -8,7 +8,9 @@
 .SideMenu{
     height: 100%;
 }
-
 .SideMenuVertical{
     height: 100%;
+}
+.PageContent{
+    padding-left: 12px;
 }

@@ -5,7 +5,9 @@
  * .container {
  * }
 */
-
 .container{
-   
+    display:flex;
+}
+.store{
+    justify-content: center;
 }

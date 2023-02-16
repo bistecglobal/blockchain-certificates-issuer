@@ -1,5 +1,6 @@
 import styles from './cart-page-home.module.css';
 
+
 /* eslint-disable-next-line */
 export interface CartPageHomeProps {}
 
