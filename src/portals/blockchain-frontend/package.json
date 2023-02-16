@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start":"nx run blockchain-frontend:serve:development",
-    "nx":"nx",
-    "build":"nx run blockchain-frontend:build:production"
+    "start": "nx run blockchain-frontend:serve:development",
+    "nx": "nx",
+    "build": "nx run blockchain-frontend:build:production"
   },
   "private": true,
   "dependencies": {
     "@nrwl/next": "15.6.3",
+    "antd": "^5.2.1",
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
