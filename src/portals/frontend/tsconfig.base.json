@@ -16,6 +16,18 @@
     "baseUrl": ".",
     "paths": {
       "@loginform/cart": ["cart/src/index.ts"],
+      "@loginform/cart/content": ["cart/content/src/index.ts"],
+      "@loginform/cart/footer": ["cart/footer/src/index.ts"],
+      "@loginform/cart/header": ["cart/header/src/index.ts"],
+      "@loginform/cart/page/course": ["cart/page/course/src/index.ts"],
+      "@loginform/cart/page/home": ["cart/page/home/src/index.ts"],
+      "@loginform/cart/page/issuecertificate": [
+        "cart/page/issuecertificate/src/index.ts"
+      ],
+      "@loginform/cart/page/trainee": ["cart/page/trainee/src/index.ts"],
+      "@loginform/cart/page/trainer": ["cart/page/trainer/src/index.ts"],
+      "@loginform/cart/pageroot": ["cart/pageroot/src/index.ts"],
+      "@loginform/cart/sidemenu": ["cart/sidemenu/src/index.ts"],
       "@loginform/shared/ui": ["shared/ui/src/index.ts"]
     }
   },

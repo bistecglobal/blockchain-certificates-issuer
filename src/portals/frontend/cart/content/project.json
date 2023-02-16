@@ -1,0 +1,40 @@
+{
+  "name": "cart-content",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "cart/content/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["cart/content/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/cart/content"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/cart/content"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/cart/content"
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "profiles": {
     "BlockchainCertificatesIssuer": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7174",
+      "commandLineArgs": "--port 7250",
       "launchBrowser": false
     }
   }
