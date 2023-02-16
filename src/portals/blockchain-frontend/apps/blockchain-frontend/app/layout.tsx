@@ -1,5 +1,4 @@
 import React from 'react'
-import SideMenu from '../components/sidemenu/sidemenu';
 
 
 export default function RootLayout({ children }) {
@@ -9,7 +8,7 @@ export default function RootLayout({ children }) {
             }
             <head />
             <body>
-                <SideMenu />
+            
                 {children}
             </body>
         </html>
