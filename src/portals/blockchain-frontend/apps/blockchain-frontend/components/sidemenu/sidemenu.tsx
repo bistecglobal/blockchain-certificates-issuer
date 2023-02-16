@@ -1,3 +1,4 @@
+"use client";
 import styles from './cart-sidemenu.module.css';
 import {
   AppstoreOutlined,
@@ -7,19 +8,13 @@ import {
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 /* eslint-disable-next-line */
 export interface CartSidemenuProps {}
 
 export function SideMenu(props: CartSidemenuProps) {
-  // const location = useLocation();
-  // const [selectedKeys, setSelectedKeys] = useState("/*");
-
-  // useEffect(() => {
-  //   const pathName = location.pathname;
-  //   setSelectedKeys(pathName);
-  // }, [location.pathname]);
+ 
 
   const navigate = useRouter();
   return (

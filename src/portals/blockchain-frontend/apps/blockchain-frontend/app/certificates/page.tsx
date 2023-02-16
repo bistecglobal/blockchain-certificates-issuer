@@ -1,3 +1,4 @@
+"use client";
 import styles from './cart-page-certificates.module.css';
 import {Select,Form,Button} from 'antd'
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
@@ -37,9 +38,9 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
         })}
       </Select>
       <p>Select Certificate Issue Date</p>
-      <Form>
+     
         <div><DatePicker/></div>
-      </Form>
+      
       <p></p>
       <Form.Item>
       <Button htmlType="submit" icon={<PlusOutlined/>} type="primary"   onClick={()=>{

@@ -1,3 +1,4 @@
+"use client";
 import styles from './cart-page-trainers.module.css';
 import {Form} from 'antd'
 import Input from 'antd/es/input';
@@ -7,7 +8,8 @@ import axios from 'axios';
 import React,{useState} from 'react';
 
 
-/* eslint-disable-next-line */
+/* eslint-disable
+-next-line */
 export interface CartPageTrainersProps {}
 
 export function CartPageTrainers(props: CartPageTrainersProps) {

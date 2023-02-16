@@ -1,3 +1,4 @@
+"use client";
 import styles from './details.module.css';
 import  Link  from 'next/link';
 import { Button, Checkbox, Form, Input, Result } from 'antd';

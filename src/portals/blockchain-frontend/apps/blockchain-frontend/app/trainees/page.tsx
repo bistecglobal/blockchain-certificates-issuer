@@ -1,3 +1,4 @@
+"use client";
 import styles from './cart-page-trainees.module.css';
 
 /* eslint-disable-next-line */

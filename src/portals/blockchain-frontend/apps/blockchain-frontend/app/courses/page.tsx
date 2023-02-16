@@ -1,3 +1,4 @@
+"use client";
 import styles from './cart-page-course.module.css';
 import { useEffect, useState } from "react";
 import { Avatar, Rate, Space, Table, Typography } from "antd";
