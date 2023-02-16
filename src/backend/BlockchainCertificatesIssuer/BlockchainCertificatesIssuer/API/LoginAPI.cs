@@ -29,7 +29,7 @@ namespace BlockchainCertificatesIssuer.API.API
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
 
-            await repository.CreateAsync(new Login { UserName = "upeksha@bistecglobal.com", Password = "abc@123" });
+            await repository.CreateAsync(new Login { UserName = "upeksha@bistecglobal.com", Password = "" });
             response.WriteString("Welcome to Login form!");
 
             return response;
