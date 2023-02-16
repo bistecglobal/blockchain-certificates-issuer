@@ -1,4 +1,5 @@
 using System.Net;
+using BlockchainCertificatesIssuer.domain.Models.Course;
 using BlockchainCertificatesIssuer.domain.Models.Trainee;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.Functions.Worker;
@@ -18,16 +19,22 @@ namespace BlockchainCertificatesIssuer.API
             this.repository = repository;
         }
 
-        [Function("TraineeAPI")]
+        [Function("Trainee")]
         public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+            var trainee =await System.Text.Json.JsonSerializer.DeserializeAsync<Trainee>(req.Body);
+          
 
-            await repository.CreateAsync(new Trainee { FirstName = "Thushini", LasttName = "Maheepala", EmailAddress = "thushini@bistecglobal.com" });
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            
+
+            var created =await repository.CreateAsync(new Trainee { FirstName = trainee.FirstName, LasttName = trainee.LasttName, EmailAddress = trainee.EmailAddress });
+            await response.WriteAsJsonAsync(created);
             response.WriteString("Welcome to Trainee application!");
+        
+     
 
             return response;
         }
