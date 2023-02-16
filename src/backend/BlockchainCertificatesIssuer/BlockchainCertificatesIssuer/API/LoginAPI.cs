@@ -1,9 +1,11 @@
 using System.Net;
 using BlockchainCertificatesIssuer.domain.Models.Login;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace BlockchainCertificatesIssuer.API.API
 {
@@ -23,14 +25,29 @@ namespace BlockchainCertificatesIssuer.API.API
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            var data = await System.Text.Json.JsonSerializer.DeserializeAsync<LoginAPI>(req.Body);
+            var data = await new StreamReader(req.Body).ReadToEndAsync(); 
+            var temp = JsonConvert.DeserializeObject<Login>(data);
+
+          
 
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+             var  user= await repository.GetAsync(x => x.UserName == temp.UserName && x.Password == temp.Password);
 
+            if (user!=null)
+            {
+                response.WriteString("Welcome to Bistec Global!");
+            }
+            else
+            {
+                 response = req.CreateResponse(HttpStatusCode.Unauthorized);
+            }
 
-            await repository.CreateAsync(new Login { UserName = "upeksha@bistecglobal.com", Password = "" });
+         
             response.WriteString("Welcome to Login form!");
+
+           
+            
 
             return response;
         }
