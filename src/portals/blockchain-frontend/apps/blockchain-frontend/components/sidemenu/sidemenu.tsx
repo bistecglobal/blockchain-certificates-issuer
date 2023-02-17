@@ -18,7 +18,7 @@ export function SideMenu(props: CartSidemenuProps) {
 
   const navigate = useRouter();
   return (
-   
+   <div className={styles["container"]}>
       <div className={styles["SideMenu"]}>
       <Menu
         className={styles["SideMenuVertical"]}
@@ -32,7 +32,7 @@ export function SideMenu(props: CartSidemenuProps) {
           {
             label: "Home",
             icon: <AppstoreOutlined />,
-            key: "/",
+            key: "/home",
           },
           {
             label: "Courses",
@@ -56,6 +56,7 @@ export function SideMenu(props: CartSidemenuProps) {
           },
         ]}
       ></Menu>
+    </div>
     </div>
     
   );

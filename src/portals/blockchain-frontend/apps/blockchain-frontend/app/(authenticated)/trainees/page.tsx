@@ -46,6 +46,7 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
 
   return (
     <div className={styles['container']}>
+      <div className={styles['content']}>
       <Form >
       <Form.Item 
         
@@ -88,6 +89,7 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
       <Button htmlType="submit" icon={<PlusOutlined/>} type="primary"   onClick={(e)=>{ handleSave(e) }}> Add a Trainee</Button>
      </Form.Item>
      </Form>
+    </div>
     </div>
   );
 }

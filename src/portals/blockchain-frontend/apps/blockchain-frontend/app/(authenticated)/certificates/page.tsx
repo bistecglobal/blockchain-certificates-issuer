@@ -61,6 +61,7 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
       }
   return (
     <div className={styles['container']}>
+      <div className={styles['content']}>
       <Form onFinish={onFinish}>
       <p>Select Course</p>
       <Select   placeholder='Select Course' style={{width:150}} value={courseval} onChange={(value) => {setSelectCourse(value) }}  >
@@ -94,6 +95,7 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
       <Button htmlType="submit" icon={<PlusOutlined/>} type="primary"   onClick={(e)=>{ handleSave(e) }}>Issue Certificate</Button>
      </Form.Item>
      </Form>
+    </div>
     </div>
   );
 }

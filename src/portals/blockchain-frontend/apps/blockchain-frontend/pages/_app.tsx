@@ -8,9 +8,13 @@ function CustomApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Welcome to blockchain-frontend!</title>
       </Head>
-      <main className="app">
+      <div className='container'>
+        <div className='content'>
+      <main className="app" >
         <Component {...pageProps} />
       </main>
+      </div>
+      </div>
     </>
   );
 }

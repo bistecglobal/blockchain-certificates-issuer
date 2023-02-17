@@ -53,7 +53,7 @@ export function CartPageTrainers(props: CartPageTrainersProps) {
 
   return (
     <div className={styles['container']}>
-      <div className={styles['store']}>
+      <div className={styles['content']}>
       
      <Form onFinish={onFinish}>
       <Form.Item 

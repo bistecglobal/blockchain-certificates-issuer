@@ -1,4 +1,4 @@
-html {
+/* html {
   -webkit-text-size-adjust: 100%;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
@@ -397,4 +397,23 @@ summary svg {
   #middle-content {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+} */
+/* .container{
+  display: flex; 
+  flex-direction: column; 
+  width: 100vw;
+  height: 100vh;
+} */
+
+.content{
+  /* display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: rgba(0, 0, 0, 0.05) ; */
+  position: absolute;
+  top:50%;
+  bottom: 50%;
+  left: 30%;
+  right: auto;
 }

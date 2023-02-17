@@ -5,3 +5,20 @@
  * .container {
  * }
 */
+.container{
+    position: absolute;
+    top: 20%;
+    /* bottom: 50%; */
+    left: 40%;
+    right: auto;
+    display: flex; 
+    flex-direction: column; 
+    width: 100vw;
+    height: 100vh;
+}
+
+.content{
+    position: absolute;
+    width: 300px;
+    /* background-color: rgba(220, 245, 244, 0.475) ; */
+}

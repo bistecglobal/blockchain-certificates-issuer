@@ -61,9 +61,12 @@ function setStartDate(startdate, dateString) {
 
   return (
     <div className={styles['container']}>
+      <div className={styles['content']}>
       
-      <Typography>Courses</Typography>
+      
+     
       <Form  >
+      <p>Course</p>
       <Form.Item 
         
       rules={[
@@ -72,7 +75,7 @@ function setStartDate(startdate, dateString) {
           message:"Title is required"
         }
       ]}
-      name ={"Course"} 
+       
      
        >
       <Input placeholder='C#' value={titleval} 
@@ -103,6 +106,7 @@ function setStartDate(startdate, dateString) {
       <Button htmlType="submit" icon={<PlusOutlined/>} type="primary"   onClick={(e)=>{ handleSave(e) }}> Add Courses</Button>
      </Form.Item>
      </Form>
+    </div>
     </div>
   );
 }
