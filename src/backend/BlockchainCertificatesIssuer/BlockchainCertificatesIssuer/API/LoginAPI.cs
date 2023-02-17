@@ -38,7 +38,8 @@ namespace BlockchainCertificatesIssuer.API.API
             }
             else
             {
-                 response = req.CreateResponse(HttpStatusCode.Unauthorized);
+                _logger.LogInformation("Invalid credentials !");
+                response = req.CreateResponse(HttpStatusCode.Unauthorized);
                 response.WriteString("Invalid credentials !");
             }
             return response;
