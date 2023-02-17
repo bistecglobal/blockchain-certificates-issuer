@@ -32,8 +32,6 @@ namespace BlockchainCertificatesIssuer.API.API
             var created = await repository.CreateAsync(new Trainer { FirstName = trainer.FirstName, LasttName = trainer.LasttName, EmailAddress = trainer.EmailAddress });
             await response.WriteAsJsonAsync(created);
 
-            response.WriteString("Welcome to Trainer application!");
-
             return response;
         }
     }

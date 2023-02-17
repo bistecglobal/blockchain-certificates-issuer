@@ -32,10 +32,7 @@ namespace BlockchainCertificatesIssuer.API
 
             var created =await repository.CreateAsync(new Trainee { FirstName = trainee.FirstName, LasttName = trainee.LasttName, EmailAddress = trainee.EmailAddress });
             await response.WriteAsJsonAsync(created);
-            response.WriteString("Welcome to Trainee application!");
         
-     
-
             return response;
         }
     }
