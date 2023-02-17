@@ -54,6 +54,7 @@ jobs:
           api_location: ${{ env.API_LOCATION }}
           app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
           ###### End of Repository/Build Configurations ######
+          is_static_export : true
 
   close_pull_request_job:
     permissions:
