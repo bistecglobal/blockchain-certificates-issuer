@@ -10,6 +10,7 @@ import React,{useState} from 'react';
 import { Descriptions } from 'antd';
 import {DatePicker} from 'antd'
 import { Input } from 'antd';
+import moment from 'moment';
 /* eslint-disable-next-line */
 export interface CartPageCourseProps {}
 
@@ -18,17 +19,23 @@ export function Courses(props: CartPageCourseProps) {
   const [lastval,setlastnameval]= useState("");
   const [emailval,setemailval]= useState("");
   const { TextArea } = Input;
+  const [startdate,setstartval] =useState([]);
+  const [enddate,setendval] =useState([]);
+  const [description,setdescriptionval] =useState("");
   
   const setFirstNameVal = (value:any) =>{
     setfirstnameval(value);
 };
-  const setLastNameVal  = (value:any) =>{
-  setlastnameval(value);
+  const setStartVal  = (value:any) =>{
+  setstartval(value);
  };
 
-  const setEmailVal = (value:any) =>{
-      setemailval(value);
+  const setEndVal = (value:any) =>{
+      setendval(value);
   };
+  const setDescriptionVal = (value:any) =>{
+    setdescriptionval(value);
+};
   
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault();
@@ -36,6 +43,8 @@ export function Courses(props: CartPageCourseProps) {
     FirstName: firstval,
     LastName: lastval,
     Email : emailval,
+    StartDate: startdate,
+    EndDate : enddate
    
   };
   console.log("abc",data)
@@ -65,7 +74,7 @@ export function Courses(props: CartPageCourseProps) {
       name ={"Course"} 
      
        >
-      <Input placeholder='C#' value={lastval} 
+      <Input placeholder='C#' value={firstval} 
       onChange={(e)=>{setFirstNameVal(e.target.value)}} />
       </Form.Item>
     
@@ -73,15 +82,19 @@ export function Courses(props: CartPageCourseProps) {
   
   <p>Start date</p>
      <Space>
-     <div ><DatePicker/></div>
+     <div ><DatePicker onChange={(e)=>{
+
+     const value1 = moment(e[0]).format('DD,MM,YYYY')
+      setStartVal(value1)}}/></div>
      </Space>
 
      <p>End Date</p>
      <Space>
-     <div ><DatePicker/></div>
+     <div ><DatePicker onChange={(e)=>setEndVal(e.toDate)} /></div>
      </Space>
      <p>Description</p>
-     <TextArea rows={4} title="Description" name='Description' />
+     <TextArea rows={4} title="Description" name='Description' value={description} 
+      onChange={(e)=>{setDescriptionVal(e.target.value)}} />
     <br />
     <br />
      <Form.Item>
