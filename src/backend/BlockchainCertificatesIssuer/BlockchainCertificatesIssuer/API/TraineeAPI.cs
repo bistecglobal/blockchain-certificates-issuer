@@ -28,9 +28,8 @@ namespace BlockchainCertificatesIssuer.API
           
 
             var response = req.CreateResponse(HttpStatusCode.OK);
-            
 
-            var created =await repository.CreateAsync(new Trainee { FirstName = trainee.FirstName, LasttName = trainee.LasttName, EmailAddress = trainee.EmailAddress });
+            var created = await repository.CreateAsync(trainee);
             await response.WriteAsJsonAsync(created);
         
             return response;

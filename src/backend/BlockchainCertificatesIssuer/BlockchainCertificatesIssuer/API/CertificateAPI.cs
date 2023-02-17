@@ -28,8 +28,8 @@ namespace BlockchainCertificatesIssuer.API.API
             var certificate = await System.Text.Json.JsonSerializer.DeserializeAsync<Certificate>(req.Body);
 
             var response = req.CreateResponse(HttpStatusCode.OK);
-          
-            var created = await repository.CreateAsync(new Certificate { Course = certificate.Course, Trainee = certificate.Trainee, Trainer = certificate.Trainer, CertificateIssueDate =certificate.CertificateIssueDate });
+
+            var created = await repository.CreateAsync(certificate);
             await response.WriteAsJsonAsync(created);
             response.WriteString("Welcome to Issue Certification Application!");
             return response;

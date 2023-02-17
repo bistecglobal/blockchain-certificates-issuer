@@ -27,9 +27,8 @@ namespace BlockchainCertificatesIssuer.API.API
             var trainer = await System.Text.Json.JsonSerializer.DeserializeAsync<Trainer>(req.Body);
 
             var response = req.CreateResponse(HttpStatusCode.OK);
-            /*response.Headers.Add("Content-Type", "text/plain; charset=utf-8");*/
-
-            var created = await repository.CreateAsync(new Trainer { FirstName = trainer.FirstName, LasttName = trainer.LasttName, EmailAddress = trainer.EmailAddress });
+          
+            var created = await repository.CreateAsync(trainer);
             await response.WriteAsJsonAsync(created);
 
             return response;
