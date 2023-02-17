@@ -8,31 +8,33 @@ import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
 import React,{useState} from 'react';
 import { Descriptions } from 'antd';
-import {DatePicker} from 'antd'
+import {DatePicker,DatePickerProps,Alert} from 'antd'
 import { Input } from 'antd';
 import moment from 'moment';
+import { format } from 'path';
+
 /* eslint-disable-next-line */
 export interface CartPageCourseProps {}
 
 export function Courses(props: CartPageCourseProps) {
-  const [firstval,setfirstnameval]= useState("");
-  const [lastval,setlastnameval]= useState("");
-  const [emailval,setemailval]= useState("");
+  const [titleval,setcourseval]= useState("");
   const { TextArea } = Input;
-  const [startdate,setstartval] =useState([]);
-  const [enddate,setendval] =useState([]);
+ 
+  const [startdate, setDateS] = React.useState(false);
+  const [enddate, setDateE] = React.useState(false);
   const [description,setdescriptionval] =useState("");
-  
-  const setFirstNameVal = (value:any) =>{
-    setfirstnameval(value);
-};
-  const setStartVal  = (value:any) =>{
-  setstartval(value);
- };
 
-  const setEndVal = (value:any) =>{
-      setendval(value);
-  };
+
+  const setCourseVal = (value:any) =>{
+    setcourseval(value);
+};
+function setStartDate(startdate, dateString) {
+  setDateS(dateString);
+}
+
+  function setEndDate(enddate, dateString) {
+    setDateE(dateString);
+  }
   const setDescriptionVal = (value:any) =>{
     setdescriptionval(value);
 };
@@ -40,9 +42,8 @@ export function Courses(props: CartPageCourseProps) {
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault();
   const data ={
-    FirstName: firstval,
-    LastName: lastval,
-    Email : emailval,
+    Course: titleval,
+    Description: description,
     StartDate: startdate,
     EndDate : enddate
    
@@ -62,7 +63,7 @@ export function Courses(props: CartPageCourseProps) {
     <div className={styles['container']}>
       
       <Typography>Courses</Typography>
-      <Form >
+      <Form  >
       <Form.Item 
         
       rules={[
@@ -74,23 +75,24 @@ export function Courses(props: CartPageCourseProps) {
       name ={"Course"} 
      
        >
-      <Input placeholder='C#' value={firstval} 
-      onChange={(e)=>{setFirstNameVal(e.target.value)}} />
+      <Input placeholder='C#' value={titleval} 
+      onChange={(e)=>{setCourseVal(e.target.value)}} />
       </Form.Item>
     
     
   
   <p>Start date</p>
      <Space>
-     <div ><DatePicker onChange={(e)=>{
-
-     const value1 = moment(e[0]).format('DD,MM,YYYY')
-      setStartVal(value1)}}/></div>
+     <div ><DatePicker onChange={setStartDate}/></div>
      </Space>
 
      <p>End Date</p>
      <Space>
-     <div ><DatePicker onChange={(e)=>setEndVal(e.toDate)} /></div>
+     <div ><DatePicker 
+      // const value1 = moment(e[0]).format('DD,MM,YYYY')
+      onChange={setEndDate}
+       />
+       </div>
      </Space>
      <p>Description</p>
      <TextArea rows={4} title="Description" name='Description' value={description} 

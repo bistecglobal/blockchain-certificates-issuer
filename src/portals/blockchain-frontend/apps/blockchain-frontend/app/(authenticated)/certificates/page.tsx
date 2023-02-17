@@ -6,6 +6,7 @@ import {DatePicker} from 'antd'
 import Input from 'antd/es/input';
 import axios from 'axios';
 import React,{useState} from 'react';
+import moment from 'moment';
 /* eslint-disable-next-line */
 export interface CartPageCertificatesProps {}
 
@@ -17,6 +18,8 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
   const [courseval,setselectcourse]= useState("");
   const [traineeval,setselecttrainee]= useState("");
   const [trainerval,setselecttranier]= useState("");
+  const [date, setDate] = React.useState(false);
+
   
   const setSelectCourse = (value) =>{
     setselectcourse(value);
@@ -28,6 +31,9 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
   const setSelectTrainer = (value) =>{
     setselecttranier(value);
   };
+  function setIssueDate (date,dateString){
+    setDate(dateString);
+  }
   
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault();
@@ -35,6 +41,7 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
     Course: courseval,
     Trainee: traineeval,
     Trainer : trainerval,
+    Date: date
    
   };
   console.log("abc",data)
@@ -80,7 +87,7 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
       </Select>
       <p>Select Certificate Issue Date</p>
      
-        <div><DatePicker/></div>
+        <div><DatePicker onChange={setIssueDate}/></div>
       
       <p></p>
       <Form.Item>
