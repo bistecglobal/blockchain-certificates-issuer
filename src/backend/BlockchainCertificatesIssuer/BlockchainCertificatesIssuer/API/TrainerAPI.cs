@@ -19,16 +19,17 @@ namespace BlockchainCertificatesIssuer.API.API
             this.repository = repository;
         }
 
-        [Function("TrainerAPI")]
+        [Function("Trainer")]
         public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+            var trainer = await System.Text.Json.JsonSerializer.DeserializeAsync<Trainer>(req.Body);
 
-            await repository.CreateAsync(new Trainer { FirstName = "chandima", LasttName = "Damith", EmailAddress = "chandima@bistecglobal.com" });
-            response.WriteString("Welcome to Trainer application!");
+            var response = req.CreateResponse(HttpStatusCode.OK);
+          
+            var created = await repository.CreateAsync(trainer);
+            await response.WriteAsJsonAsync(created);
 
             return response;
         }

@@ -1,5 +1,6 @@
 using System.Net;
 using BlockchainCertificatesIssuer.domain.Models.Certificate;
+using BlockchainCertificatesIssuer.domain.Models.Course;
 using BlockchainCertificatesIssuer.domain.Models.Trainee;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.Functions.Worker;
@@ -19,16 +20,17 @@ namespace BlockchainCertificatesIssuer.API.API
             this.repository = repository;
         }
 
-        [Function("CertificateAPI")]
+        [Function("Certificate")]
         public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
+            var certificate = await System.Text.Json.JsonSerializer.DeserializeAsync<Certificate>(req.Body);
+
             var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-
-            await repository.CreateAsync(new Certificate { Course = "c#", Trainee = "Thushini", Trainer = "Chandima", CertificateIssueDate = DateTime.Today.AddDays(5) });
+            var created = await repository.CreateAsync(certificate);
+            await response.WriteAsJsonAsync(created);
             response.WriteString("Welcome to Issue Certification Application!");
             return response;
         }
