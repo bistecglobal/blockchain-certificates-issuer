@@ -10,7 +10,7 @@ namespace BlockchainCertificatesIssuer.domain.Models.Trainee
     public class Trainee : Item
     {
         public string FirstName { get; set; }
-        public string LasttName { get; set; }
+        public string LastName { get; set; }
         public string EmailAddress { get; set; }
     }
 }
