@@ -32,12 +32,12 @@ export function CartPageTrainers(props: CartPageTrainersProps) {
     e.preventDefault();
   const data ={
     FirstName: firstval,
-    LastName: lastval,
-    Email : emailval,
+    LasttName: lastval,
+    EmailAddress : emailval,
    
   };
   console.log("abc",data)
-  const url ='';
+  const url ='http://localhost:7250/api/Trainer';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 

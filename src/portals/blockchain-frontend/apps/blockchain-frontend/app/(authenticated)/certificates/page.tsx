@@ -41,11 +41,11 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
     Course: courseval,
     Trainee: traineeval,
     Trainer : trainerval,
-    Date: date
+    CertificateIssueDateDate: date
    
   };
   console.log("abc",data)
-  const url ='';
+  const url ='http://localhost:7250/api/Certificate';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 

@@ -31,11 +31,11 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
   const data ={
     FirstName: firstval,
     LastName: lastval,
-    Email : emailval,
+    EmailAddress : emailval,
    
   };
   console.log("abc",data)
-  const url ='';
+  const url ='http://localhost:7250/api/Trainee';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 

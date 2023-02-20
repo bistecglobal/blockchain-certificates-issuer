@@ -2,7 +2,6 @@
 import styles from './cart-page-course.module.css';
 import { Avatar, Rate, Space, Table, Typography } from "antd";
 import {Form} from 'antd'
-// import Input from 'antd/es/input';
 import Button from 'antd/es/button';
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
@@ -42,14 +41,14 @@ function setStartDate(startdate, dateString) {
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault();
   const data ={
-    Course: titleval,
-    Description: description,
+    Title: titleval,
+    Details: description,
     StartDate: startdate,
     EndDate : enddate
    
   };
   console.log("abc",data)
-  const url ='';
+  const url ='http://localhost:7250/api/Course';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 
