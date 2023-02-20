@@ -7,6 +7,7 @@ import Input from 'antd/es/input';
 import axios from 'axios';
 import React,{useState} from 'react';
 import moment from 'moment';
+import trainers from  '../trainers/page'
 /* eslint-disable-next-line */
 export interface CartPageCertificatesProps {}
 
