@@ -53,6 +53,11 @@ jobs:
           npm run build --if-present
         working-directory: ${{ env.APP_LOCATION }}
 
+      - name: npm install production
+        run: |
+          npm install
+        working-directory: ${{ env.APP_ARTIFACT_LOCATION }}
+
       - name: 'Deploy to Azure WebApp'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
