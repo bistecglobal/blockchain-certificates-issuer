@@ -37,9 +37,49 @@ function setStartDate(startdate, dateString) {
   const setDescriptionVal = (value:any) =>{
     setdescriptionval(value);
 };
+const [tableData,setTableData] =useState([
+  {
+    Title: titleval,
+    Details: description,
+    StartDate: startdate,
+    EndDate : enddate
+  }
+
+])
+const columns=[
+  {
+    key:'1',
+    title:'Title',
+    dataIndex:'Title'
+  },
+  {
+    key:'2',
+    title:'Description',
+    dataIndex:'Details'
+  },
+  {
+    key:'3',
+    title:'StartDate',
+    dataIndex:'StartDate'
+  },
+  {
+    key:'4',
+    title:'EndDate',
+    dataIndex:'EndDate'
+  }
+]
   
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault();
+    const newCourse ={
+      Title: titleval,
+      Details: description,
+      StartDate: startdate,
+      EndDate : enddate
+    }
+    setTableData(pre=>{
+      return[...pre,newCourse]
+    })
   const data ={
     Title: titleval,
     Details: description,
@@ -105,6 +145,12 @@ function setStartDate(startdate, dateString) {
       <Button htmlType="submit" icon={<PlusOutlined/>} type="primary"   onClick={(e)=>{ handleSave(e) }}> Add Courses</Button>
      </Form.Item>
      </Form>
+
+     <Table 
+     dataSource={tableData}
+     columns={columns}>
+
+     </Table>
     </div>
     </div>
   );

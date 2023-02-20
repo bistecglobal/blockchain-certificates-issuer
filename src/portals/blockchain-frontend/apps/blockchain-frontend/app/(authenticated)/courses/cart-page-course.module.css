@@ -7,7 +7,7 @@
 */
 .container{
     position: absolute;
-    top: 20%;
+    top: 10%;
     /* bottom: 50%; */
     left: 40%;
     right: auto;
@@ -19,6 +19,6 @@
 
 .content{
     position: absolute;
-    width: 300px;
+    width: 400px;
     /* background-color: rgba(220, 245, 244, 0.475) ; */
 }

@@ -1,6 +1,6 @@
 "use client";
 import styles from './cart-page-trainees.module.css';
-import {Form} from 'antd'
+import {Form,Table} from 'antd'
 import Input from 'antd/es/input';
 import Button from 'antd/es/button';
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
@@ -25,9 +25,43 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
   const setEmailVal = (value:any) =>{
       setemailval(value);
   };
+  const [tableData,setTableData] =useState([
+    {
+      FirstName:firstval,
+      LastName:lastval,
+      EmailAddress:emailval
+  }
+
+])
+  const columns=[
+    {
+      key:'1',
+      title:'FirstName',
+      dataIndex:'FirstName'
+    },
+    {
+      key:'2',
+      title:'LastName',
+      dataIndex:'LastName'
+    },
+    {
+      key:'3',
+      title:'EmailAddress',
+      dataIndex:'EmailAddress'
+    }
+  ]
   
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault();
+    const newTrainee ={
+      
+      FirstName:firstval,
+      LastName:lastval,
+      EmailAddress:emailval
+    }
+    setTableData(pre=>{
+      return[...pre,newTrainee]
+    })
   const data ={
     FirstName: firstval,
     LastName: lastval,
@@ -89,6 +123,11 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
       <Button htmlType="submit" icon={<PlusOutlined/>} type="primary"   onClick={(e)=>{ handleSave(e) }}> Add a Trainee</Button>
      </Form.Item>
      </Form>
+     <Table 
+      columns={columns} 
+      dataSource ={tableData}>
+      
+     </Table>
     </div>
     </div>
   );
