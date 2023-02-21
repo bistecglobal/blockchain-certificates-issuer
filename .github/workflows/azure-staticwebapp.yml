@@ -21,7 +21,7 @@ on:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-  AZURE_WEBAPP_NAME: "bto-cert"
+  AZURE_WEBAPP_NAME: "academy-certifier"
   APP_LOCATION: "src/portals/blockchain-frontend" # location of your client code
   APP_ARTIFACT_LOCATION: "src/portals/blockchain-frontend/dist/apps/blockchain-frontend" # location of client code build output
 
