@@ -24,7 +24,6 @@ env:
   AZURE_WEBAPP_NAME: "bto-cert"
   APP_LOCATION: "src/portals/blockchain-frontend" # location of your client code
   APP_ARTIFACT_LOCATION: "src/portals/blockchain-frontend/dist/apps/blockchain-frontend" # location of client code build output
-  AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }} # secret containing deployment token for your static web app
 
 permissions:
   contents: read
@@ -61,8 +60,6 @@ jobs:
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ env.APP_ARTIFACT_LOCATION }}
 
-    
-
   close_pull_request_job:
     permissions:
       contents: none
@@ -75,4 +72,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: ${{ env.APP_ARTIFACT_LOCATION }}
           action: "close"
