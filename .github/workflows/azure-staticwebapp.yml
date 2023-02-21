@@ -22,6 +22,9 @@ on:
 # Environment variables available to all jobs and steps in this workflow
 env:
   AZURE_WEBAPP_NAME: "academy-certifier"
+  AZURE_FUNCTIONAPP_NAME: "academy-certifier-api"  # set this to your application's name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: "."
+  API_LOCATION: "src/backend/BlockchainCertificatesIssuer/BlockchainCertificatesIssuer"
   APP_LOCATION: "src/portals/blockchain-frontend" # location of your client code
   APP_ARTIFACT_LOCATION: "src/portals/blockchain-frontend/dist/apps/blockchain-frontend" # location of client code build output
 
@@ -59,6 +62,20 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ env.APP_ARTIFACT_LOCATION }}
+
+      - name: build function app
+        run: |
+          # Build and test the project, then
+          # deploy to Azure Web App.
+          dotnet build --configuration Release --output ./output
+        working-directory: ${{ env.API_LOCATION }}     
+
+      - name: 'Run Azure Functions action'
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
 
   close_pull_request_job:
     permissions:
