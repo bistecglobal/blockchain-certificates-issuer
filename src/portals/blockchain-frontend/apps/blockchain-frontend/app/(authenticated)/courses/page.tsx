@@ -6,11 +6,9 @@ import Button from 'antd/es/button';
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
 import React,{useState} from 'react';
-import { Descriptions } from 'antd';
 import {DatePicker,DatePickerProps,Alert} from 'antd'
 import { Input } from 'antd';
-import moment from 'moment';
-import { format } from 'path';
+
 
 /* eslint-disable-next-line */
 export interface CartPageCourseProps {}
@@ -88,7 +86,7 @@ const columns=[
    
   };
   console.log("abc",data)
-  const url ='http://localhost:7250/api/Course';
+  const url ='http://localhost:7250/api';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 

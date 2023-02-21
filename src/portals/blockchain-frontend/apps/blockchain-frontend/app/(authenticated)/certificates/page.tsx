@@ -3,15 +3,18 @@ import styles from './cart-page-certificates.module.css';
 import {Select,Form,Button} from 'antd'
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import {DatePicker} from 'antd'
-import Input from 'antd/es/input';
 import axios from 'axios';
 import React,{useState} from 'react';
-import moment from 'moment';
-import trainers from  '../trainers/page'
+import { DownloadOutlined } from '@ant-design/icons';
+import jsPDF from 'jspdf'
+
+
+
 /* eslint-disable-next-line */
 export interface CartPageCertificatesProps {}
 
 export function CartPageCertificates(props: CartPageCertificatesProps) {
+  const [size, setSize] = useState('large');
   const selectCourse =['c#',"java","python"]
   const selectTrainee =['chandima','dulanaka','chathura']
   const selectTrainer =['kamal','amal','bimal']
@@ -46,7 +49,7 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
    
   };
   console.log("abc",data)
-  const url ='http://localhost:7250/api/Certificate';
+  const url ='http://localhost:7250/api';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 
@@ -59,6 +62,28 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
 
   const onFinish = (values:any)=>{
     console.log({values});
+
+      }
+
+  const  pdfGenerate=()=>{
+        let doc = new jsPDF('landscape','px','a4');
+        doc.addImage("certificate.png",'PNG',65,20,500,400)
+        doc.addPage()
+        doc.setFont('Helvertica','bold')
+        doc.text(60,60,'Course')
+        doc.text(60,80,'Trainee')
+        doc.text(60,100,'Trainer')
+        doc.text(60,120,'IssueDate')
+        doc.setFont('Helvertica','Normal')
+        doc.text(100,60,courseval)
+        doc.text(100,80,traineeval)
+        doc.text(100,100,trainerval)
+        doc.text(100,120,date)
+        doc.save('a.pdf')
+
+
+
+
       }
   return (
     <div className={styles['container']}>
@@ -95,6 +120,13 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
       <Form.Item>
       <Button htmlType="submit" icon={<PlusOutlined/>} type="primary"   onClick={(e)=>{ handleSave(e) }}>Issue Certificate</Button>
      </Form.Item>
+     <Button type="primary" icon={<DownloadOutlined />} onClick={pdfGenerate}>
+            Download
+          </Button>
+      <div className={styles['CertificateWrapper']}>
+        <img src="" alt="" />
+        </div>  
+
      </Form>
     </div>
     </div>
