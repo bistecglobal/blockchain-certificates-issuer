@@ -7,7 +7,7 @@ import axios from 'axios';
 import React,{useState} from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import jsPDF from 'jspdf'
-
+import { exportComponentAsPNG } from "react-component-export-image";
 
 
 /* eslint-disable-next-line */
@@ -60,35 +60,26 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
 }
 
 
-  const onFinish = (values:any)=>{
-    console.log({values});
+  // const onFinish = (values:any)=>{
+  //   console.log({values});
 
-      }
+  //     }
 
-  const  pdfGenerate=()=>{
-        let doc = new jsPDF('landscape','px','a4');
-        doc.addImage("certificate.png",'PNG',65,20,500,400)
-        doc.addPage()
-        doc.setFont('Helvertica','bold')
-        doc.text(60,60,'Course')
-        doc.text(60,80,'Trainee')
-        doc.text(60,100,'Trainer')
-        doc.text(60,120,'IssueDate')
-        doc.setFont('Helvertica','Normal')
-        doc.text(100,60,courseval)
-        doc.text(100,80,traineeval)
-        doc.text(100,100,trainerval)
-        doc.text(100,120,date)
-        doc.save('a.pdf')
+  // const  pdfGenerate=()=>{
+  //       let doc = new jsPDF('landscape','px','a4');
+  //       doc.addImage(,'PNG',65,20,500,400)
+  //       doc.addPage()
+  //       doc.save('a.pdf')
 
-
-
-
-      }
+  //     }
+  //     const [certc,setcertificateWrapper]= useState([]);
+    const certificateWrapper = React.createRef();
+    
+   
   return (
     <div className={styles['container']}>
       <div className={styles['content']}>
-      <Form onFinish={onFinish}>
+      <Form >
       <p>Select Course</p>
       <Select   placeholder='Select Course' style={{width:150}} value={courseval} onChange={(value) => {setSelectCourse(value) }}  >
         {selectCourse.map((Course,index)=>{ 
@@ -116,17 +107,33 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
      
         <div><DatePicker onChange={setIssueDate}/></div>
       
-      <p></p>
-      <Form.Item>
+      {/* <p></p> */}
+      {/* <Form.Item>
       <Button htmlType="submit" icon={<PlusOutlined/>} type="primary"   onClick={(e)=>{ handleSave(e) }}>Issue Certificate</Button>
-     </Form.Item>
-     <Button type="primary" icon={<DownloadOutlined />} onClick={pdfGenerate}>
+     </Form.Item> */}
+     {/* <Button type="primary" icon={<DownloadOutlined />} onClick={pdfGenerate}>
+            Download
+          </Button> */}
+
+      <div className={styles['Meta']}>
+      <div className={styles['certificateWrapper']} ref={certificateWrapper}>
+        <p className={styles['p1']}>{courseval}</p>
+        <p className={styles['p2']}>{traineeval}</p>
+        <img src="https://i.imgur.com/km7ATll.png" width={500} height={500} alt="" />
+
+        
+        </div>  
+        </div>
+        <br/><br/>
+
+        <Button type="primary" icon={<DownloadOutlined />} 
+        onClick={(e)=>{
+          e.preventDefault();
+        var x = exportComponentAsPNG(certificateWrapper)
+          }}>
             Download
           </Button>
-      <div className={styles['CertificateWrapper']}>
-        <img src="" alt="" />
-        </div>  
-
+          
      </Form>
     </div>
     </div>
