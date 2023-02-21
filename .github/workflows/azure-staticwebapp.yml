@@ -28,7 +28,7 @@ env:
   APP_LOCATION: "src/portals/blockchain-frontend" # location of your client code
   APP_ARTIFACT_LOCATION: "src/portals/blockchain-frontend/dist/apps/blockchain-frontend" # location of client code build output
   DOTNET_VERSION: '7.0.x'
-  
+
 permissions:
   contents: read
 
@@ -61,14 +61,6 @@ jobs:
           npm run build --if-present
         working-directory: ${{ env.APP_LOCATION }}
 
-      - name: 'Deploy to Azure WebApp'
-        uses: azure/webapps-deploy@v2
-        id: deploy-to-webapp
-        with: 
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ${{ env.APP_ARTIFACT_LOCATION }}
-
       - name: build function app
         run: |
           # Build and test the project, then
@@ -76,25 +68,17 @@ jobs:
           dotnet build --configuration Release --output ./output
         working-directory: ${{ env.API_LOCATION }}     
 
-      - name: 'Run Azure Functions action'
+      - name: 'Deploy Backedn to Azure Functions'
         uses: Azure/functions-action@v1
         with:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
 
-  close_pull_request_job:
-    permissions:
-      contents: none
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    name: Close Pull Request Job
-    steps:
-      - name: Close Pull Request
-        id: closepullrequest
+      - name: 'Deploy Frontend to Azure WebApp'
         uses: azure/webapps-deploy@v2
-        with:
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        id: deploy-to-webapp
+        with: 
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ env.APP_ARTIFACT_LOCATION }}
-          action: "close"
