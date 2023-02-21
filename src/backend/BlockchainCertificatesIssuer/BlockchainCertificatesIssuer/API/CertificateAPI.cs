@@ -1,4 +1,5 @@
 using System.Net;
+using System.Web;
 using BlockchainCertificatesIssuer.domain.Models.Certificate;
 using BlockchainCertificatesIssuer.domain.Models.Course;
 using BlockchainCertificatesIssuer.domain.Models.Trainee;
@@ -6,8 +7,9 @@ using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.WebUtilities;
 
-namespace BlockchainCertificatesIssuer.API.API
+namespace BlockchainCertificatesIssuer.API
 {
     public class CertificateAPI
     {

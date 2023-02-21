@@ -25,7 +25,7 @@ namespace BlockchainCertificatesIssuer.API.API
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-        
+       
             var temp = await System.Text.Json.JsonSerializer.DeserializeAsync<Login>(req.Body);
             
             var response = req.CreateResponse(HttpStatusCode.OK);
