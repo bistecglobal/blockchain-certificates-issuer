@@ -1,11 +1,11 @@
 "use client";
 import styles from './cart-page-trainees.module.css';
-import {Form,Table} from 'antd'
+import {Form,Result,Table} from 'antd'
 import Input from 'antd/es/input';
 import Button from 'antd/es/button';
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 
 /* eslint-disable-next-line */
 export interface CartPageTraineesProps {}
@@ -14,6 +14,35 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
   const [firstval,setfirstnameval]= useState("");
   const [lastval,setlastnameval]= useState("");
   const [emailval,setemailval]= useState("");
+
+  const [show ,setShow] =useState(false);
+
+  const handleClose =() => setShow(false);
+  const handleShow =()=> setShow(true);
+  const[fname,setNameF]= useState('');
+  const[lname,setNameL]= useState('');
+  const[email,setEmail]= useState('');
+
+  const empdata =[
+
+  ]
+
+  const [data2, setData2] =useState([]);
+
+  useEffect(()=>{
+    getData();
+  },[])
+
+  const getData =() =>{
+    axios.get('http://localhost:7250/api/Trainee')
+    .then((result)=>{
+      setData2(result.data)
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
+
   
   const setFirstNameVal = (value:any) =>{
     setfirstnameval(value);

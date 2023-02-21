@@ -10,7 +10,7 @@ namespace BlockchainCertificatesIssuer.API.Service
 {
     internal class Class
     {
-      private void btnClick(object sender, EventArgs e)
+      private void Main(string[] args)
         {
             try
             {
