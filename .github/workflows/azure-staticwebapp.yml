@@ -21,10 +21,13 @@ on:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-  AZURE_WEBAPP_NAME: "bto-cert"
+  AZURE_WEBAPP_NAME: "academy-certifier"
+  AZURE_FUNCTIONAPP_NAME: "academy-certifier-api"  # set this to your application's name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: "."
+  API_LOCATION: "src/backend/BlockchainCertificatesIssuer/BlockchainCertificatesIssuer"
   APP_LOCATION: "src/portals/blockchain-frontend" # location of your client code
   APP_ARTIFACT_LOCATION: "src/portals/blockchain-frontend/dist/apps/blockchain-frontend" # location of client code build output
-  AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }} # secret containing deployment token for your static web app
+  DOTNET_VERSION: '7.0.x'
 
 permissions:
   contents: read
@@ -45,6 +48,11 @@ jobs:
         with:
           submodules: true
 
+      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
       - name: npm install, build, and test
         run: |
           # Build and test the project, then
@@ -53,26 +61,24 @@ jobs:
           npm run build --if-present
         working-directory: ${{ env.APP_LOCATION }}
 
-      - name: 'Deploy to Azure WebApp'
+      - name: build function app
+        run: |
+          # Build and test the project, then
+          # deploy to Azure Web App.
+          dotnet build --configuration Release --output ./output
+        working-directory: ${{ env.API_LOCATION }}     
+
+      - name: 'Deploy Backedn to Azure Functions'
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: '${{ env.API_LOCATION }}/output'
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+
+      - name: 'Deploy Frontend to Azure WebApp'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with: 
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ env.APP_ARTIFACT_LOCATION }}
-
-    
-
-  close_pull_request_job:
-    permissions:
-      contents: none
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    name: Close Pull Request Job
-    steps:
-      - name: Close Pull Request
-        id: closepullrequest
-        uses: azure/webapps-deploy@v2
-        with:
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          action: "close"
