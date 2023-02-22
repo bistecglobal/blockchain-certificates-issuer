@@ -8,17 +8,57 @@
 .container{
     position: absolute;
     top: 20%;
-    /* bottom: 50%; */
+    display: flex;
     left: 40%;
     right: auto;
-    display: flex; 
-    flex-direction: column; 
     width: 100vw;
     height: 100vh;
 }
 
-.content{
-    position: absolute;
+.container .content{
+    display: flex;
+    /* position: absolute; */
     width: 300px;
     /* background-color: rgba(0, 0, 0, 0.05) ; */
 }
+
+.container .content .Meta{
+    position: absolute;
+    height: 100px;
+    top:0;
+    left:20%;
+}
+
+.container .content .Meta .certificateWrapper {
+    box-shadow: 0 0 5px #000;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  .container .content .Meta .certificateWrapper img {
+    display: block;
+  }
+  .container .content .Meta .certificateWrapper .p1 {
+    font-family: "Staatliches", cursive;
+    margin: 0;
+    position: absolute;
+    left: 210px;
+    top: 250px;
+    font-size: 20pt;
+  }
+  .container .content .Meta .certificateWrapper .p2 {
+    font-family: "Staatliches", cursive;
+    margin: 0;
+    position: absolute;
+    left: 200px;
+    top: 200px;
+    font-size: 20pt;
+  }
+  .container .content .Meta .certificateWrapper .p3 {
+    font-family: "Staatliches", cursive;
+    margin: 0;
+    position: absolute;
+    left: 380px;
+    top: 440px;
+    font-size: 10pt;
+  }

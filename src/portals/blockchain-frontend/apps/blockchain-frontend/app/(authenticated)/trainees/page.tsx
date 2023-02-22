@@ -6,8 +6,9 @@ import Button from 'antd/es/button';
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
 import React,{useEffect, useState} from 'react';
+import type { ColumnsType } from 'antd/es/table';
 
-/* eslint-disable-next-line */
+
 export interface CartPageTraineesProps {}
 
 export function CartPageTrainees(props: CartPageTraineesProps) {
@@ -15,19 +16,15 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
   const [lastval,setlastnameval]= useState("");
   const [emailval,setemailval]= useState("");
 
-  const [show ,setShow] =useState(false);
-
-  const handleClose =() => setShow(false);
-  const handleShow =()=> setShow(true);
-  const[fname,setNameF]= useState('');
-  const[lname,setNameL]= useState('');
-  const[email,setEmail]= useState('');
-
   const empdata =[
 
   ]
 
-  const [data2, setData2] =useState([]);
+  const [data , setData2] =useState([{
+    FirstName:firstval,
+    LastName:lastval,
+    EmailAddress:emailval
+  }]);
 
   useEffect(()=>{
     getData();
@@ -54,15 +51,13 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
   const setEmailVal = (value:any) =>{
       setemailval(value);
   };
-  const [tableData,setTableData] =useState([
-    {
-      FirstName:firstval,
-      LastName:lastval,
-      EmailAddress:emailval
-  }
+//   const [tableData,setTableData] =useState([
+//     {
+      
+//   }
 
-])
-  const columns=[
+// ])
+  const columns =[
     {
       key:'1',
       title:'FirstName',
@@ -88,19 +83,20 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
       LastName:lastval,
       EmailAddress:emailval
     }
-    setTableData(pre=>{
+    setData2(pre=>{
       return[...pre,newTrainee]
     })
+
   const data ={
     FirstName: firstval,
     LastName: lastval,
     EmailAddress : emailval,
    
   };
-  console.log("abc",data)
-  const url ='http://localhost:7250/api/Trainee';
+  // console.log("abc",data)
+  const url ='http://localhost:7250/api';
   axios.post(url,data).then((result)=>{
-     alert(result.data);
+     getData();
 
   }).catch((error)=>{
     alert(error);
@@ -154,7 +150,7 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
      </Form>
      <Table 
       columns={columns} 
-      dataSource ={tableData}>
+      dataSource ={data}>
       
      </Table>
     </div>

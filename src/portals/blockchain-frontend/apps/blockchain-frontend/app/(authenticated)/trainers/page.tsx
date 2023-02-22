@@ -6,8 +6,7 @@ import Button from 'antd/es/button';
 import {AccountBookFilled, PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
 import React,{useState} from 'react';
-import { randomFill } from 'crypto';
-import { Column } from 'rc-table';
+
 
 
 /* eslint-disable
@@ -76,7 +75,7 @@ export function CartPageTrainers(props: CartPageTrainersProps) {
    
   };
   console.log("abc",data)
-  const url ='http://localhost:7250/api/Trainer';
+  const url ='http://localhost:7250/api';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 
