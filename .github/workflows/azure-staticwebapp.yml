@@ -41,6 +41,7 @@ jobs:
     permissions:
       contents: read # for actions/checkout to fetch code
       pull-requests: write # for Azure/static-web-apps-deploy to comment on PRs    
+    if: (github.event_name == 'pull_request' && github.event.action == 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
@@ -87,4 +88,3 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ env.APP_ARTIFACT_LOCATION }}
-          startup-command: "npm install && npm start"
