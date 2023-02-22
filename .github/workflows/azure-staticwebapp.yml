@@ -1,23 +1,12 @@
-# This workflow will build and push a web application to an Azure Static Web App when you change your code.
-#
-# This workflow assumes you have already created the target Azure Static Web App.
-# For instructions see https://docs.microsoft.com/azure/static-web-apps/get-started-portal?tabs=vanilla-javascript
-#
-# To configure this workflow:
-#
-# 1. Set up a secret in your repository named AZURE_STATIC_WEB_APPS_API_TOKEN with the value of your Static Web Apps deployment token.
-#    For instructions on obtaining the deployment token see: https://docs.microsoft.com/azure/static-web-apps/deployment-token-management
-#
-# 3. Change the values for the APP_LOCATION, API_LOCATION and APP_ARTIFACT_LOCATION, AZURE_STATIC_WEB_APPS_API_TOKEN environment variables (below).
-#    For instructions on setting up the appropriate configuration values go to https://docs.microsoft.com/azure/static-web-apps/front-end-frameworks
-name: Deploy web app to Azure Static Web Apps
+name: Deploy to Azure
 
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    types: [closed]
-    branches: [ "main" ]
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
