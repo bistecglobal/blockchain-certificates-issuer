@@ -119,6 +119,7 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
       <div className={styles['certificateWrapper']} ref={certificateWrapper}>
         <p className={styles['p1']}>{courseval}</p>
         <p className={styles['p2']}>{traineeval}</p>
+        <p className={styles['p3']}>{date}</p>
         <img src="https://i.imgur.com/km7ATll.png" width={500} height={500} alt="" />
 
         

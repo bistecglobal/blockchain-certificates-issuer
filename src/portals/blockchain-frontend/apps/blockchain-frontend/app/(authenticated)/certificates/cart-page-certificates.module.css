@@ -54,7 +54,11 @@
     top: 200px;
     font-size: 20pt;
   }
-  .container .content .Meta .certificateWrapper Button{
-    
-    
+  .container .content .Meta .certificateWrapper .p3 {
+    font-family: "Staatliches", cursive;
+    margin: 0;
+    position: absolute;
+    left: 380px;
+    top: 440px;
+    font-size: 10pt;
   }
