@@ -39,6 +39,7 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
     setDate(dateString);
   }
   
+  
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault();
   const data ={
@@ -60,19 +61,6 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
 }
 
 
-  // const onFinish = (values:any)=>{
-  //   console.log({values});
-
-  //     }
-
-  // const  pdfGenerate=()=>{
-  //       let doc = new jsPDF('landscape','px','a4');
-  //       doc.addImage(,'PNG',65,20,500,400)
-  //       doc.addPage()
-  //       doc.save('a.pdf')
-
-  //     }
-  //     const [certc,setcertificateWrapper]= useState([]);
     const certificateWrapper = React.createRef();
     
    

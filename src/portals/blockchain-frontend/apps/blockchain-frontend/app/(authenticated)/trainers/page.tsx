@@ -5,7 +5,7 @@ import Input from 'antd/es/input';
 import Button from 'antd/es/button';
 import {AccountBookFilled, PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 
 
 
@@ -28,14 +28,29 @@ export function CartPageTrainers(props: CartPageTrainersProps) {
   const setEmailVal = (value:any) =>{
       setemailval(value);
   };
-  const [tableData,setTableData] =useState([
+  const [data,setData2] =useState([
     {
       FirstName:firstval,
       LastName:lastval,
       EmailAddress:emailval
   }
 
-])
+]);
+
+useEffect(()=>{
+  getData();
+},[]);
+
+const getData =() =>{
+  axios.get('http://localhost:7250/api/TrainerGetAPI?pageSize=10&PageNumber=1')
+  .then((result)=>{
+    setData2(result.data)
+    console.log(data)
+  })
+  .catch((error)=>{
+    console.log(error)
+  })
+}
   const columns=[
     {
       key:'1',
@@ -63,21 +78,22 @@ export function CartPageTrainers(props: CartPageTrainersProps) {
       LastName:lastval,
       EmailAddress:emailval
     }
-    setTableData(pre=>{
+    setData2(pre=>{
       return[...pre,newTrainer]
     })
     
   const data ={
 
     FirstName: firstval,
-    LasttName: lastval,
+    LastName: lastval,
     EmailAddress : emailval,
    
   };
   console.log("abc",data)
-  const url ='http://localhost:7250/api';
+  const url ='http://localhost:7250/api/Trainer';
   axios.post(url,data).then((result)=>{
-     alert(result.data);
+     getData();
+     alert(result.status)
 
   }).catch((error)=>{
     alert(error);
@@ -85,15 +101,13 @@ export function CartPageTrainers(props: CartPageTrainersProps) {
   
 }
 
-  const onFinish = (values:any)=>{
-      
-  }
+
 
   return (
     <div className={styles['container']}>
       <div className={styles['content']}>
       
-     <Form onFinish={onFinish}>
+     <Form >
       <Form.Item 
         
       rules={[
@@ -138,7 +152,7 @@ export function CartPageTrainers(props: CartPageTrainersProps) {
      </Form> 
      <Table 
       columns={columns} 
-      dataSource ={tableData}>
+      dataSource ={data}>
       
      </Table>
     
