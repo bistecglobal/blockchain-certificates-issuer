@@ -61,7 +61,7 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
 }
 
 
-    const certificateWrapper = React.createRef();
+  const certificateWrapper = React.createRef<HTMLDivElement>();
     
    
   return (
@@ -118,7 +118,7 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
         <Button type="primary" icon={<DownloadOutlined />} 
         onClick={(e)=>{
           e.preventDefault();
-        var x = exportComponentAsPNG(certificateWrapper)
+         exportComponentAsPNG(certificateWrapper)
           }}>
             Download
           </Button>

@@ -26,16 +26,13 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
     getData();
   },[])
 
-  const getData =() =>{
-    axios.get('http://localhost:7250/api/TraineeGetAPI?pageSize=10&PageNumber=1')
-    .then((result)=>{
-      setData2(result.data)
-      console.log(data)
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
+  const getData =async() =>{
+   const result = await  axios.get('http://localhost:7250/api/TraineeGetAPI?pageSize=10&PageNumber=1');
+   setData2(result.data)
+    
   }
+
+  
 
   
   const setFirstNameVal = (value:any) =>{
