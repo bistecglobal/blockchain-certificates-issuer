@@ -7,6 +7,7 @@ import Input from 'antd/es/input';
 import axios from 'axios';
 import React,{useState} from 'react';
 import moment from 'moment';
+import trainers from  '../trainers/page'
 /* eslint-disable-next-line */
 export interface CartPageCertificatesProps {}
 
@@ -41,11 +42,11 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
     Course: courseval,
     Trainee: traineeval,
     Trainer : trainerval,
-    Date: date
+    CertificateIssueDateDate: date
    
   };
   console.log("abc",data)
-  const url ='';
+  const url ='http://localhost:7250/api/Certificate';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 

@@ -2,7 +2,6 @@
 import styles from './cart-page-course.module.css';
 import { Avatar, Rate, Space, Table, Typography } from "antd";
 import {Form} from 'antd'
-// import Input from 'antd/es/input';
 import Button from 'antd/es/button';
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
@@ -38,18 +37,58 @@ function setStartDate(startdate, dateString) {
   const setDescriptionVal = (value:any) =>{
     setdescriptionval(value);
 };
+const [tableData,setTableData] =useState([
+  {
+    Title: titleval,
+    Details: description,
+    StartDate: startdate,
+    EndDate : enddate
+  }
+
+])
+const columns=[
+  {
+    key:'1',
+    title:'Title',
+    dataIndex:'Title'
+  },
+  {
+    key:'2',
+    title:'Description',
+    dataIndex:'Details'
+  },
+  {
+    key:'3',
+    title:'StartDate',
+    dataIndex:'StartDate'
+  },
+  {
+    key:'4',
+    title:'EndDate',
+    dataIndex:'EndDate'
+  }
+]
   
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault();
+    const newCourse ={
+      Title: titleval,
+      Details: description,
+      StartDate: startdate,
+      EndDate : enddate
+    }
+    setTableData(pre=>{
+      return[...pre,newCourse]
+    })
   const data ={
-    Course: titleval,
-    Description: description,
+    Title: titleval,
+    Details: description,
     StartDate: startdate,
     EndDate : enddate
    
   };
   console.log("abc",data)
-  const url ='';
+  const url ='http://localhost:7250/api/Course';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 
@@ -106,6 +145,12 @@ function setStartDate(startdate, dateString) {
       <Button htmlType="submit" icon={<PlusOutlined/>} type="primary"   onClick={(e)=>{ handleSave(e) }}> Add Courses</Button>
      </Form.Item>
      </Form>
+
+     <Table 
+     dataSource={tableData}
+     columns={columns}>
+
+     </Table>
     </div>
     </div>
   );
