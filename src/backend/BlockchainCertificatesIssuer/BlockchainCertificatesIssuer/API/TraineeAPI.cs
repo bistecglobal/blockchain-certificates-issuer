@@ -1,5 +1,4 @@
 using System.Net;
-using BlockchainCertificatesIssuer.domain.Models.Course;
 using BlockchainCertificatesIssuer.domain.Models.Trainee;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.Functions.Worker;
