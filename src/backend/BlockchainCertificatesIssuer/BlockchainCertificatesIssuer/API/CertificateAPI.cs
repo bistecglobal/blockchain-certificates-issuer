@@ -32,7 +32,6 @@ namespace BlockchainCertificatesIssuer.API.API
 
             var created = await repository.CreateAsync(certificate);
             await response.WriteAsJsonAsync(created);
-            //SendMailOutLook.MailManager(new SendEmail { FromEmail = "chathura@bistecglobal.com", ToEmail = "nalin@bistecglobal.com", MailBody = "Test mail", Subject = "test subject" });
             response.WriteString("Welcome to Issue Certification Application!");
             return response;
 
