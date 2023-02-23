@@ -18,7 +18,7 @@ namespace BlockchainCertificatesIssuer.API.API
                 smtpClient.Port = 587;
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtpClient.UseDefaultCredentials = false;
-                System.Net.NetworkCredential credential = new System.Net.NetworkCredential(sendEmail.FromEmail, "pacm@230206");
+                System.Net.NetworkCredential credential = new System.Net.NetworkCredential(sendEmail.FromEmail, "123@abc");
                 smtpClient.EnableSsl = true;
                 smtpClient.Credentials = credential;
 
