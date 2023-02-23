@@ -5,9 +5,10 @@ import {Form} from 'antd'
 import Button from 'antd/es/button';
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {DatePicker,DatePickerProps,Alert} from 'antd'
 import { Input } from 'antd';
+import moment from 'moment'
 
 
 /* eslint-disable-next-line */
@@ -35,7 +36,7 @@ function setStartDate(startdate, dateString) {
   const setDescriptionVal = (value:any) =>{
     setdescriptionval(value);
 };
-const [tableData,setTableData] =useState([
+const [data,setData2] =useState([
   {
     Title: titleval,
     Details: description,
@@ -43,7 +44,20 @@ const [tableData,setTableData] =useState([
     EndDate : enddate
   }
 
-])
+]);
+
+useEffect(()=>{
+  getData();
+},[]);
+
+const getData =async() =>{
+ const result = await axios.get('http://localhost:7250/api/CourseGetAPI?pageSize=10&pageNumber=1')
+ setData2(result.data)
+  
+}
+
+
+
 const columns=[
   {
     key:'1',
@@ -75,7 +89,7 @@ const columns=[
       StartDate: startdate,
       EndDate : enddate
     }
-    setTableData(pre=>{
+    setData2(pre=>{
       return[...pre,newCourse]
     })
   const data ={
@@ -86,9 +100,10 @@ const columns=[
    
   };
   console.log("abc",data)
-  const url ='http://localhost:7250/api';
+  const url ='http://localhost:7250/api/Course';
   axios.post(url,data).then((result)=>{
-     alert(result.data);
+    getData();
+     alert(result.status);
 
   }).catch((error)=>{
     alert(error);
@@ -145,7 +160,7 @@ const columns=[
      </Form>
 
      <Table 
-     dataSource={tableData}
+     dataSource={data}
      columns={columns}>
 
      </Table>

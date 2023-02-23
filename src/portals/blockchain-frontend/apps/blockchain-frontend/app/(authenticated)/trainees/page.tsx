@@ -6,7 +6,6 @@ import Button from 'antd/es/button';
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
 import React,{useEffect, useState} from 'react';
-import type { ColumnsType } from 'antd/es/table';
 
 
 export interface CartPageTraineesProps {}
@@ -16,9 +15,6 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
   const [lastval,setlastnameval]= useState("");
   const [emailval,setemailval]= useState("");
 
-  const empdata =[
-
-  ]
 
   const [data , setData2] =useState([{
     FirstName:firstval,
@@ -30,15 +26,13 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
     getData();
   },[])
 
-  const getData =() =>{
-    axios.get('http://localhost:7250/api/Trainee')
-    .then((result)=>{
-      setData2(result.data)
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
+  const getData =async() =>{
+   const result = await  axios.get('http://localhost:7250/api/TraineeGetAPI?pageSize=10&PageNumber=1');
+   setData2(result.data)
+    
   }
+
+  
 
   
   const setFirstNameVal = (value:any) =>{
@@ -51,12 +45,7 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
   const setEmailVal = (value:any) =>{
       setemailval(value);
   };
-//   const [tableData,setTableData] =useState([
-//     {
-      
-//   }
 
-// ])
   const columns =[
     {
       key:'1',
@@ -93,10 +82,11 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
     EmailAddress : emailval,
    
   };
-  // console.log("abc",data)
-  const url ='http://localhost:7250/api';
+  console.log("abc",data)
+  const url ='http://localhost:7250/api/Trainee';
   axios.post(url,data).then((result)=>{
      getData();
+     alert(result.status)
 
   }).catch((error)=>{
     alert(error);
