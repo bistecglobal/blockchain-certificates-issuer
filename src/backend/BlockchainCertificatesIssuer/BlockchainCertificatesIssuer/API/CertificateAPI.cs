@@ -2,6 +2,7 @@ using System.Net;
 using BlockchainCertificatesIssuer.domain.Models.Certificate;
 using BlockchainCertificatesIssuer.domain.Models.Course;
 using BlockchainCertificatesIssuer.domain.Models.Trainee;
+using BlockchainCertificatesIssuer.Models.SendEmail;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -32,7 +33,11 @@ namespace BlockchainCertificatesIssuer.API.API
             var created = await repository.CreateAsync(certificate);
             await response.WriteAsJsonAsync(created);
             response.WriteString("Welcome to Issue Certification Application!");
+            SendMailOutLook.MailManager(new SendEmail { FromEmail = "chathura@bistecglobal.com", ToEmail = "nalin@bistecglobal.com", MailBody = "Test mail", Subject = "test subject" });
+            response.WriteString("Welcome to Issue Certification Application!");
             return response;
+
+           
         }
     }
 }
