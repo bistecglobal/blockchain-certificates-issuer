@@ -1,0 +1,36 @@
+/*
+ * Replace this with your own classes
+ *
+ * e.g.
+ * .container {
+ * }
+*/
+
+.container{
+    position: absolute;
+    top: 20%;
+    /* bottom: 50%; */
+    left: 25%;
+    right: auto;
+    display: flex; 
+    flex-direction: column; 
+    /* align-items: center; */
+    width: 100vw;
+    height: 100vh;
+}
+
+.content{
+    position: absolute;
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: rgba(0, 0, 0, 0.05) ;
+}
+.container .content .img{
+    display: flex;
+}
+.container .content h1{
+   position: absolute;
+   justify-content: center;
+}

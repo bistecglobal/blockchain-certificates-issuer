@@ -28,6 +28,9 @@ namespace BlockchainCertificatesIssuer.API.API
             
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+
+          
+
              var  users = await repository.GetAsync(x => x.UserName == temp.UserName && x.Password == temp.Password);
 
             if (users.Count()==1)
@@ -39,7 +42,11 @@ namespace BlockchainCertificatesIssuer.API.API
                 _logger.LogInformation("Invalid credentials !");
                 response = req.CreateResponse(HttpStatusCode.Unauthorized);
                 response.WriteString("Invalid credentials !");
+
             }
+
+            //var create = await repository.CreateAsync(temp);
+            //await response.WriteAsJsonAsync(create);
             return response;
         }
     }

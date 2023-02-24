@@ -1,0 +1,24 @@
+/*
+ * Replace this with your own classes
+ *
+ * e.g.
+ * .container {
+ * }
+*/
+.container{
+    position: absolute;
+    top: 5%;
+    /* left: 40%; */
+    /* right: auto; */
+    display: flex; 
+    flex-direction: column; 
+   align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.content{
+    position: absolute;
+    width: 500px;
+    
+}
