@@ -1,12 +1,13 @@
 import React from 'react'
-import SideMenu from '../../components/sidemenu/sidemenu';
+import SideMeu from '../components/sideMenu';
 
 
 export default function RootLayout({ children }) {
     return (
         <div>
-            <SideMenu />
-            {children}
+           <SideMeu/>
+           <main>{children}</main> 
+           
         </div>
     );
 }

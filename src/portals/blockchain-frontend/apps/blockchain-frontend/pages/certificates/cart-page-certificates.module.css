@@ -9,15 +9,18 @@
     position: absolute;
     top: 20%;
     display: flex;
-    left: 40%;
+    flex-direction: column;
+    align-items: center;
+    /* left: 40%;
     right: auto;
+    justify-content: center; */
     width: 100vw;
     height: 100vh;
 }
 
 .container .content{
     display: flex;
-    /* position: absolute; */
+    position: absolute;
     width: 300px;
     /* background-color: rgba(0, 0, 0, 0.05) ; */
 }
@@ -26,8 +29,9 @@
     position: absolute;
     height: 100px;
     top:0;
-    left:20%;
+    left:80%;
 }
+
 
 .container .content .Meta .certificateWrapper {
     box-shadow: 0 0 5px #000;

@@ -1,11 +1,10 @@
-"use client";
+
 import styles from './cart-page-trainees.module.css';
-import {Form,Result,Table} from 'antd'
-import Input from 'antd/es/input';
-import Button from 'antd/es/button';
+import {Button, Form,Input,Result,Table} from 'antd';
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
 import React,{useEffect, useState} from 'react';
+import {DeleteOutlined} from '@ant-design/icons'
 
 
 export interface CartPageTraineesProps {}
@@ -22,20 +21,22 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
     EmailAddress:emailval
   }]);
 
+const [totalPages, setTotalPages] =useState(1);
+const [loading, setLoading]=useState(false);
+
   useEffect(()=>{
-    getData();
+    getData(1);
   },[])
 
-  const getData =() =>{
-    axios.get('http://localhost:7250/api/TraineeGetAPI?pageSize=10&PageNumber=1')
-    .then((result)=>{
-      setData2(result.data)
-      console.log(data)
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
+  const getData =async(page:number) =>{
+    setLoading(true)
+   const result = await  axios.get('http://localhost:7250/api/TraineeGetAPI?pageSize=10&PageNumber=1');
+   setData2(result.data)
+   setTotalPages(10);
+   setLoading(false);
   }
+
+  
 
   
   const setFirstNameVal = (value:any) =>{
@@ -64,8 +65,29 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
       key:'3',
       title:'EmailAddress',
       dataIndex:'EmailAddress'
+    },
+    {
+      key:'4',
+      title:'Action',
+      // render:<Button  type="primary" danger
+      // onClick={()=>{handleDelete(firstval)}}
+      // >Delete</Button>
+      render:(record)=>{
+        return<>
+        <DeleteOutlined onClick={()=>{
+          handleDelete(record)
+        }} style ={{color:"red",marginLeft:4}}/>
+        </>
+      }
+
     }
   ]
+  const handleDelete =(firstval)=>{
+    if(window.confirm("Are you sure to delete this trainer")==true){
+      axios.delete(`http://localhost:5024/api/trainer/${firstval}`)
+    }
+  }
+   
   
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault();
@@ -82,13 +104,13 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
   const data ={
     FirstName: firstval,
     LastName: lastval,
-    EmailAddress : emailval,
+    EmailAddress : emailval
    
   };
   console.log("abc",data)
   const url ='http://localhost:7250/api/Trainee';
   axios.post(url,data).then((result)=>{
-     getData();
+  
      alert(result.status)
 
   }).catch((error)=>{
@@ -142,8 +164,14 @@ export function CartPageTrainees(props: CartPageTraineesProps) {
      </Form.Item>
      </Form>
      <Table 
-      columns={columns} 
-      dataSource ={data}>
+      loading={loading} columns={columns} dataSource ={data}
+      pagination={{
+        pageSize:3,
+        total:totalPages,
+        onChange:(page)=>{
+          getData(page=1)
+        }
+       }} >
       
      </Table>
     </div>

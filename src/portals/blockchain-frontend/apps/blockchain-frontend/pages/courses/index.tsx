@@ -1,14 +1,14 @@
-"use client";
+
 import styles from './cart-page-course.module.css';
-import { Avatar, Rate, Space, Table, Typography } from "antd";
+import { Avatar, Button, Rate, Space, Table, Typography } from "antd";
 import {Form} from 'antd'
-import Button from 'antd/es/button';
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
 import React,{useState,useEffect} from 'react';
 import {DatePicker,DatePickerProps,Alert} from 'antd'
 import { Input } from 'antd';
-import moment from 'moment'
+import {DeleteOutlined} from '@ant-design/icons'
+
 
 
 /* eslint-disable-next-line */
@@ -45,16 +45,20 @@ const [data,setData2] =useState([
   }
 
 ]);
+const [totalPages, setTotalPages] =useState(1);
+const [loading, setLoading]=useState(false);
 
 useEffect(()=>{
-  getData();
+  getData(1);
 },[]);
 
-const getData =() =>{
+const getData =(page:number) =>{
+  setLoading(true)
   axios.get('http://localhost:7250/api/CourseGetAPI?pageSize=10&pageNumber=1')
   .then((result)=>{
     setData2(result.data)
-    console.log(data)
+    setTotalPages(10);
+    setLoading(false);
   })
   .catch((error)=>{
     console.log(error)
@@ -83,8 +87,28 @@ const columns=[
     key:'4',
     title:'EndDate',
     dataIndex:'EndDate'
+  },
+  {
+    key:'4',
+    title:'Action',
+    // render:<Button  type="primary" danger
+    // onClick={()=>{handleDelete(firstval)}}
+    // >Delete</Button>
+    render:(record)=>{
+      return<>
+      <DeleteOutlined onClick={()=>{
+        handleDelete(record)
+      }} style ={{color:"red",marginLeft:4}}/>
+      </>
+    }
+
   }
 ]
+const handleDelete =(firstval)=>{
+  if(window.confirm("Are you sure to delete this trainer")==true){
+    axios.delete(`http://localhost:5024/api/trainer/${firstval}`)
+  }
+}
   
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     e.preventDefault();
@@ -104,10 +128,10 @@ const columns=[
     EndDate : enddate
    
   };
-  console.log("abc",data)
+
   const url ='http://localhost:7250/api/Course';
   axios.post(url,data).then((result)=>{
-    getData();
+  
      alert(result.status);
 
   }).catch((error)=>{
@@ -143,12 +167,12 @@ const columns=[
   
   <p>Start date</p>
      <Space>
-     <div ><DatePicker onChange={setStartDate}/></div>
+     <div ><DatePicker onChange={setStartDate} style={{width:500}} /></div>
      </Space>
 
      <p>End Date</p>
      <Space>
-     <div ><DatePicker 
+     <div ><DatePicker style={{width:500}}
       // const value1 = moment(e[0]).format('DD,MM,YYYY')
       onChange={setEndDate}
        />
@@ -165,8 +189,14 @@ const columns=[
      </Form>
 
      <Table 
-     dataSource={data}
-     columns={columns}>
+     loading={loading} columns={columns} dataSource={data}
+     pagination={{
+      pageSize:3,
+      total:totalPages,
+      onChange:(page)=>{
+        getData(page=1)
+      }
+     }} >
 
      </Table>
     </div>

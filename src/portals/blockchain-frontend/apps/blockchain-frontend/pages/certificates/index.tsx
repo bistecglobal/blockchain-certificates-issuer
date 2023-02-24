@@ -1,20 +1,18 @@
-"use client";
+
 import styles from './cart-page-certificates.module.css';
 import {Select,Form,Button} from 'antd'
 import {PlusOutlined} from '@ant-design/icons/lib/icons'
 import {DatePicker} from 'antd'
 import axios from 'axios';
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
-import jsPDF from 'jspdf'
 import { exportComponentAsPNG } from "react-component-export-image";
 
 
-/* eslint-disable-next-line */
+
 export interface CartPageCertificatesProps {}
 
 export function CartPageCertificates(props: CartPageCertificatesProps) {
-  const [size, setSize] = useState('large');
   const selectCourse =['c#',"java","python"]
   const selectTrainee =['chandima','dulanaka','chathura']
   const selectTrainer =['kamal','amal','bimal']
@@ -38,6 +36,36 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
   function setIssueDate (date,dateString){
     setDate(dateString);
   }
+  const [data,setData2] =useState([]);
+  useEffect(()=>{
+    getData();
+  },[]);
+  
+  // const getData =() =>{
+   
+    // axios.get('http://localhost:7250/api/CourseGetAPI?pageSize=10&pageNumber=1')
+    // .then((result)=>{
+    //   // setData2(result.data);
+    //   return fetch(result).then((res)=>res.json()).then((json)=>{
+    //     console.log(json);
+    //     setData2(json)
+    //   })
+        
+      
+      
+      
+  
+    //   })
+    // .catch((error)=>{
+    //   console.log(error)
+    // })
+    const getData = () => {
+      return fetch("http://localhost:7250/api/CourseGetAPI?pageSize=10&pageNumber=1")
+            .then((response) => response.json())
+            .then((data) => setData2(data));
+    }
+  // }
+
   
   
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
@@ -49,8 +77,8 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
     CertificateIssueDateDate: date
    
   };
-  console.log("abc",data)
-  const url ='http://localhost:7250/api';
+
+  const url ='http://localhost:7250/api/Certificate';
   axios.post(url,data).then((result)=>{
      alert(result.data);
 
@@ -61,9 +89,13 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
 }
 
 
-    const certificateWrapper = React.createRef();
+  const certificateWrapper = React.createRef<HTMLDivElement>();
     
    
+  // function exportComponentAsPNG(certificateWrapper: React.RefObject<HTMLDivElement>) {
+  //   throw new Error('Function not implemented.');
+  // }
+
   return (
     <div className={styles['container']}>
       <div className={styles['content']}>
@@ -95,10 +127,10 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
      
         <div><DatePicker onChange={setIssueDate}/></div>
       
-      {/* <p></p> */}
-      {/* <Form.Item>
+      <p></p>
+      <Form.Item>
       <Button htmlType="submit" icon={<PlusOutlined/>} type="primary"   onClick={(e)=>{ handleSave(e) }}>Issue Certificate</Button>
-     </Form.Item> */}
+     </Form.Item>
      {/* <Button type="primary" icon={<DownloadOutlined />} onClick={pdfGenerate}>
             Download
           </Button> */}
@@ -118,7 +150,7 @@ export function CartPageCertificates(props: CartPageCertificatesProps) {
         <Button type="primary" icon={<DownloadOutlined />} 
         onClick={(e)=>{
           e.preventDefault();
-        var x = exportComponentAsPNG(certificateWrapper)
+         exportComponentAsPNG(certificateWrapper)
           }}>
             Download
           </Button>

@@ -403,17 +403,17 @@ summary svg {
   flex-direction: column; 
   width: 100vw;
   height: 100vh;
-} */
+}
 
 .content{
-  /* display: flex;
+  display: flex;
   flex: 1;
   justify-content: flex-start;
   align-items: flex-start;
-  background-color: rgba(0, 0, 0, 0.05) ; */
+  background-color: rgba(0, 0, 0, 0.05) ;
   position: absolute;
   top:50%;
   bottom: 50%;
   left: 30%;
   right: auto;
-}
+} */

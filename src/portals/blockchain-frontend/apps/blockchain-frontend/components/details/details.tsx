@@ -1,11 +1,11 @@
-"use client";
+
 import styles from './details.module.css';
-import  Link  from 'next/link';
-import { Button, Checkbox, Form, Input, Result } from 'antd';
 
 import axios from 'axios';
 
 import React,{useState} from 'react';
+import { useRouter } from 'next/router';
+
 
 
 /* eslint-disable-next-line */
@@ -13,7 +13,9 @@ export interface DetailsProps {}
 
 export function Details(props: DetailsProps) {
   const [emailval,setemailval]= useState("");
-  const [passval,setpassval]= useState("");
+  const [passway,setpassval]= useState("");
+
+  const navigate = useRouter();
 
   const setEmailVal = (value:any) =>{
       setemailval(value);
@@ -21,16 +23,20 @@ export function Details(props: DetailsProps) {
   const setPassVal = (value:any) =>{
     setpassval(value);
 };
-const handleSave =()=>{
+const handleSave =(e)=>{
+  e.preventDefault();
   const data ={
-    Email : emailval,
-    Password : passval
+    UserName : emailval,
+    Password : passway
   };
 
-  const url ='';
+  const url ='http://localhost:7250/api/LoginAPI';
   axios.post(url,data).then((result)=>{
-     alert(result.data);
 
+      navigate.push('/home');
+     
+    
+  
   }).catch((error)=>{
     alert(error);
   });
@@ -57,10 +63,10 @@ const handleSave =()=>{
                             onChange={(e)=>{setEmailVal(e.target.value)}}  id={styles["emil1"]}/>
                         <label htmlFor="pwd1">Password</label>
                             <input placeholder="Enter password" type="password" autoComplete="false"
-                             value={passval} onChange={(e)=>{setPassVal(e.target.value)}}
+                             value={passway} onChange={(e)=>{setPassVal(e.target.value)}}
                            
                              id={styles["pwd1"]}/>
-                            <button type="submit" id={styles["sub_butt"]} onClick={()=> handleSave()}>Login</button>
+                            <button type="submit" id={styles["sub_butt"]} onClick={(e)=> handleSave(e)}>Login</button>
                             {/* <Link className={styles['link']} to='/Register'>Login</Link> */}
                          </form>
 
@@ -118,3 +124,4 @@ const handleSave =()=>{
 export default Details;
 
 {/* <div className={styles['container']}> */}
+

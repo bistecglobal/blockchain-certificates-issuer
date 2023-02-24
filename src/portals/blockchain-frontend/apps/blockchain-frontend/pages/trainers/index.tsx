@@ -1,11 +1,10 @@
-"use client";
+
 import styles from './cart-page-trainers.module.css';
-import {Form,Table} from 'antd'
-import Input from 'antd/es/input';
-import Button from 'antd/es/button';
+import {Button, Form,Table,Input,Modal} from 'antd'
 import {AccountBookFilled, PlusOutlined} from '@ant-design/icons/lib/icons'
 import axios from 'axios';
 import React,{useState,useEffect} from 'react';
+import {DeleteOutlined} from '@ant-design/icons'
 
 
 
@@ -36,16 +35,19 @@ export function CartPageTrainers(props: CartPageTrainersProps) {
   }
 
 ]);
-
+const [totalPages, setTotalPages] =useState(1);
+const [loading, setLoading]=useState(false);
 useEffect(()=>{
-  getData();
+  getData(1);
 },[]);
 
-const getData =() =>{
-  axios.get('http://localhost:7250/api/TrainerGetAPI?pageSize=10&PageNumber=1')
+const getData =(page: number) =>{
+  setLoading(true);
+  axios.get(`http://localhost:7250/api/TrainerGetAPI?pageSize=5&PageNumber=1`)
   .then((result)=>{
-    setData2(result.data)
-    console.log(data)
+    setData2(result.data);
+    setTotalPages(10)
+    setLoading(false)
   })
   .catch((error)=>{
     console.log(error)
@@ -66,8 +68,43 @@ const getData =() =>{
       key:'3',
       title:'EmailAddress',
       dataIndex:'EmailAddress'
+      
+    },
+    {
+      key:'4',
+      title:'Action',
+      // render:<Button  type="primary" danger
+      // onClick={()=>{handleDelete(firstval)}}
+      // >Delete</Button>
+      render:(record)=>{
+        return<>
+        <DeleteOutlined onClick={()=>{
+          handleDelete(record.id)
+        }} style ={{color:"red",marginLeft:4}}/>
+        </>
+      }
+
     }
   ]
+  
+  // const onDeleteStudent=(record: any)=>{
+  //   Modal.confirm({
+  //     title:"Are you sure to delete this trainer record",
+  //      onOk:()=>{
+  //       setData2((pre)=>{ 
+  //         return pre.filter(student=>student.FirstName != record.FirstName);
+     
+  //      });
+  //     }
+  //   })
+      
+  // };
+
+  const handleDelete =(id)=>{
+    if(window.confirm("Are you sure to delete this trainer")==true){
+      axios.delete(`http://localhost:5024/api/trainer/${id}`)
+    }
+  }
    
   
   const handleSave =(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
@@ -92,7 +129,7 @@ const getData =() =>{
   console.log("abc",data)
   const url ='http://localhost:7250/api/Trainer';
   axios.post(url,data).then((result)=>{
-     getData();
+     
      alert(result.status)
 
   }).catch((error)=>{
@@ -150,10 +187,14 @@ const getData =() =>{
      </Form.Item>
      
      </Form> 
-     <Table 
-      columns={columns} 
-      dataSource ={data}>
-      
+     <Table loading={loading} columns={columns} dataSource ={data}
+     pagination={{
+      pageSize:3,
+      total:totalPages,
+      onChange:(page)=>{
+        getData(page=1)
+      }
+     }}>
      </Table>
     
     </div>

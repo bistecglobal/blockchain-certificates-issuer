@@ -13,9 +13,9 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
-  experimental:{
-    appDir: true
-  }
+  // experimental:{
+  //   appDir: true
+  // }
  
 };
 

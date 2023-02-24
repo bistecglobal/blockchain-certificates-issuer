@@ -1,22 +1,15 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import './styles.css';
+import RootLayout from './layout';
 
-function CustomApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <Head>
-        <title>Welcome to blockchain-frontend!</title>
-      </Head>
-      <div className='container'>
-        <div className='content'>
-      <main className="app" >
-        <Component {...pageProps} />
-      </main>
-      </div>
-      </div>
-    </>
-  );
+
+
+export default function CustomApp({ Component, pageProps }) {
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout || ((page) => <RootLayout>{page}</RootLayout>)
+
+  return getLayout(<Component {...pageProps} />)
 }
 
-export default CustomApp;
+

@@ -1,4 +1,4 @@
-"use client";
+
 import styles from './cart-sidemenu.module.css';
 import {
   AppstoreOutlined,
@@ -7,7 +7,6 @@ import {
   SafetyCertificateOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 /* eslint-disable-next-line */
