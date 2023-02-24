@@ -8,8 +8,7 @@ import {DeleteOutlined} from '@ant-design/icons'
 
 
 
-/* eslint-disable
--next-line */
+
 export interface CartPageTrainersProps {}
 
 export function CartPageTrainers(props: CartPageTrainersProps) {
