@@ -61,4 +61,4 @@ export function SideMenu(props: CartSidemenuProps) {
   );
 }
 
-export default SideMenu;
+
