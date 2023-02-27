@@ -53,6 +53,7 @@ jobs:
           app_location: ${{ env.APP_LOCATION }}
           api_location: ${{ env.API_LOCATION }}
           app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
+          is_static_export: true # boolean. Set static export
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
