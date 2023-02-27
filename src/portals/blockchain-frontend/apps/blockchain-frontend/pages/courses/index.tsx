@@ -91,22 +91,23 @@ const columns=[
   {
     key:'4',
     title:'Action',
-    // render:<Button  type="primary" danger
-    // onClick={()=>{handleDelete(firstval)}}
-    // >Delete</Button>
-    render:(record)=>{
+ 
+    render:(data)=>{
       return<>
       <DeleteOutlined onClick={()=>{
-        handleDelete(record)
+        handleDelete(data.Id)
+        setData2((pre)=>{ 
+          return pre.filter(student=>student.Title != data.Title)});
       }} style ={{color:"red",marginLeft:4}}/>
       </>
     }
 
   }
 ]
-const handleDelete =(firstval)=>{
+const handleDelete =(id)=>{
   if(window.confirm("Are you sure to delete this trainer")==true){
-    axios.delete(`http://localhost:5024/api/trainer/${firstval}`)
+    console.log(id);
+    axios.delete(`http://localhost:7250/api/Course/${id}`)
   }
 }
   

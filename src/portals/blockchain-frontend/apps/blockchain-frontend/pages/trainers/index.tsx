@@ -8,11 +8,9 @@ import {DeleteOutlined} from '@ant-design/icons'
 
 
 
-/* eslint-disable
--next-line */
-export interface CartPageTrainersProps {}
 
-export function CartPageTrainers(props: CartPageTrainersProps) {
+
+export function CartPageTrainers() {
   const [firstval,setfirstnameval]= useState("");
   const [lastval,setlastnameval]= useState("");
   const [emailval,setemailval]= useState("");
@@ -43,7 +41,7 @@ useEffect(()=>{
 
 const getData =(page: number) =>{
   setLoading(true);
-  axios.get(`http://localhost:7250/api/TrainerGetAPI?pageSize=5&PageNumber=1`)
+  axios.get('http://localhost:7250/api/TrainerGetAPI?pageSize=5&PageNumber=1')
   .then((result)=>{
     setData2(result.data);
     setTotalPages(10)
@@ -73,36 +71,26 @@ const getData =(page: number) =>{
     {
       key:'4',
       title:'Action',
-      // render:<Button  type="primary" danger
-      // onClick={()=>{handleDelete(firstval)}}
-      // >Delete</Button>
-      render:(record)=>{
+    
+      render:(data)=>{
         return<>
         <DeleteOutlined onClick={()=>{
-          handleDelete(record.id)
+          handleDelete(data.Id)
+          setData2((pre)=>{ 
+                    return pre.filter(student=>student.FirstName != data.FirstName)});
         }} style ={{color:"red",marginLeft:4}}/>
+        
         </>
       }
 
     }
   ]
   
-  // const onDeleteStudent=(record: any)=>{
-  //   Modal.confirm({
-  //     title:"Are you sure to delete this trainer record",
-  //      onOk:()=>{
-  //       setData2((pre)=>{ 
-  //         return pre.filter(student=>student.FirstName != record.FirstName);
-     
-  //      });
-  //     }
-  //   })
-      
-  // };
-
   const handleDelete =(id)=>{
     if(window.confirm("Are you sure to delete this trainer")==true){
-      axios.delete(`http://localhost:5024/api/trainer/${id}`)
+      console.log(id)
+      axios.delete(`http://localhost:7250/api/Trainer/${id}`)
+      
     }
   }
    
