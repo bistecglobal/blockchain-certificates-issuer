@@ -17,6 +17,8 @@ import { useRouter } from "next/navigation";
 
 export function CartPageCertificates() {
 
+  
+
   const [courseval,setselectcourse]= useState("");
   const [traineeval,setselecttrainee]= useState("");
   const [trainerval,setselecttranier]= useState("");
@@ -25,6 +27,7 @@ export function CartPageCertificates() {
   const navigate =useRouter();
 
   const certificateWrapper = React.createRef<HTMLDivElement>();
+
   
   const setSelectCourse = (value) =>{
     setselectcourse(value);
@@ -109,7 +112,6 @@ export function CartPageCertificates() {
   }).catch((error)=>{
     alert(error);
   });
-  
   }
  
 
@@ -175,9 +177,9 @@ export function CartPageCertificates() {
                 top:"120%"         
         
       }} type="primary" icon={<DownloadOutlined />} 
-        onClick={(e)=>{
+        onClick={async (e)=>{
           e.preventDefault();
-         
+          const { exportComponentAsPNG } = await import('react-component-export-image')
          exportComponentAsPNG(certificateWrapper)
           }}>
             Download
