@@ -1,78 +1,70 @@
-name: Deploy to Azure
+# This workflow will build and push a web application to an Azure Static Web App when you change your code.
+#
+# This workflow assumes you have already created the target Azure Static Web App.
+# For instructions see https://docs.microsoft.com/azure/static-web-apps/get-started-portal?tabs=vanilla-javascript
+#
+# To configure this workflow:
+#
+# 1. Set up a secret in your repository named AZURE_STATIC_WEB_APPS_API_TOKEN with the value of your Static Web Apps deployment token.
+#    For instructions on obtaining the deployment token see: https://docs.microsoft.com/azure/static-web-apps/deployment-token-management
+#
+# 3. Change the values for the APP_LOCATION, API_LOCATION and APP_ARTIFACT_LOCATION, AZURE_STATIC_WEB_APPS_API_TOKEN environment variables (below).
+#    For instructions on setting up the appropriate configuration values go to https://docs.microsoft.com/azure/static-web-apps/front-end-frameworks
+name: Deploy web app to Azure Static Web Apps
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    branches: [ "main" ]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches: [ "main" ]
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-  AZURE_WEBAPP_NAME: "academy-certifier"
-  AZURE_FUNCTIONAPP_NAME: "academy-certifier-api"  # set this to your application's name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: "."
-  API_LOCATION: "src/backend/BlockchainCertificatesIssuer/BlockchainCertificatesIssuer"
   APP_LOCATION: "src/portals/blockchain-frontend" # location of your client code
-  APP_ARTIFACT_LOCATION: "src/portals/blockchain-frontend/dist/apps/blockchain-frontend" # location of client code build output
-  DOTNET_VERSION: '7.0.x'
-  NODE_VERSION: '18'
+  API_LOCATION: "src/backend/BlockchainCertificatesIssuer/BlockchainCertificatesIssuer" # location of your api source code - optional
+  APP_ARTIFACT_LOCATION: "dist/apps/blockchain-frontend" # location of client code build output
+  AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }} # secret containing deployment token for your static web app
 
 permissions:
   contents: read
 
 jobs:
   build_and_deploy_job:
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       contents: read # for actions/checkout to fetch code
       pull-requests: write # for Azure/static-web-apps-deploy to comment on PRs
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
-
-      - name: Setup node ${{ env.NODE_VERSION }} Environment
-        uses: actions/setup-node@v3
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }} # secret containing api token for app
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match you app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: ${{ env.APP_LOCATION }}
+          api_location: ${{ env.API_LOCATION }}
+          app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
+          ###### End of Repository/Build Configurations ######
 
-      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-        uses: actions/setup-dotnet@v1
+  close_pull_request_job:
+    permissions:
+      contents: none
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      - name: npm install, build, and test
-        run: |
-          # Build and test the project, then
-          # deploy to Azure Web App.
-          npm install
-          npm run build --if-present
-        working-directory: ${{ env.APP_LOCATION }}
-
-      - name: build function app
-        run: |
-          # Build and test the project, then
-          # deploy to Azure Web App.
-          dotnet build --configuration Release --output ./output
-        working-directory: ${{ env.API_LOCATION }}     
-
-      - name: 'Deploy Backedn to Azure Functions'
-        uses: Azure/functions-action@v1
-        with:
-          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          package: '${{ env.API_LOCATION }}/output'
-          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
-
-      - name: 'Deploy Frontend to Azure WebApp'
-        uses: azure/webapps-deploy@v2
-        id: deploy-to-webapp
-        with: 
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ${{ env.APP_ARTIFACT_LOCATION }}
+          azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }} # secret containing api token for app
+          action: "close"
