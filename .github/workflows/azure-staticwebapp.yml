@@ -21,6 +21,7 @@ on:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
+  NEXT_PUBLIC_BASE_URL: "/"
   APP_LOCATION: "src/portals/blockchain-frontend" # location of your client code
   API_LOCATION: "src/backend/BlockchainCertificatesIssuer/BlockchainCertificatesIssuer" # location of your api source code - optional
   APP_ARTIFACT_LOCATION: "dist/apps/blockchain-frontend" # location of client code build output

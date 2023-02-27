@@ -8,7 +8,7 @@
   "scripts": {
     "start": "nx run blockchain-frontend:serve:development",
     "nx": "nx",
-    "build": "nx run blockchain-frontend:build:production"
+    "build": "nx run blockchain-frontend:export:production"
   },
   "private": true,
   "dependencies": {
