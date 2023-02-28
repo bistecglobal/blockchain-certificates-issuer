@@ -49,7 +49,7 @@ export function CartPageCertificates() {
   
   const getData =() =>{
    
-    axios.get('http://localhost:7250/api/CourseGetAPI?pageSize=10&pageNumber=1')
+    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/CourseGetAPI?pageSize=10&pageNumber=1`)
     .then((result)=>{
       setData2(result.data);
      console.log(result);
@@ -66,7 +66,7 @@ export function CartPageCertificates() {
   
   const getDataTrainee =() =>{
    
-    axios.get('http://localhost:7250/api/TraineeGetAPI?pageSize=10&PageNumber=1')
+    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/TraineeGetAPI?pageSize=10&PageNumber=1`)
     .then((result)=>{
       setDataTrainee(result.data);
      console.log(result);
@@ -83,7 +83,7 @@ export function CartPageCertificates() {
   
   const getDataTrainer =() =>{
    
-    axios.get('http://localhost:7250/api/TrainerGetAPI?pageSize=5&PageNumber=1')
+    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/TrainerGetAPI?pageSize=5&PageNumber=1`)
     .then((result)=>{
       setDataTrainer(result.data);
      console.log(result);
@@ -105,7 +105,7 @@ export function CartPageCertificates() {
    
   };
 
-  const url ='http://localhost:7250/api/Certificate';
+  const url =`${process.env.NEXT_PUBLIC_BASE_URL}api/Certificate`;
   axios.post(url,data).then((result)=>{
      alert(result.data);
 

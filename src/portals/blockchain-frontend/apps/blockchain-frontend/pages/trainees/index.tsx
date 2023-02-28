@@ -7,9 +7,9 @@ import React,{useEffect, useState} from 'react';
 import {DeleteOutlined} from '@ant-design/icons'
 
 
-export interface CartPageTraineesProps {}
 
-export function CartPageTrainees(props: CartPageTraineesProps) {
+
+export function CartPageTrainees() {
   const [firstval,setfirstnameval]= useState("");
   const [lastval,setlastnameval]= useState("");
   const [emailval,setemailval]= useState("");
@@ -30,7 +30,7 @@ const [loading, setLoading]=useState(false);
 
   const getData =async(page:number) =>{
     setLoading(true)
-   const result = await  axios.get('http://localhost:7250/api/TraineeGetAPI?pageSize=10&PageNumber=1');
+   const result = await  axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/TraineeGetAPI?pageSize=10&PageNumber=1`);
    setData2(result.data)
    setTotalPages(10);
    setLoading(false);
@@ -85,7 +85,7 @@ const [loading, setLoading]=useState(false);
   const handleDelete =(id)=>{
     if(window.confirm("Are you sure to delete this trainer")==true){
       console.log(id);
-      axios.delete(`http://localhost:7250/api/Trainee/${id}`)
+      axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}api/Trainee/${id}`)
     }
   }
    
@@ -109,7 +109,7 @@ const [loading, setLoading]=useState(false);
    
   };
   console.log("abc",data)
-  const url ='http://localhost:7250/api/Trainee';
+  const url =`${process.env.NEXT_PUBLIC_BASE_URL}api/Trainee`;
   axios.post(url,data).then((result)=>{
   
      alert(result.status)
