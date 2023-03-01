@@ -130,7 +130,7 @@ const handleDelete =(id)=>{
    
   };
 
-  const url =`${process.env.NEXT_PUBLIC_BASE_URL}/api/Course`;
+  const url =`${process.env.NEXT_PUBLIC_BASE_URL}api/Course`;
   axios.post(url,data).then((result)=>{
   
      alert(result.status);
