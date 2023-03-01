@@ -54,7 +54,7 @@ useEffect(()=>{
 
 const getData =(page:number) =>{
   setLoading(true)
-  axios.get('http://localhost:7250/api/CourseGetAPI?pageSize=10&pageNumber=1')
+  axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/CourseGetAPI?pageSize=10&pageNumber=1`)
   .then((result)=>{
     setData2(result.data)
     setTotalPages(10);
@@ -107,7 +107,7 @@ const columns=[
 const handleDelete =(id)=>{
   if(window.confirm("Are you sure to delete this trainer")==true){
     console.log(id);
-    axios.delete(`http://localhost:7250/api/Course/${id}`)
+    axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}api/Course/${id}`)
   }
 }
   
@@ -130,7 +130,7 @@ const handleDelete =(id)=>{
    
   };
 
-  const url ='http://localhost:7250/api/Course';
+  const url =`${process.env.NEXT_PUBLIC_BASE_URL}api/Course`;
   axios.post(url,data).then((result)=>{
   
      alert(result.status);

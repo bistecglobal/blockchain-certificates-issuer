@@ -41,7 +41,7 @@ useEffect(()=>{
 
 const getData =(page: number) =>{
   setLoading(true);
-  axios.get('http://localhost:7250/api/TrainerGetAPI?pageSize=5&PageNumber=1')
+  axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/TrainerGetAPI?pageSize=5&PageNumber=1`)
   .then((result)=>{
     setData2(result.data);
     setTotalPages(10)
@@ -89,7 +89,7 @@ const getData =(page: number) =>{
   const handleDelete =(id)=>{
     if(window.confirm("Are you sure to delete this trainer")==true){
       console.log(id)
-      axios.delete(`http://localhost:7250/api/Trainer/${id}`)
+      axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}api/Trainer/${id}`)
       
     }
   }
@@ -115,7 +115,7 @@ const getData =(page: number) =>{
    
   };
   console.log("abc",data)
-  const url ='http://localhost:7250/api/Trainer';
+  const url =`${process.env.NEXT_PUBLIC_BASE_URL}/api/Trainer`;
   axios.post(url,data).then((result)=>{
      
      alert(result.status)

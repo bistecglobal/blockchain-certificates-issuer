@@ -2,7 +2,6 @@
 import styles from './details.module.css';
 
 import axios from 'axios';
-
 import React,{useState} from 'react';
 import { useRouter } from 'next/router';
 
@@ -30,7 +29,7 @@ const handleSave =(e)=>{
     Password : passway
   };
 
-  const url ='http://localhost:7250/api/LoginAPI';
+  const url =`${process.env.NEXT_PUBLIC_BASE_URL}api/LoginAPI`;
   axios.post(url,data).then((result)=>{
 
       navigate.push('/home');
