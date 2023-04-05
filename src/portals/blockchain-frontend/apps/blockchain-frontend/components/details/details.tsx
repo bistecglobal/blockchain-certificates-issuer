@@ -27,7 +27,7 @@ export function Details() {
       headers: header,
       body: JSON.stringify(formData),
     };
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/login`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}api/user/login`;
 
     console.log(options);
 
