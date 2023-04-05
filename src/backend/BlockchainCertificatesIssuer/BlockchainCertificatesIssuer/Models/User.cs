@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlockchainCertificatesIssuer.domain.Models.Login
+namespace BlockchainCertificatesIssuer.API.Models
 {
-    public class Login : Item
+    public class User : Item
     {
-        public string UserName { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
     }
 }

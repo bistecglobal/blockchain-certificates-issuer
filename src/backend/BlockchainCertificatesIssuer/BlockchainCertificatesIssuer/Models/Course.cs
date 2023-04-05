@@ -1,7 +1,7 @@
 ﻿using Microsoft.Azure.CosmosRepository;
 
 
-namespace BlockchainCertificatesIssuer.domain.Models.Course
+namespace BlockchainCertificatesIssuer.API.Models
 {
     public class Course : Item
     {
