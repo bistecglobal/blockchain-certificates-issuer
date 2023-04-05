@@ -1,39 +1,45 @@
 import styles from './details.module.css';
-import axios from 'axios';
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 
-/* eslint-disable-next-line */
-export interface DetailsProps {}
+type user = {
+  Id: string;
+  Type: string;
+  Email: string;
+  Password: string;
+};
 
-export function Details(props: DetailsProps) {
-  const [emailval, setemailval] = useState('');
-  const [passway, setpassval] = useState('');
-
+export function Details() {
   const navigate = useRouter();
 
-  const setEmailVal = (value: any) => {
-    setemailval(value);
-  };
-  const setPassVal = (value: any) => {
-    setpassval(value);
-  };
-  const handleSave = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-      UserName: emailval,
-      Password: passway,
+
+    const formData = {
+      Email: e.target.email.value,
+      Password: e.target.password.value,
     };
 
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}api/LoginAPI`;
-    axios
-      .post(url, data)
-      .then((result) => {
-        navigate.push('/home');
-      })
-      .catch((error) => {
-        alert(error);
-      });
+    const header = new Headers();
+    header.append('Content-Type', 'application/json');
+    const options: RequestInit = {
+      method: 'POST',
+      headers: header,
+      body: JSON.stringify(formData),
+    };
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/login`;
+
+    console.log(options);
+
+    try {
+      const response = await fetch(url, options);
+      const data = (await response.json()) as user;
+      if (data) {
+        navigate.push('/dashboard');
+      }
+    } catch (error) {
+      console.error('Oh no, Error occured!', error);
+    }
   };
 
   return (
@@ -45,35 +51,16 @@ export function Details(props: DetailsProps) {
               <img src={'/bg.png'} id={styles['img-id']} alt="" />
             </div>
             <h1 className={styles['sign']}>Sign In</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
               <label htmlFor="emil1">Email</label>
-              <input
-                placeholder="Enter your email..."
-                type="email"
-                value={emailval}
-                onChange={(e) => {
-                  setEmailVal(e.target.value);
-                }}
-                id={styles['emil1']}
-              />
+              <input placeholder="Enter your email" type="email" name="email" />
               <label htmlFor="pwd1">Password</label>
               <input
                 placeholder="Enter password"
                 type="password"
-                autoComplete="false"
-                value={passway}
-                onChange={(e) => {
-                  setPassVal(e.target.value);
-                }}
-                id={styles['pwd1']}
+                name="password"
               />
-              <button
-                type="submit"
-                id={styles['sub_butt']}
-                onClick={(e) => handleSave(e)}
-              >
-                Login
-              </button>
+              <button type="submit">Login</button>
             </form>
           </div>
           <div className={styles['right-side']}>
