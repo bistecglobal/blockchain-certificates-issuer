@@ -19,7 +19,7 @@ namespace BlockchainCertificatesIssuer.API.Functions
         }
 
         [Function("CreateCertificate")]
-        public async Task<HttpResponseData> CreateCertificate([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
+        public async Task<HttpResponseData> CreateCertificate([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route ="certificates")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 

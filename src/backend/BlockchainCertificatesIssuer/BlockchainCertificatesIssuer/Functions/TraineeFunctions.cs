@@ -21,7 +21,7 @@ namespace BlockchainCertificatesIssuer.API.Functions
         }
 
         [Function("CreateTrainee")]
-        public async Task<HttpResponseData> CreateTrainee([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
+        public async Task<HttpResponseData> CreateTrainee([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route ="trainee")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
@@ -37,7 +37,7 @@ namespace BlockchainCertificatesIssuer.API.Functions
 
         [Function("GetTrainees")]
         public async Task<HttpResponseData> GetTrainees(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route ="trainees")] HttpRequestData req)
         {
 
             var queryDictionary = QueryHelpers.ParseQuery(req.Url.Query);
