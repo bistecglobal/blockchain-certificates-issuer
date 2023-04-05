@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlockchainCertificatesIssuer.domain.Models.Certificate
+namespace BlockchainCertificatesIssuer.API.Models
 {
     public class Certificate : Item
     {

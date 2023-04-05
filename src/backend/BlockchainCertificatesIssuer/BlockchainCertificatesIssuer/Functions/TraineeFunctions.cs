@@ -1,27 +1,42 @@
 using System.Net;
-using BlockchainCertificatesIssuer.domain.Models.Trainee;
+using BlockchainCertificatesIssuer.API.Models;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Azure.CosmosRepository.Paging;
 using Microsoft.Azure.CosmosRepository;
+using Microsoft.Azure.CosmosRepository.Paging;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
-namespace BlockchainCertificatesIssuer.API.API
+namespace BlockchainCertificatesIssuer.API.Functions
 {
-    public class TraineeGetAPI
+    public class TraineeFunctions
     {
         private readonly ILogger _logger;
-        private readonly IRepository<Trainee> repository;
+        private readonly IRepository<Trainee> traineeRepository;
 
-        public TraineeGetAPI(ILoggerFactory loggerFactory, IRepository<Trainee> repository)
+        public TraineeFunctions(ILoggerFactory loggerFactory, IRepository<Trainee> repository)
         {
-            _logger = loggerFactory.CreateLogger<TraineeGetAPI>();
-            this.repository = repository;
+            _logger = loggerFactory.CreateLogger<TraineeFunctions>();
+            this.traineeRepository = repository;
         }
 
-        [Function("TraineeGetAPI")]
-        public async Task<HttpResponseData> Run(
+        [Function("CreateTrainee")]
+        public async Task<HttpResponseData> CreateTrainee([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request.");
+
+            var trainee =await System.Text.Json.JsonSerializer.DeserializeAsync<Trainee>(req.Body);
+          
+            var response = req.CreateResponse(HttpStatusCode.OK);
+
+            var created = await traineeRepository.CreateAsync(trainee);
+            await response.WriteAsJsonAsync(created);
+        
+            return response;
+        }
+
+        [Function("GetTrainees")]
+        public async Task<HttpResponseData> GetTrainees(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
         {
 
@@ -46,7 +61,7 @@ namespace BlockchainCertificatesIssuer.API.API
             }
 
             IPage<Trainee> trainees =
-                await repository.PageAsync(pageNumber: page, pageSize: size);
+                await traineeRepository.PageAsync(pageNumber: page, pageSize: size);
             await response.WriteAsJsonAsync(trainees.Items);
             return response;
         }

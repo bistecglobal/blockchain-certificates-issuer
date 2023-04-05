@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlockchainCertificatesIssuer.domain.Models.Trainee
+namespace BlockchainCertificatesIssuer.API.Models
 {
-    public class Trainee : Item
+    public class Trainer : Item
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
