@@ -43,25 +43,25 @@ export function Courses(props: CartPageCourseProps) {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    getData(1);
-  }, []);
+  // useEffect(() => {
+  //   getData(1);
+  // }, []);
 
-  const getData = (page: number) => {
-    setLoading(true);
-    axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}api/CourseGetAPI?pageSize=10&pageNumber=1`
-      )
-      .then((result) => {
-        setData2(result.data);
-        setTotalPages(10);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const getData = (page: number) => {
+  //   setLoading(true);
+  //   axios
+  //     .get(
+  //       `${process.env.NEXT_PUBLIC_BASE_URL}api/CourseGetAPI?pageSize=10&pageNumber=1`
+  //     )
+  //     .then((result) => {
+  //       setData2(result.data);
+  //       setTotalPages(10);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   const columns = [
     {
@@ -130,14 +130,14 @@ export function Courses(props: CartPageCourseProps) {
       EndDate: enddate,
     };
 
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}api/Course`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/Course`;
     axios
       .post(url, data)
       .then((result) => {
-        alert(result.status);
+        console.error(result.status);
       })
       .catch((error) => {
-        alert(error);
+        console.error(error);
       });
   };
 
@@ -214,9 +214,7 @@ export function Courses(props: CartPageCourseProps) {
           pagination={{
             pageSize: 3,
             total: totalPages,
-            onChange: (page) => {
-              getData((page = 1));
-            },
+            onChange: () => {},
           }}
         ></Table>
       </div>
