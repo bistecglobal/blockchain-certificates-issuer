@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
               {
                 label: 'Home',
                 icon: <AppstoreOutlined />,
-                key: '/home',
+                key: '/dashboard',
               },
               {
                 label: 'Courses',

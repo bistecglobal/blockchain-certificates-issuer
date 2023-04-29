@@ -11,13 +11,13 @@ export function CartPageHome(props: CartPageHomeProps) {
         {/* <Layout title="/home"> </Layout> */}
         <h1>Welcome to Home Page</h1>
         <br />
-        <img
+        {/* <img
           className={styles['img']}
           src="dashboard.png"
           alt="dashboard"
           width={1000}
           height={500}
-        />
+        /> */}
       </div>
     </div>
   );

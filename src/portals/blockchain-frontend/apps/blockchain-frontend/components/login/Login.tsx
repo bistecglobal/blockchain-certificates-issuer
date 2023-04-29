@@ -20,6 +20,7 @@ export default function Login() {
       Password: e.target.password.value,
     };
 
+    console.log(formData);
     const header = new Headers();
     header.append('Content-Type', 'application/json');
     const options: RequestInit = {
@@ -27,9 +28,7 @@ export default function Login() {
       headers: header,
       body: JSON.stringify(formData),
     };
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}api/user/login`;
-
-    console.log(options);
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/login`;
 
     try {
       const response = await fetch(url, options);
