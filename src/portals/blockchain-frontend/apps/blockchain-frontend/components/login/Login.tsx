@@ -1,4 +1,4 @@
-import styles from './details.module.css';
+import styles from './Login.module.css';
 import React from 'react';
 import { useRouter } from 'next/router';
 
@@ -9,8 +9,8 @@ type user = {
   Password: string;
 };
 
-export function Details() {
-  const navigate = useRouter();
+export default function Login() {
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ export function Details() {
       const response = await fetch(url, options);
       const data = (await response.json()) as user;
       if (data) {
-        navigate.push('/dashboard');
+        router.push('/dashboard');
       }
     } catch (error) {
       console.error('Oh no, Error occured!', error);
@@ -76,5 +76,3 @@ export function Details() {
     </div>
   );
 }
-
-export default Details;

@@ -1,29 +1,21 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
-.container{
-    display: flex; 
-    flex-direction: column; 
-    width: 100vw;
-    height: 100vh;
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
 }
 
-.SideMenu{
-    display: flex;
-    flex: 1;
-    justify-content: flex-start;
-    align-items: flex-start;
-    background-color: rgba(0, 0, 0, 0.05) ;
-    height: 100%;
+.SideMenu {
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: rgba(0, 0, 0, 0.05);
+  height: 100%;
 }
-.SideMenuVertical{
-    height: 100%;
-    
+.SideMenuVertical {
+  height: 100%;
 }
-.PageContent{
-    padding-left: 12px;
+.PageContent {
+  padding-left: 12px;
 }

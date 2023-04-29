@@ -1,21 +1,12 @@
-import React from 'react'
-import {Details} from '../components/details/details'
-
-
+import React from 'react';
+import Login from '../components/login/Login';
 
 function LoginPage() {
-  return (
-    <Details/>
-    
-  )
+  return <Login />;
 }
 
 LoginPage.getLayout = function getLayout(LoginPage) {
-  return (
-    <div>
-    {LoginPage}
-    </div>
-  )
-}
+  return <div>{LoginPage}</div>;
+};
 
-export default LoginPage
+export default LoginPage;
