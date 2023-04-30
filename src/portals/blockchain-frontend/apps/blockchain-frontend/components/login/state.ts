@@ -3,7 +3,7 @@ import type {
   UserRequest,
   UserResponse,
 } from 'apps/blockchain-frontend/interfaces/viewModels';
-import { fetchLogin } from '../../api/fetchData';
+import { GetUserByEmail } from '../../api/fetchData';
 
 export function useComponentState() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export function useComponentState() {
   };
 
   async function validateUser(formData: UserRequest): Promise<void> {
-    const user: UserResponse = await fetchLogin(formData);
+    const user: UserResponse = await GetUserByEmail(formData);
     if (!user) {
       console.error('User not found');
       return;

@@ -5,7 +5,9 @@ import type {
   CourseResponse,
 } from 'apps/blockchain-frontend/interfaces/viewModels';
 
-export async function fetchLogin(userReq: UserRequest): Promise<UserResponse> {
+export async function GetUserByEmail(
+  userReq: UserRequest
+): Promise<UserResponse> {
   const header = new Headers();
   header.append('Content-Type', 'application/json');
   const options: RequestInit = {
