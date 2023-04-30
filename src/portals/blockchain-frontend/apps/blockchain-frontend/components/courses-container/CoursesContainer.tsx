@@ -5,7 +5,7 @@ import styles from './CoursesContainer.module.css';
 import { useComponentState } from './state';
 
 export default function CoursesContainer() {
-  const { formik, handleDelete } = useComponentState();
+  const { formik, deleteCourse } = useComponentState();
   const {
     handleSubmit,
     handleChange,
@@ -47,7 +47,7 @@ export default function CoursesContainer() {
           <>
             <DeleteOutlined
               onClick={() => {
-                handleDelete(data.Id);
+                deleteCourse(data.Id);
               }}
               style={{ color: 'red', marginLeft: 4 }}
             />

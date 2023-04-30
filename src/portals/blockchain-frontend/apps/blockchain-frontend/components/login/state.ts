@@ -1,5 +1,8 @@
 import { useRouter } from 'next/router';
-import type { User, LoginFormData } from '../../interfaces/types';
+import type {
+  UserRequest,
+  UserResponse,
+} from 'apps/blockchain-frontend/interfaces/viewModels';
 import { fetchLogin } from '../../api/fetchData';
 
 export function useComponentState() {
@@ -7,15 +10,15 @@ export function useComponentState() {
 
   const handleLoginFormSubmit = async (e) => {
     e.preventDefault();
-    const formData: LoginFormData = {
+    const raw: UserRequest = {
       Email: e.target.email.value,
       Password: e.target.password.value,
     };
-    validateUser(formData);
+    validateUser(raw);
   };
 
-  async function validateUser(formData: LoginFormData): Promise<void> {
-    const user: User = await fetchLogin(formData);
+  async function validateUser(formData: UserRequest): Promise<void> {
+    const user: UserResponse = await fetchLogin(formData);
     if (!user) {
       console.error('User not found');
       return;

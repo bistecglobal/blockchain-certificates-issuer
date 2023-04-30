@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.Json;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -24,14 +25,24 @@ namespace BlockchainCertificatesIssuer.API.Functions
         [Function("CreateCourse")]
         public async Task<HttpResponseData> CreateCourse([HttpTrigger(AuthorizationLevel.Anonymous,"post", Route ="course")] HttpRequestData req)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            _logger.LogInformation("Create a course.");
 
-            var course = await System.Text.Json.JsonSerializer.DeserializeAsync<Course>(req.Body);
-            
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            var created = await courseRepository.CreateAsync(new Course { Title = course.Title, Details = course.Details, StartDate = course.StartDate, EndDate = course.EndDate });
-            await response.WriteAsJsonAsync(created);
-            return response;
+            try
+            {
+                var course = await JsonSerializer.DeserializeAsync<Course>(req.Body);
+                if (course == null) return req.CreateResponse(HttpStatusCode.BadRequest);
+
+                var created = await courseRepository.CreateAsync(course);
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                await response.WriteAsJsonAsync(created);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return req.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+
         }
 
         [Function("GetCourses")]

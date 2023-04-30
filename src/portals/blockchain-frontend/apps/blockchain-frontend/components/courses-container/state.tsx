@@ -1,8 +1,25 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import type { Course } from 'apps/blockchain-frontend/interfaces/models';
+import { CourseRequest } from 'apps/blockchain-frontend/interfaces/viewModels';
+import { createCourse } from 'apps/blockchain-frontend/api/fetchData';
 
 export function useComponentState() {
+  const deleteCourse = (id) => {
+    throw new Error('Not implemented');
+  };
+
+  const createNewCourse = async (values) => {
+    var course: CourseRequest = {
+      Title: values.title,
+      Description: values.description,
+      StartDate: values.startDate,
+      EndDate: values.endDate,
+    };
+    const courseRes = await createCourse(course);
+  };
+
   const validate = (values) => {
     const errors: {
       title?: string;
@@ -42,18 +59,8 @@ export function useComponentState() {
       description: '',
     },
     validate,
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
-    },
+    onSubmit: createNewCourse,
   });
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3000/api/courses/${id}`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return { formik, handleDelete };
+  return { formik, deleteCourse };
 }
