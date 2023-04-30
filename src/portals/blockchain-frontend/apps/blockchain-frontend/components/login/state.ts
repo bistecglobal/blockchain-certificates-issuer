@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import type { User, LoginFormData } from '../../interfaces/types';
 import { fetchLogin } from '../../api/fetchData';
 
-export function useLoginState() {
+export function useComponentState() {
   const router = useRouter();
 
   const handleLoginFormSubmit = async (e) => {

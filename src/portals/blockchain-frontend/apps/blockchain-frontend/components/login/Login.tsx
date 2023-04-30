@@ -1,9 +1,9 @@
 import styles from './Login.module.css';
 import React from 'react';
-import { useLoginState } from './loginState';
+import { useComponentState } from './state';
 
 export default function Login() {
-  const { handleLoginFormSubmit } = useLoginState();
+  const { handleLoginFormSubmit } = useComponentState();
 
   return (
     <div className={styles['container']}>
