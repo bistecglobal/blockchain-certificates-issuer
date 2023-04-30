@@ -1,13 +1,23 @@
-import styles from './CoursesContainer.module.css';
-import { Button, Space, Table, DatePicker, Form, Input } from 'antd';
+import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { DeleteOutlined } from '@ant-design/icons';
+import styles from './CoursesContainer.module.css';
 import { useComponentState } from './state';
 
 export default function CoursesContainer() {
-  const { handleSubmit, handleDelete } = useComponentState();
-  const { TextArea } = Input;
+  const { formik, handleDelete } = useComponentState();
+  const {
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    handleBlur,
+    isSubmitting,
+    values,
+    errors,
+  } = formik;
 
+  const { TextArea } = Input;
+  const { Title } = Typography;
   const columns = [
     {
       key: '1',
@@ -50,68 +60,85 @@ export default function CoursesContainer() {
   return (
     <div className={styles['container']}>
       <div className={styles['content']}>
-        <Form>
-          <p>Course</p>
-          <Form.Item
-            rules={[
-              {
-                required: true,
-                message: 'Title is required',
-              },
-            ]}
-          >
-            <Input
-              placeholder="My Awsome Course"
-              value={''}
-              onChange={() => {}}
-            />
-          </Form.Item>
+        <div id="course-add-form">
+          <Title level={3}>Add Course</Title>
+          <Form onFinish={handleSubmit}>
+            <Form.Item>
+              <label htmlFor="title">Course</label>
+              <Input
+                name="title"
+                type="text"
+                placeholder="My Awesome Course"
+                onChange={handleChange}
+                value={values.title}
+              />
+              <sub style={{ color: 'red' }}>
+                {errors.title ? `${errors.title}` : null}
+              </sub>
+            </Form.Item>
 
-          <p>Start date</p>
-          <Space>
-            <div>
-              <DatePicker onChange={() => {}} style={{ width: 500 }} />
-            </div>
-          </Space>
+            <Form.Item>
+              <label htmlFor="startDate">Start Date</label>
+              <DatePicker
+                name="startDate"
+                value={values.startDate}
+                onChange={(date) => setFieldValue('startDate', date)}
+                onBlur={handleBlur}
+                disabled={isSubmitting}
+                style={{ width: 500 }}
+              />
+              <sub style={{ color: 'red' }}>
+                {errors.startDate ? `${errors.startDate}` : null}
+              </sub>
+            </Form.Item>
 
-          <p>End Date</p>
-          <Space>
-            <div>
-              <DatePicker style={{ width: 500 }} onChange={() => {}} />
-            </div>
-          </Space>
-          <p>Description</p>
-          <TextArea
-            rows={4}
-            title="Description"
-            name="Description"
-            value={''}
-            onChange={() => {}}
-          />
-          <br />
-          <br />
-          <Form.Item>
-            <Button
-              htmlType="submit"
-              icon={<PlusOutlined />}
-              type="primary"
-              onClick={() => {}}
-            >
-              Add Courses
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item>
+              <label htmlFor="endDate">End Date</label>
+              <DatePicker
+                name="endDate"
+                value={values.endDate}
+                onChange={(date) => setFieldValue('endDate', date)}
+                onBlur={handleBlur}
+                disabled={isSubmitting}
+                style={{ width: 500 }}
+              />
+              <sub style={{ color: 'red' }}>
+                {errors.endDate ? `${errors.endDate}` : null}
+              </sub>
+            </Form.Item>
 
-        <Table
-          loading={false}
-          columns={columns}
-          dataSource={[]}
-          pagination={{
-            pageSize: 3,
-            total: 1,
-            onChange: () => {},
-          }}
-        ></Table>
+            <Form.Item>
+              <label htmlFor="description">Description</label>
+              <TextArea
+                name="description"
+                rows={4}
+                value={values.description}
+                onChange={handleChange}
+              />
+              <sub style={{ color: 'red' }}>
+                {errors.description ? `${errors.description}` : null}
+              </sub>
+            </Form.Item>
+
+            <Form.Item>
+              <Button htmlType="submit" icon={<PlusOutlined />} type="primary">
+                Add Courses
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+        <div id="course-grid">
+          <Table
+            loading={false}
+            columns={columns}
+            dataSource={[]}
+            pagination={{
+              pageSize: 3,
+              total: 1,
+              onChange: () => {},
+            }}
+          ></Table>
+        </div>
       </div>
     </div>
   );
