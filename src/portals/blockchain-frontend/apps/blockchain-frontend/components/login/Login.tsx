@@ -1,46 +1,9 @@
-import styles from './details.module.css';
+import styles from './Login.module.css';
 import React from 'react';
-import { useRouter } from 'next/router';
+import { useComponentState } from './state';
 
-type user = {
-  Id: string;
-  Type: string;
-  Email: string;
-  Password: string;
-};
-
-export function Details() {
-  const navigate = useRouter();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = {
-      Email: e.target.email.value,
-      Password: e.target.password.value,
-    };
-
-    const header = new Headers();
-    header.append('Content-Type', 'application/json');
-    const options: RequestInit = {
-      method: 'POST',
-      headers: header,
-      body: JSON.stringify(formData),
-    };
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}api/user/login`;
-
-    console.log(options);
-
-    try {
-      const response = await fetch(url, options);
-      const data = (await response.json()) as user;
-      if (data) {
-        navigate.push('/dashboard');
-      }
-    } catch (error) {
-      console.error('Oh no, Error occured!', error);
-    }
-  };
+export default function Login() {
+  const { handleLoginFormSubmit } = useComponentState();
 
   return (
     <div className={styles['container']}>
@@ -51,7 +14,7 @@ export function Details() {
               <img src={'/bg.png'} id={styles['img-id']} alt="" />
             </div>
             <h1 className={styles['sign']}>Sign In</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleLoginFormSubmit}>
               <label htmlFor="emil1">Email</label>
               <input placeholder="Enter your email" type="email" name="email" />
               <label htmlFor="pwd1">Password</label>
@@ -76,5 +39,3 @@ export function Details() {
     </div>
   );
 }
-
-export default Details;
