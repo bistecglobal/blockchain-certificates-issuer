@@ -56,8 +56,6 @@ namespace BlockchainCertificatesIssuer.API.Functions
 
                 var pageNumber = queryDictionary["pageNumber"];
                 var pageSize = queryDictionary["pageSize"];
-                //var pageNumber = "1";
-                //var pageSize = "2";
                 var response = req.CreateResponse(HttpStatusCode.OK);
 
                 if (string.IsNullOrWhiteSpace(pageNumber) || !int.TryParse(pageNumber, out var page) || page <= 0)

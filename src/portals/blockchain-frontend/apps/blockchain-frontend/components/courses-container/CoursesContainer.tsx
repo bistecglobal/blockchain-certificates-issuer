@@ -64,7 +64,7 @@ export default function CoursesContainer() {
   }, []);
 
   const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
-    fetchCourses(pageNumber, pageSize ?? 10);
+    fetchCourses(pageNumber, pageSize ?? Pagination.pageSize);
   };
   return (
     <div className={styles['container']}>
