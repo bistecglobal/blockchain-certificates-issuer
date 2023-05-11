@@ -50,30 +50,50 @@ namespace BlockchainCertificatesIssuer.API.Functions
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "courses")] HttpRequestData req)
         {
 
-            var queryDictionary = QueryHelpers.ParseQuery(req.Url.Query);
-
-            var pageNumber = queryDictionary["pageNumber"];
-            var pageSize = queryDictionary["pageSize"];
-            var response = req.CreateResponse(HttpStatusCode.OK);
-
-            if (string.IsNullOrWhiteSpace(pageNumber) || !int.TryParse(pageNumber, out var page) || page <= 0)
+            try
             {
-                _logger.LogWarning("No pageNumber provided.");
-                response = req.CreateResponse(HttpStatusCode.BadRequest);
-                return response; ;
-            }
+                var queryDictionary = QueryHelpers.ParseQuery(req.Url.Query);
 
-            if (string.IsNullOrWhiteSpace(pageSize) || !int.TryParse(pageSize, out var size) || size <= 0)
+                var pageNumber = queryDictionary["pageNumber"];
+                var pageSize = queryDictionary["pageSize"];
+                //var pageNumber = "1";
+                //var pageSize = "2";
+                var response = req.CreateResponse(HttpStatusCode.OK);
+
+                if (string.IsNullOrWhiteSpace(pageNumber) || !int.TryParse(pageNumber, out var page) || page <= 0)
+                {
+                    _logger.LogWarning("No pageNumber provided.");
+                    response = req.CreateResponse(HttpStatusCode.BadRequest);
+                    return response; ;
+                }
+
+                if (string.IsNullOrWhiteSpace(pageSize) || !int.TryParse(pageSize, out var size) || size <= 0)
+                {
+                    _logger.LogWarning("No pageSize provided.");
+                    response = req.CreateResponse(HttpStatusCode.BadRequest);
+                    return response;
+                }
+                IPage<Course> courses =
+                    await courseRepository.PageAsync(pageNumber: page, pageSize: size);
+
+                if (courses == null || !courses.Items.Any())
+                {
+                    _logger.LogWarning("No data.");
+                    response = req.CreateResponse(HttpStatusCode.NotFound);
+                    await response.WriteAsJsonAsync("No data");
+                    return response;
+                }
+                else
+                {
+                    await response.WriteAsJsonAsync(courses.Items);
+                    return response;
+                }
+            }
+            catch (Exception ex)
             {
-                _logger.LogWarning("No pageSize provided.");
-                response = req.CreateResponse(HttpStatusCode.BadRequest);
-                return response;
+                _logger.LogError(ex.Message);
+                return req.CreateResponse(HttpStatusCode.InternalServerError);
             }
-
-            IPage<Course> trainers =
-                await courseRepository.PageAsync(pageNumber: page, pageSize: size);
-            await response.WriteAsJsonAsync(trainers.Items);
-            return response;
         }
     }
 }

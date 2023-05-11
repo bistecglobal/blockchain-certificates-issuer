@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import type { Course } from 'apps/blockchain-frontend/interfaces/models';
-import { CourseRequest } from 'apps/blockchain-frontend/interfaces/viewModels';
-import { createCourse } from 'apps/blockchain-frontend/api/fetchData';
+import { CourseRequest, CourseResponse } from 'apps/blockchain-frontend/interfaces/viewModels';
+import { createCourse, getCourse } from 'apps/blockchain-frontend/api/fetchData';
 
 export function useComponentState() {
   const deleteCourse = (id) => {
@@ -11,7 +11,7 @@ export function useComponentState() {
   };
 
   const createNewCourse = async (values) => {
-    var course: CourseRequest = {
+    let course: CourseRequest = {
       Title: values.title,
       Description: values.description,
       StartDate: values.startDate,
@@ -63,4 +63,28 @@ export function useComponentState() {
   });
 
   return { formik, deleteCourse };
+}
+
+export function useCoursesState() {
+  const [dataSource, setDataSource] = useState([]);
+
+  const fetchCourses = async (pageNumber: number, pageSize: number) => {
+    debugger
+    let  courseRes:CourseResponse[] =[await getCourse(pageNumber,pageSize)];
+      if (Array.isArray(courseRes)) {
+        courseRes = courseRes.flat();
+      }
+      const formattedData = courseRes.map((item) => {
+        const formattedStartDate = new Date(item.StartDate).toLocaleDateString();
+        const formattedEndDate = new Date(item.EndDate).toLocaleDateString();
+        return { ...item, StartDate: formattedStartDate, EndDate: formattedEndDate };
+      });
+      setDataSource(formattedData);
+    };
+    
+
+  return {
+    dataSource,
+    fetchCourses
+  };
 }

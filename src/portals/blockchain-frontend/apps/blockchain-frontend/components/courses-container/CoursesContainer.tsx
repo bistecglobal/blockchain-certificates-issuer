@@ -2,8 +2,9 @@ import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { DeleteOutlined } from '@ant-design/icons';
 import styles from './CoursesContainer.module.css';
-import { useComponentState } from './state';
-
+import { useComponentState, useCoursesState } from './state';
+import { useEffect } from 'react';
+import { Pagination } from '../../interfaces/enums'
 export default function CoursesContainer() {
   const { formik, deleteCourse } = useComponentState();
   const {
@@ -57,6 +58,14 @@ export default function CoursesContainer() {
     },
   ];
 
+  const { dataSource, fetchCourses } = useCoursesState();
+  useEffect(() => {
+    fetchCourses(Pagination.pageNumber, Pagination.pageSize);
+  }, []);
+
+  const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
+    fetchCourses(pageNumber, pageSize ?? 10);
+  };
   return (
     <div className={styles['container']}>
       <div className={styles['content']}>
@@ -131,11 +140,11 @@ export default function CoursesContainer() {
           <Table
             loading={false}
             columns={columns}
-            dataSource={[]}
+            dataSource={dataSource}
             pagination={{
-              pageSize: 3,
-              total: 1,
-              onChange: () => {},
+              pageSize: Pagination.pageSize,
+              total: Pagination.pageNumber,
+              onChange: handlePaginationChange,
             }}
           ></Table>
         </div>
