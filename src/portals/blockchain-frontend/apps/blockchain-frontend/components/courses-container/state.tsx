@@ -69,7 +69,6 @@ export function useCoursesState() {
   const [dataSource, setDataSource] = useState([]);
 
   const fetchCourses = async (pageNumber: number, pageSize: number) => {
-    debugger
     let  courseRes:CourseResponse[] =[await getCourse(pageNumber,pageSize)];
       if (Array.isArray(courseRes)) {
         courseRes = courseRes.flat();
