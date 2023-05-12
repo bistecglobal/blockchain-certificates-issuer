@@ -6,6 +6,7 @@ import { CourseRequest, CourseResponse } from 'apps/blockchain-frontend/interfac
 import { createCourse, getCourse } from 'apps/blockchain-frontend/api/fetchData';
 
 export function useComponentState() {
+  const [dataSource, setDataSource] = useState([]);
   const deleteCourse = (id) => {
     throw new Error('Not implemented');
   };
@@ -62,28 +63,19 @@ export function useComponentState() {
     onSubmit: createNewCourse,
   });
 
-  return { formik, deleteCourse };
-}
-
-export function useCoursesState() {
-  const [dataSource, setDataSource] = useState([]);
-
   const fetchCourses = async (pageNumber: number, pageSize: number) => {
-    let  courseRes:CourseResponse[] =[await getCourse(pageNumber,pageSize)];
-      if (Array.isArray(courseRes)) {
-        courseRes = courseRes.flat();
-      }
-      const formattedData = courseRes.map((item) => {
-        const formattedStartDate = new Date(item.StartDate).toLocaleDateString();
-        const formattedEndDate = new Date(item.EndDate).toLocaleDateString();
-        return { ...item, StartDate: formattedStartDate, EndDate: formattedEndDate };
-      });
-      setDataSource(formattedData);
-    };
-    
-
-  return {
-    dataSource,
-    fetchCourses
+    let courseRes: CourseResponse[] = [await getCourse(pageNumber, pageSize)];
+    if (Array.isArray(courseRes)) {
+      courseRes = courseRes.flat();
+    }
+    const formattedData = courseRes.map((item) => {
+      const formattedStartDate = new Date(item.StartDate).toLocaleDateString();
+      const formattedEndDate = new Date(item.EndDate).toLocaleDateString();
+      return { ...item, StartDate: formattedStartDate, EndDate: formattedEndDate };
+    });
+    setDataSource(formattedData);
   };
+
+
+  return { formik, deleteCourse, dataSource, fetchCourses };
 }

@@ -2,11 +2,11 @@ import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { DeleteOutlined } from '@ant-design/icons';
 import styles from './CoursesContainer.module.css';
-import { useComponentState, useCoursesState } from './state';
+import { useComponentState } from './state';
 import { useEffect } from 'react';
 import { Pagination } from '../../interfaces/enums'
 export default function CoursesContainer() {
-  const { formik, deleteCourse } = useComponentState();
+  const { formik, deleteCourse,dataSource,fetchCourses } = useComponentState();
   const {
     handleSubmit,
     handleChange,
@@ -57,8 +57,7 @@ export default function CoursesContainer() {
       },
     },
   ];
-
-  const { dataSource, fetchCourses } = useCoursesState();
+  
   useEffect(() => {
     fetchCourses(Pagination.pageNumber, Pagination.pageSize);
   }, []);

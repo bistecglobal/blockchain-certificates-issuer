@@ -91,6 +91,7 @@ export async function getCourse(pageNumber: number, pageSize: number
         console.error('Unspecified error occured!');
         return null;
       }
+      
       return (await response.json()) as CourseResponse;
     } catch (error) {
       console.error('Oh no, Error occured in getCourse()!', error);
