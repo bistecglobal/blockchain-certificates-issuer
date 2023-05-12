@@ -1,12 +1,12 @@
 import React from 'react';
 import Login from '../components/login/Login';
-
-function LoginPage() {
-  return <Login />;
+import Auth from '../components/auth/Auth';
+function AuthPage() {
+  return <Auth />;
 }
 
-LoginPage.getLayout = function getLayout(LoginPage) {
-  return <div>{LoginPage}</div>;
+AuthPage.getLayout = function getLayout(AuthPage) {
+  return <div>{AuthPage}</div>;
 };
 
-export default LoginPage;
+export default AuthPage;

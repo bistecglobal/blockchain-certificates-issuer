@@ -4,12 +4,12 @@ import type {
   UserRequest,
   UserResponse,
 } from 'apps/blockchain-frontend/interfaces/viewModels';
-import { GetUserByEmail } from '../../api/fetchData';
+import { CreateUserByEmail } from '../../api/fetchData';
 
 export function useComponentState() {
   const router = useRouter();
 
-  const handleLoginFormSubmit = async (e) => {
+  const handleSignupFormSubmit = async (e) => {
     e.preventDefault();
     const raw: UserRequest = {
       Email: e.target.email.value,
@@ -19,7 +19,7 @@ export function useComponentState() {
   };
 
   async function validateUser(formData: UserRequest): Promise<void> {
-    const user: UserResponse = await GetUserByEmail(formData);
+    const user: UserResponse = await CreateUserByEmail(formData);
     if (!user) {
       console.error('User not found');
       return;
@@ -27,5 +27,5 @@ export function useComponentState() {
     await router.push('/dashboard');
   }
 
-  return { handleLoginFormSubmit };
+  return { handleSignupFormSubmit };
 }
