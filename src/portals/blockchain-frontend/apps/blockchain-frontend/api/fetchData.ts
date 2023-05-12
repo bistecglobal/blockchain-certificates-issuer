@@ -3,6 +3,8 @@ import type {
   UserResponse,
   CourseRequest,
   CourseResponse,
+  TrainerRequest,
+  TrainerResponse,
 } from 'apps/blockchain-frontend/interfaces/viewModels';
 
 export async function GetUserByEmail(
@@ -98,3 +100,65 @@ export async function getCourse(pageNumber: number, pageSize: number
       return null;
     }
   }
+
+  export async function createTrainer(
+    trainerReq: TrainerRequest
+  ): Promise<TrainerResponse> {
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+  
+    var requestOptions: RequestInit = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(trainerReq),
+      redirect: 'follow',
+    };
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/trainer`,
+        requestOptions
+      );
+      if (response.status === 500) {
+        console.error('Internal Server Error');
+        return null;
+      }
+      if (!response.ok) {
+        console.error('Unspecified error occured!');
+        return null;
+      }
+      return (await response.json()) as TrainerResponse;
+    } catch (error) {
+      console.error('Oh no, Error occured in createTrainer()!', error);
+    }
+  }
+
+  export async function getTrainers(pageNumber: number, pageSize: number
+    ): Promise<TrainerResponse> {
+      debugger
+      let myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+    
+      let  requestOptions: RequestInit = {
+        method: 'Get',
+        headers: myHeaders,   
+      };
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/trainers?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+          requestOptions
+        );
+        if (response.status === 500) {
+          console.error('Internal Server Error');
+          return null;
+        }
+        if (!response.ok) {
+          console.error('Unspecified error occured!');
+          return null;
+        }
+        
+        return (await response.json()) as TrainerResponse;
+      } catch (error) {
+        console.error('Oh no, Error occured in getCourse()!', error);
+        return null;
+      }
+    }

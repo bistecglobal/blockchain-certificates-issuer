@@ -9,3 +9,9 @@ export interface Course {
   StartDate: Date;
   EndDate: Date;
 }
+
+export interface Trainer {
+  FirstName : string;
+  LastName : string;
+  EmailAddress : string;
+}
