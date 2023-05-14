@@ -4,7 +4,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import styles from './CoursesContainer.module.css';
 import { useComponentState, useFetchCourseEffect } from './state';
 import { useEffect } from 'react';
-import { Pagination } from '../../interfaces/enums'
+import { DefaultPagination } from '../../interfaces/enums'
 export default function CoursesContainer() {
   const { formik, deleteCourse,dataSource,fetchCourses } = useComponentState();
   const {
@@ -59,7 +59,7 @@ export default function CoursesContainer() {
   ];
   useFetchCourseEffect(fetchCourses)
   const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
-    fetchCourses(pageNumber, pageSize ?? Pagination.pageSize);
+    fetchCourses(pageNumber, pageSize ?? DefaultPagination.pageSize);
   };
   return (
     <div className={styles['container']}>
@@ -137,8 +137,8 @@ export default function CoursesContainer() {
             columns={columns}
             dataSource={dataSource}
             pagination={{
-              pageSize: Pagination.pageSize,
-              total: Pagination.pageNumber,
+              pageSize: DefaultPagination.pageSize,
+              total: DefaultPagination.pageNumber,
               onChange: handlePaginationChange,
             }}
           ></Table>

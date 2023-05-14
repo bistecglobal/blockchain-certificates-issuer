@@ -4,7 +4,7 @@ import axios from 'axios';
 import type { Course } from 'apps/blockchain-frontend/interfaces/models';
 import { CourseRequest, CourseResponse } from 'apps/blockchain-frontend/interfaces/viewModels';
 import { createCourse, getCourse } from 'apps/blockchain-frontend/api/fetchData';
-import { Pagination } from 'apps/blockchain-frontend/interfaces/enums';
+import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 
 export function useComponentState() {
   const [dataSource, setDataSource] = useState([]);
@@ -82,6 +82,6 @@ export function useComponentState() {
 }
 export const useFetchCourseEffect = (fetchCourses) => {
   useEffect(() => {
-    fetchCourses(Pagination.pageNumber, Pagination.pageSize);
+    fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
   }, []);
 }
