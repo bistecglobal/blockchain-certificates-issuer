@@ -2,7 +2,7 @@ import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { DeleteOutlined } from '@ant-design/icons';
 import styles from './CoursesContainer.module.css';
-import { useComponentState } from './state';
+import { useComponentState, useFetchCourseEffect } from './state';
 import { useEffect } from 'react';
 import { Pagination } from '../../interfaces/enums'
 export default function CoursesContainer() {
@@ -57,11 +57,7 @@ export default function CoursesContainer() {
       },
     },
   ];
-  
-  useEffect(() => {
-    fetchCourses(Pagination.pageNumber, Pagination.pageSize);
-  }, []);
-
+  useFetchCourseEffect(fetchCourses)
   const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
     fetchCourses(pageNumber, pageSize ?? Pagination.pageSize);
   };
