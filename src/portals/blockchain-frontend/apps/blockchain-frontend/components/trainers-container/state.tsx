@@ -1,7 +1,8 @@
 import { createTrainer, getTrainers } from "apps/blockchain-frontend/api/fetchData";
 import { TrainerRequest, TrainerResponse } from "apps/blockchain-frontend/interfaces/viewModels";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from 'formik';
+import { Pagination } from "apps/blockchain-frontend/interfaces/enums";
 
 export function useComponentState() {
     const [dataSource, setDataSource] = useState([]);
@@ -53,10 +54,12 @@ export function useComponentState() {
     });
   
     const fetchTrainers = async (pageNumber: number, pageSize: number) => {
-        debugger
-      let trainerRes: TrainerResponse[] = [await getTrainers(pageNumber, pageSize)];
+      let trainerRes: TrainerResponse[]= [await getTrainers(pageNumber, pageSize)];
+      if (Array.isArray(trainerRes)) {
+        trainerRes = trainerRes.flat();
+      }
       const formattedData = trainerRes.map((item) => {
-        return { ...item};
+        return { ...item,key : item.Id};
       });
       setDataSource(formattedData);
  
@@ -64,4 +67,9 @@ export function useComponentState() {
   
   
     return { formik, deleteTrainer, dataSource, fetchTrainers };
+  }
+  export const useFetchTrainersEffect = (fetchTrainers) => {
+    useEffect(() => {
+      fetchTrainers(Pagination.pageNumber, Pagination.pageSize);
+    }, [fetchTrainers]);
   }

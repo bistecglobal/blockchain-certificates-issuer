@@ -1,6 +1,6 @@
 import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
 import styles from './TrainersContainer.module.css';
-import { useComponentState } from './state';
+import { useComponentState, useFetchTrainersEffect } from './state';
 import { DeleteOutlined } from '@ant-design/icons';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { Pagination } from 'apps/blockchain-frontend/interfaces/enums';
@@ -17,18 +17,18 @@ export default function TrainersContainer() {
     const columns = [
         {
             key: '1',
-            title: 'FirstName',
+            title: 'First Name',
             dataIndex: 'FirstName',
         },
         {
             key: '2',
-            title: 'LastName',
+            title: 'Last Name',
             dataIndex: 'LastName',
         },
         {
             key: '3',
             title: 'Email',
-            dataIndex: 'Email',
+            dataIndex: 'EmailAddress',
         },
 
         {
@@ -48,12 +48,10 @@ export default function TrainersContainer() {
             },
         },
     ];
-    useEffect(() => {
-        fetchTrainers(Pagination.pageNumber, Pagination.pageSize);
-      }, []);
+    useFetchTrainersEffect(fetchTrainers)
     const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
         fetchTrainers(pageNumber, pageSize ?? Pagination.pageSize);
-      };
+    };
     return (
         <div className={styles['container']}>
             <div className={styles['content']}>

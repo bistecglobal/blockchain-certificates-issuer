@@ -134,7 +134,6 @@ export async function getCourse(pageNumber: number, pageSize: number
 
   export async function getTrainers(pageNumber: number, pageSize: number
     ): Promise<TrainerResponse> {
-      debugger
       let myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
     
