@@ -3,8 +3,7 @@ import styles from './TrainersContainer.module.css';
 import { useComponentState, useFetchTrainersEffect } from './state';
 import { DeleteOutlined } from '@ant-design/icons';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
-import { Pagination } from 'apps/blockchain-frontend/interfaces/enums';
-import { useEffect } from 'react';
+import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 export default function TrainersContainer() {
     const { Title } = Typography;
     const { formik, deleteTrainer, dataSource, fetchTrainers } = useComponentState();
@@ -50,7 +49,7 @@ export default function TrainersContainer() {
     ];
     useFetchTrainersEffect(fetchTrainers)
     const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
-        fetchTrainers(pageNumber, pageSize ?? Pagination.pageSize);
+        fetchTrainers(pageNumber, pageSize ?? DefaultPagination.pageSize);
     };
     return (
         <div className={styles['container']}>
@@ -111,8 +110,8 @@ export default function TrainersContainer() {
                         columns={columns}
                         dataSource={dataSource}
                         pagination={{
-                            pageSize: Pagination.pageSize,
-                            total: Pagination.pageNumber,
+                            pageSize: DefaultPagination.pageSize,
+                            total: DefaultPagination.pageNumber,
                             onChange: handlePaginationChange,
                         }}
                     ></Table>

@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import type { Course } from 'apps/blockchain-frontend/interfaces/models';
 import { CourseRequest, CourseResponse } from 'apps/blockchain-frontend/interfaces/viewModels';
 import { createCourse, getCourse } from 'apps/blockchain-frontend/api/fetchData';
+import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 
 export function useComponentState() {
   const [dataSource, setDataSource] = useState([]);
@@ -71,11 +72,16 @@ export function useComponentState() {
     const formattedData = courseRes.map((item) => {
       const formattedStartDate = new Date(item.StartDate).toLocaleDateString();
       const formattedEndDate = new Date(item.EndDate).toLocaleDateString();
-      return { ...item, StartDate: formattedStartDate, EndDate: formattedEndDate };
+      return { ...item, StartDate: formattedStartDate, EndDate: formattedEndDate,key: item.Id};
     });
     setDataSource(formattedData);
   };
 
 
   return { formik, deleteCourse, dataSource, fetchCourses };
+}
+export const useFetchCourseEffect = (fetchCourses) => {
+  useEffect(() => {
+    fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+  }, []);
 }

@@ -2,7 +2,7 @@ import { createTrainer, getTrainers } from "apps/blockchain-frontend/api/fetchDa
 import { TrainerRequest, TrainerResponse } from "apps/blockchain-frontend/interfaces/viewModels";
 import { useEffect, useState } from "react";
 import { useFormik } from 'formik';
-import { Pagination } from "apps/blockchain-frontend/interfaces/enums";
+import { DefaultPagination } from "apps/blockchain-frontend/interfaces/enums";
 
 export function useComponentState() {
     const [dataSource, setDataSource] = useState([]);
@@ -70,6 +70,6 @@ export function useComponentState() {
   }
   export const useFetchTrainersEffect = (fetchTrainers) => {
     useEffect(() => {
-      fetchTrainers(Pagination.pageNumber, Pagination.pageSize);
+      fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
     }, [fetchTrainers]);
   }
