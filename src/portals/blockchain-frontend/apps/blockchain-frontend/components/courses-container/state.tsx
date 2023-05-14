@@ -72,7 +72,7 @@ export function useComponentState() {
     const formattedData = courseRes.map((item) => {
       const formattedStartDate = new Date(item.StartDate).toLocaleDateString();
       const formattedEndDate = new Date(item.EndDate).toLocaleDateString();
-      return { ...item, StartDate: formattedStartDate, EndDate: formattedEndDate };
+      return { ...item, StartDate: formattedStartDate, EndDate: formattedEndDate,key: item.Id};
     });
     setDataSource(formattedData);
   };
