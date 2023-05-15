@@ -71,5 +71,5 @@ export function useComponentState() {
   export const useFetchTrainersEffect = (fetchTrainers) => {
     useEffect(() => {
       fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
-    }, [fetchTrainers]);
+    }, []);
   }
