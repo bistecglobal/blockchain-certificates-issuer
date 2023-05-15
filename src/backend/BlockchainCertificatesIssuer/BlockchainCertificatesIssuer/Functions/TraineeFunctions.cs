@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json;
 using BlockchainCertificatesIssuer.API.Models;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Azure.CosmosRepository;
@@ -23,16 +24,23 @@ namespace BlockchainCertificatesIssuer.API.Functions
         [Function("CreateTrainee")]
         public async Task<HttpResponseData> CreateTrainee([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route ="trainee")] HttpRequestData req)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            _logger.LogInformation("Create a trainee.");
 
-            var trainee =await System.Text.Json.JsonSerializer.DeserializeAsync<Trainee>(req.Body);
-          
-            var response = req.CreateResponse(HttpStatusCode.OK);
+            try
+            {
+                var trainee = await JsonSerializer.DeserializeAsync<Trainee>(req.Body);
+                if (trainee == null) return req.CreateResponse(HttpStatusCode.BadRequest);
 
-            var created = await traineeRepository.CreateAsync(trainee);
-            await response.WriteAsJsonAsync(created);
-        
-            return response;
+                var created = await traineeRepository.CreateAsync(trainee);
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                await response.WriteAsJsonAsync(created);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return req.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [Function("GetTrainees")]
@@ -40,30 +48,47 @@ namespace BlockchainCertificatesIssuer.API.Functions
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route ="trainees")] HttpRequestData req)
         {
 
-            var queryDictionary = QueryHelpers.ParseQuery(req.Url.Query);
-
-            var pageNumber = queryDictionary["pageNumber"];
-            var pageSize = queryDictionary["pageSize"];
-            var response = req.CreateResponse(HttpStatusCode.OK);
-
-            if (string.IsNullOrWhiteSpace(pageNumber) || !int.TryParse(pageNumber, out var page) || page <= 0)
+            try
             {
-                _logger.LogWarning("No pageNumber provided.");
-                response = req.CreateResponse(HttpStatusCode.BadRequest);
-                return response; ;
-            }
+                var queryDictionary = QueryHelpers.ParseQuery(req.Url.Query);
 
-            if (string.IsNullOrWhiteSpace(pageSize) || !int.TryParse(pageSize, out var size) || size <= 0)
-            {
-                _logger.LogWarning("No pageSize provided.");
-                response = req.CreateResponse(HttpStatusCode.BadRequest);
+                var pageNumber = queryDictionary["pageNumber"];
+                var pageSize = queryDictionary["pageSize"];
+                var response = req.CreateResponse(HttpStatusCode.OK);
+
+                if (string.IsNullOrWhiteSpace(pageNumber) || !int.TryParse(pageNumber, out var page) || page <= 0)
+                {
+                    _logger.LogWarning("No pageNumber provided.");
+                    response = req.CreateResponse(HttpStatusCode.BadRequest);
+                    return response; ;
+                }
+
+                if (string.IsNullOrWhiteSpace(pageSize) || !int.TryParse(pageSize, out var size) || size <= 0)
+                {
+                    _logger.LogWarning("No pageSize provided.");
+                    response = req.CreateResponse(HttpStatusCode.BadRequest);
+                    return response;
+                }
+                IPage<Trainee> trainees =
+                    await traineeRepository.PageAsync(pageNumber: page, pageSize: size);
+
+                if (trainees == null || !trainees.Items.Any())
+                {
+                    _logger.LogWarning("No data.");
+                    response = req.CreateResponse(HttpStatusCode.NotFound);
+                    await response.WriteAsJsonAsync("No data");
+                    return response;
+                }
+
+                await response.WriteAsJsonAsync(trainees.Items);
                 return response;
-            }
 
-            IPage<Trainee> trainees =
-                await traineeRepository.PageAsync(pageNumber: page, pageSize: size);
-            await response.WriteAsJsonAsync(trainees.Items);
-            return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return req.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

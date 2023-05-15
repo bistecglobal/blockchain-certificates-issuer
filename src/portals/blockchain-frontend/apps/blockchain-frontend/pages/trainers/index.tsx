@@ -4,7 +4,7 @@ import { AccountBookFilled, PlusOutlined } from '@ant-design/icons/lib/icons';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
-import TrainersContainer from 'apps/blockchain-frontend/components/trainers-container/TrainersContainer';
+import TrainersContainer from 'apps/blockchain-frontend/components/trainers-container/TrainenersContainer';
 
 // export function CartPageTrainers() {
 //   const [firstval, setfirstnameval] = useState('');

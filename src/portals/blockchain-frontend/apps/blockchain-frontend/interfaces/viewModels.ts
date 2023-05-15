@@ -1,4 +1,4 @@
-import { User, Course, Trainer } from './models';
+import { User, Course, Trainer, Trainee } from './models';
 
 export interface UserRequest extends User {}
 
@@ -15,6 +15,12 @@ export interface CourseResponse extends Course {
 export interface TrainerRequest extends Trainer{}
 
 export interface TrainerResponse extends Trainer{
+  Id: string;
+  Type: string;
+}
+export interface TraineeRequest extends Trainee{}
+
+export interface TraineeResponse extends Trainee{
   Id: string;
   Type: string;
 }
