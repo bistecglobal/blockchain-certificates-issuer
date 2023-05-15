@@ -81,11 +81,9 @@ namespace BlockchainCertificatesIssuer.API.Functions
                     await response.WriteAsJsonAsync("No data");
                     return response;
                 }
-                else
-                {
                     await response.WriteAsJsonAsync(courses.Items);
                     return response;
-                }
+                
             }
             catch (Exception ex)
             {
