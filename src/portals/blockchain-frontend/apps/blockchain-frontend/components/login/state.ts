@@ -15,13 +15,13 @@ export function useComponentState() {
       Email: e.target.email.value,
       Password: e.target.password.value,
     };
-    validateUser(raw);
+    createUser(raw);
   };
 
-  async function validateUser(formData: UserRequest): Promise<void> {
+  async function createUser(formData: UserRequest): Promise<void> {
     const user: UserResponse = await GetUserByEmail(formData);
     if (!user) {
-      console.error('User not found');
+      console.error('User not Created!');
       return;
     }
     await router.push('/dashboard');

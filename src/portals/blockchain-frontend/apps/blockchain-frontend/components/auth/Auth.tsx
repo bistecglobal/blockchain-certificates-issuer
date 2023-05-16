@@ -19,7 +19,7 @@ export default function Auth() {
             <div className={styles['toggle-text']}>
               {isRegister ? (
                 <span style={{ color: '#000' }}>
-                  {'Already have an account? '}{' '}
+                  {'Already have an account? '}
                   <span
                     style={{
                       textDecoration: 'underline',
@@ -34,7 +34,6 @@ export default function Auth() {
               ) : (
                 <span style={{ color: '#000' }}>
                   {"Don't have an account? "}
-                  {'  '}
                   <span
                     style={{
                       textDecoration: 'underline',
@@ -50,9 +49,7 @@ export default function Auth() {
             </div>
           </div>
           <div className={styles['right-side']}>
-            <div className={styles['welcomeNote']}>
-              {/* <h3>Welcome to Bistec Global</h3> */}
-            </div>
+            <div className={styles['welcomeNote']}></div>
             <div className={styles['welcomeImg']}>
               <img src={'/image1.jpg'} id={styles['wel-img-id']} alt="" />
             </div>
