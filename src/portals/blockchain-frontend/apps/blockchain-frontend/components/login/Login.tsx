@@ -4,6 +4,14 @@ import { useComponentState } from './state';
 
 export default function Login() {
   const { handleLoginFormSubmit } = useComponentState();
+  const inputStyles = {
+    padding: '7px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    fontSize: '15px',
+    boxShadow: '0px 1px 0px #34eb64',
+    outline: 'none',
+  };
 
   return (
     <div>
@@ -18,27 +26,13 @@ export default function Login() {
           placeholder="Enter your email"
           type="email"
           name="email"
-          style={{
-            padding: '7px',
-            border: '1px solid #ccc',
-            borderRadius: '5px',
-            fontSize: '15px',
-            boxShadow: '0px 1px 0px #34eb64',
-            outline: 'none',
-          }}
+          style={{ ...inputStyles }}
         />
         <input
           placeholder="Enter your password"
           type="password"
           name="password"
-          style={{
-            padding: '7px',
-            border: '1px solid #ccc',
-            borderRadius: '5px',
-            fontSize: '15px',
-            boxShadow: '0px 1px 0px #34eb64',
-            outline: 'none',
-          }}
+          style={{ ...inputStyles }}
         />
         <div style={{ textAlign: 'center' }}>
           <button className={styles['btn-signin']} type="submit">

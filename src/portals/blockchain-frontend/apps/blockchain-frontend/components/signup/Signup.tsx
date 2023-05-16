@@ -3,7 +3,14 @@ import React from 'react';
 import { useComponentState } from './state';
 export default function SignUp() {
   const { handleSignupFormSubmit } = useComponentState();
-
+  const inputStyles = {
+    padding: '7px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    fontSize: '15px',
+    boxShadow: '0px 1px 0px #f78672',
+    outline: 'none',
+  };
   return (
     <div>
       <div className={styles['form-logo']}>
@@ -16,27 +23,13 @@ export default function SignUp() {
           placeholder="Enter your email"
           type="email"
           name="email"
-          style={{
-            padding: '7px',
-            border: '1px solid #ccc',
-            borderRadius: '5px',
-            fontSize: '15px',
-            boxShadow: '0px 1px 0px #f78672',
-            outline: 'none',
-          }}
+          style={{ ...inputStyles }}
         />
         <input
           placeholder="Enter your password"
           type="password"
           name="password"
-          style={{
-            padding: '7px',
-            border: '1px solid #ccc',
-            borderRadius: '5px',
-            fontSize: '15px',
-            boxShadow: '0px 1px 0px #f78672',
-            outline: 'none',
-          }}
+          style={{ ...inputStyles }}
         />
 
         <div style={{ textAlign: 'center' }}>

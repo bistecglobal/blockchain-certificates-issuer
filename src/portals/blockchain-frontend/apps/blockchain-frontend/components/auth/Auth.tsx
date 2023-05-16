@@ -2,10 +2,16 @@ import styles from './Auth.module.css';
 import React, { useState } from 'react';
 import Login from '../login/Login';
 import SignUp from '../signup/Signup';
-//import { useComponentState } from './state';
 
 export default function Auth() {
   const [isRegister, setIsRegister] = useState(false);
+
+  const toggleText1 = isRegister
+    ? 'Already have an account?'
+    : "Don't have an account?";
+  const toggleText2 = isRegister ? 'Login here' : 'Sign up now';
+
+  const onClickHandler = () => toggleRegister();
 
   const toggleRegister = () => {
     setIsRegister(!isRegister);
@@ -17,35 +23,19 @@ export default function Auth() {
           <div className={styles['left-side']}>
             {isRegister ? <SignUp /> : <Login />}
             <div className={styles['toggle-text']}>
-              {isRegister ? (
-                <span style={{ color: '#000' }}>
-                  {'Already have an account? '}
-                  <span
-                    style={{
-                      textDecoration: 'underline',
-                      cursor: 'pointer',
-                      color: 'blue',
-                    }}
-                    onClick={toggleRegister}
-                  >
-                    Login here
-                  </span>
+              <span style={{ color: '#000' }}>
+                {toggleText1}
+                <span
+                  style={{
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                    color: 'blue',
+                  }}
+                  onClick={onClickHandler}
+                >
+                  {toggleText2}
                 </span>
-              ) : (
-                <span style={{ color: '#000' }}>
-                  {"Don't have an account? "}
-                  <span
-                    style={{
-                      textDecoration: 'underline',
-                      cursor: 'pointer',
-                      color: 'blue',
-                    }}
-                    onClick={toggleRegister}
-                  >
-                    Sign up now
-                  </span>
-                </span>
-              )}
+              </span>
             </div>
           </div>
           <div className={styles['right-side']}>

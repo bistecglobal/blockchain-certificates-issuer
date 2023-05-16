@@ -1,9 +1,5 @@
 import { useRouter } from 'next/router';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import type {
-  UserRequest,
-  UserResponse,
-} from 'apps/blockchain-frontend/interfaces/viewModels';
+import type { UserRequest, UserResponse } from '../../interfaces/viewModels';
 import { GetUserByEmail } from '../../api/fetchData';
 
 export function useComponentState() {
