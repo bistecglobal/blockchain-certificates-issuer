@@ -3,9 +3,9 @@ import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { DeleteOutlined } from '@ant-design/icons';
 import styles from './CoursesContainer.module.css';
 import { useComponentState } from './state';
-
+import { DefaultPagination } from '../../interfaces/enums'
 export default function CoursesContainer() {
-  const { formik, deleteCourse } = useComponentState();
+  const { formik, deleteCourse,dataSource,fetchCourses } = useComponentState();
   const {
     handleSubmit,
     handleChange,
@@ -57,6 +57,9 @@ export default function CoursesContainer() {
     },
   ];
 
+  const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
+    fetchCourses(pageNumber, pageSize ?? DefaultPagination.pageSize);
+  };
   return (
     <div className={styles['container']}>
       <div className={styles['content']}>
@@ -131,11 +134,11 @@ export default function CoursesContainer() {
           <Table
             loading={false}
             columns={columns}
-            dataSource={[]}
+            dataSource={dataSource}
             pagination={{
-              pageSize: 3,
-              total: 1,
-              onChange: () => {},
+              pageSize: DefaultPagination.pageSize,
+              total: DefaultPagination.pageNumber,
+              onChange: handlePaginationChange,
             }}
           ></Table>
         </div>

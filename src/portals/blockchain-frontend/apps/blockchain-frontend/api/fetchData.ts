@@ -68,3 +68,33 @@ export async function createCourse(
     console.error('Oh no, Error occured in createCourse()!', error);
   }
 }
+
+export async function getCourse(pageNumber: number, pageSize: number
+  ): Promise<CourseResponse> {
+    let myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+  
+    let  requestOptions: RequestInit = {
+      method: 'Get',
+      headers: myHeaders,   
+    };
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/courses?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        requestOptions
+      );
+      if (response.status === 500) {
+        console.error('Internal Server Error');
+        return null;
+      }
+      if (!response.ok) {
+        console.error('Unspecified error occured!');
+        return null;
+      }
+      
+      return (await response.json()) as CourseResponse;
+    } catch (error) {
+      console.error('Oh no, Error occured in getCourse()!', error);
+      return null;
+    }
+  }
