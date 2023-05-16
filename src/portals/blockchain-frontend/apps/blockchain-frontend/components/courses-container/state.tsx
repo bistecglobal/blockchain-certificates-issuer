@@ -77,11 +77,8 @@ export function useComponentState() {
     setDataSource(formattedData);
   };
 
-
-  return { formik, deleteCourse, dataSource, fetchCourses };
-}
-export const useFetchCourseEffect = (fetchCourses) => {
   useEffect(() => {
     fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
   }, []);
+  return { formik, deleteCourse, dataSource, fetchCourses };
 }
