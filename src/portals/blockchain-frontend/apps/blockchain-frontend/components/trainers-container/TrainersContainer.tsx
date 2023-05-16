@@ -47,7 +47,7 @@ export default function TrainersContainer() {
             },
         },
     ];
-    useFetchTrainersEffect(fetchTrainers)
+
     const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
         fetchTrainers(pageNumber, pageSize ?? DefaultPagination.pageSize);
     };
