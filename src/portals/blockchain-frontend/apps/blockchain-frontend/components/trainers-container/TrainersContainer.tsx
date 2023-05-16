@@ -1,6 +1,6 @@
-import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
+import { Typography, Button, Table, Form, Input } from 'antd';
 import styles from './TrainersContainer.module.css';
-import { useComponentState, useFetchTrainersEffect } from './state';
+import { useComponentState } from './state';
 import { DeleteOutlined } from '@ant-design/icons';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';

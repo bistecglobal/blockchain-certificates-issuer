@@ -132,7 +132,6 @@ export default function CoursesContainer() {
         </div>
         <div id="course-grid">
           <Table
-          key={'1'}
             loading={false}
             columns={columns}
             dataSource={dataSource}
