@@ -22,6 +22,5 @@ export function useComponentState() {
     }
     await router.push('/dashboard');
   }
-
   return { handleLoginFormSubmit };
 }
