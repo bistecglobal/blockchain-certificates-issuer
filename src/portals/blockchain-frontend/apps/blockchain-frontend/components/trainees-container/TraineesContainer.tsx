@@ -99,7 +99,7 @@ export default function TraineesContainer() {
                         </Form.Item>
                         <Form.Item>
                             <Button htmlType="submit" icon={<PlusOutlined />} type="primary">
-                                Add Courses
+                                Add Trainee
                             </Button>
                         </Form.Item>
                     </Form>
