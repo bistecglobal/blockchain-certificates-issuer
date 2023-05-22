@@ -6,10 +6,10 @@ import SignUp from '../signup/Signup';
 export default function Auth() {
   const [isRegister, setIsRegister] = useState(false);
 
-  const toggleText1 = isRegister
+  const userMessage = isRegister
     ? 'Already have an account?'
     : "Don't have an account?";
-  const toggleText2 = isRegister ? 'Login here' : 'Sign up now';
+  const linkContent = isRegister ? 'Login here' : 'Sign up now';
 
   const onClickHandler = () => toggleRegister();
 
@@ -24,17 +24,22 @@ export default function Auth() {
             {isRegister ? <SignUp /> : <Login />}
             <div className={styles['toggle-text']}>
               <span style={{ color: '#000' }}>
-                {toggleText1}
-                <span
+                {userMessage}
+                <button
                   style={{
                     textDecoration: 'underline',
                     cursor: 'pointer',
                     color: 'blue',
+                    border: 'none',
+                    background: 'none',
+                    padding: '0',
+                    margin: '0',
+                    font: 'inherit',
                   }}
                   onClick={onClickHandler}
                 >
-                  {toggleText2}
-                </span>
+                  {linkContent}
+                </button>
               </span>
             </div>
           </div>

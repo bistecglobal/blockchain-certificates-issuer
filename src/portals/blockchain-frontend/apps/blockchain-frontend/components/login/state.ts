@@ -11,10 +11,11 @@ export function useComponentState() {
       Email: e.target.email.value,
       Password: e.target.password.value,
     };
-    createUser(raw);
+
+    validateUser(raw);
   };
 
-  async function createUser(formData: UserRequest): Promise<void> {
+  async function validateUser(formData: UserRequest): Promise<void> {
     const user: UserResponse = await GetUserByEmail(formData);
     if (!user) {
       console.error('User not Created!');
