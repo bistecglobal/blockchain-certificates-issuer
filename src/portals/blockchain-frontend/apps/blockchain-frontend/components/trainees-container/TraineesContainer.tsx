@@ -1,12 +1,12 @@
-import { Typography, Button, Table, Form, Input } from 'antd';
-import styles from './TrainersContainer.module.css';
-import { useComponentState } from './state';
+import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
+import styles from './TraineesContainer.module.css';
+import { useComponentState, useFetchTraineesEffect } from './state';
 import { DeleteOutlined } from '@ant-design/icons';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
-export default function TrainersContainer() {
+export default function TraineesContainer() {
     const { Title } = Typography;
-    const { formik, deleteTrainer, dataSource, fetchTrainers } = useComponentState();
+    const { formik, deleteTrainee, dataSource, fetchTrainees } = useComponentState();
     const {
         handleSubmit,
         handleChange,
@@ -38,7 +38,7 @@ export default function TrainersContainer() {
                     <>
                         <DeleteOutlined
                             onClick={() => {
-                                deleteTrainer(data.Id);
+                                deleteTrainee(data.Id);
                             }}
                             style={{ color: 'red', marginLeft: 4 }}
                         />
@@ -47,15 +47,15 @@ export default function TrainersContainer() {
             },
         },
     ];
-
+    useFetchTraineesEffect(fetchTrainees)
     const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
-        fetchTrainers(pageNumber, pageSize ?? DefaultPagination.pageSize);
+        fetchTrainees(pageNumber, pageSize ?? DefaultPagination.pageSize);
     };
     return (
         <div className={styles['container']}>
             <div className={styles['content']}>
-                <div id="trainer-add-form">
-                    <Title level={3}>Add Trainer</Title>
+                <div id="trainee-add-form">
+                    <Title level={3}>Add Trainee</Title>
                     <Form onFinish={handleSubmit}>
                         <Form.Item>
                             <label htmlFor="firstName">First Name</label>
@@ -99,7 +99,7 @@ export default function TrainersContainer() {
                         </Form.Item>
                         <Form.Item>
                             <Button htmlType="submit" icon={<PlusOutlined />} type="primary">
-                                Add Trainer
+                                Add Trainee
                             </Button>
                         </Form.Item>
                     </Form>

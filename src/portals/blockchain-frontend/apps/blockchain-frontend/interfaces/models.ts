@@ -15,3 +15,9 @@ export interface Trainer {
   LastName : string;
   EmailAddress : string;
 }
+
+export interface Trainee {
+  FirstName : string;
+  LastName : string;
+  EmailAddress : string;
+}
