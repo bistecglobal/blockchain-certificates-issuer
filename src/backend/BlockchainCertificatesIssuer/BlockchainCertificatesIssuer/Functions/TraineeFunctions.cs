@@ -1,7 +1,6 @@
 using System.Net;
 using System.Text.Json;
 using BlockchainCertificatesIssuer.API.Models;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.CosmosRepository.Paging;
 using Microsoft.Azure.Functions.Worker;
@@ -50,7 +49,7 @@ namespace BlockchainCertificatesIssuer.API.Functions
 
             try
             {
-                var queryDictionary = QueryHelpers.ParseQuery(req.Url.Query);
+                var queryDictionary = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
 
                 var pageNumber = queryDictionary["pageNumber"];
                 var pageSize = queryDictionary["pageSize"];
