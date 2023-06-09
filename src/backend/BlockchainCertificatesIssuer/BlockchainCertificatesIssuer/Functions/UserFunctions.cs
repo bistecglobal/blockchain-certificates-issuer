@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using BlockchainCertificatesIssuer.API.Models;
+using BlockchainCertificatesIssuer.API.Validations;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -27,7 +28,18 @@ namespace BlockchainCertificatesIssuer.API.Functions
             try
             {
                 var newUser = await JsonSerializer.DeserializeAsync<User>(req.Body);
+                
                 if(newUser == null) return req.CreateResponse(HttpStatusCode.BadRequest);
+                
+                var validator = new UserValidator();
+                var result = validator.Validate(newUser);
+                if(!result.IsValid)
+                {
+                    var resp = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await resp.WriteAsJsonAsync(result.Errors);
+                    resp.StatusCode = HttpStatusCode.BadRequest;
+                    return resp;
+                }
 
                 var existingUser = await userRepository.GetAsync(x => x.Email == newUser.Email);
                 if (existingUser.Any()) return req.CreateResponse(HttpStatusCode.Conflict);
@@ -52,6 +64,16 @@ namespace BlockchainCertificatesIssuer.API.Functions
             {
                 var userLogin = await JsonSerializer.DeserializeAsync<User>(req.Body);
                 if (userLogin == null) return req.CreateResponse(HttpStatusCode.BadRequest);
+
+                var validator = new UserValidator();
+                var result = validator.Validate(userLogin);
+                if (!result.IsValid)
+                {
+                    var resp = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await resp.WriteAsJsonAsync(result.Errors);
+                    resp.StatusCode = HttpStatusCode.BadRequest;
+                    return resp;
+                }
 
                 var existingUsers = await userRepository.GetAsync(x => x.Email == userLogin.Email);
                 if(existingUsers == null) return req.CreateResponse(HttpStatusCode.Unauthorized);
