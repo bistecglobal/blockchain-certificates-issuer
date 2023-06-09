@@ -23,7 +23,11 @@ export default function Login() {
                 type="password"
                 name="password"
               />
-              <button type="submit">Login</button>
+              <div className="flex flex-col items-center">
+                <button className="bg-indigo-500 p-2 font-mono" type="submit">
+                  Login
+                </button>
+              </div>
             </form>
           </div>
           <div className={styles['right-side']}>
