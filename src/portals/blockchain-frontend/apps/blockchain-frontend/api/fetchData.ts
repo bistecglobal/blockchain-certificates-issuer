@@ -42,6 +42,39 @@ export async function GetUserByEmail(
   }
 }
 
+export async function CreateUserByEmail(
+  userReq: UserRequest
+): Promise<UserResponse> {
+  const header = new Headers();
+  header.append('Content-Type', 'application/json');
+  const options: RequestInit = {
+    method: 'POST',
+    headers: header,
+    body: JSON.stringify(userReq),
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/signup`,
+      options
+    );
+    if (response.status === 401) {
+      console.error('Invalid username or password');
+      return null;
+    }
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
+    }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+    return (await response.json()) as UserResponse;
+  } catch (error) {
+    console.error('Oh no, Error occured in fetchSignup()!', error);
+  }
+}
+
 export async function createCourse(
   courseReq: CourseRequest
 ): Promise<CourseResponse> {
