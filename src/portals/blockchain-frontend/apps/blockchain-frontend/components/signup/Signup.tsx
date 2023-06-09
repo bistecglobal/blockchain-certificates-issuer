@@ -1,27 +1,24 @@
-import styles from './Login.module.css';
+import styles from './Signup.module.css';
 import React from 'react';
 import { useComponentState } from './state';
-
-export default function Login() {
-  const { handleLoginFormSubmit } = useComponentState();
+export default function SignUp() {
+  const { handleSignupFormSubmit } = useComponentState();
   const inputStyles = {
     padding: '7px',
     border: '1px solid #ccc',
     borderRadius: '5px',
     fontSize: '15px',
-    boxShadow: '0px 1px 0px #34eb64',
+    boxShadow: '0px 1px 0px #f78672',
     outline: 'none',
   };
-
   return (
     <div>
       <div className={styles['form-logo']}>
-        <img src={'/bg.png'} alt="" className={styles['logo']} />
+        <img className={styles['logo']} src={'/bg.png'} alt="" />
       </div>
+      <h1 className={styles['form-heading']}>Sign Up</h1>
 
-      <h1 className={styles['form-heading']}>Log In</h1>
-
-      <form onSubmit={handleLoginFormSubmit}>
+      <form onSubmit={handleSignupFormSubmit}>
         <input
           placeholder="Enter your email"
           type="email"
@@ -34,9 +31,10 @@ export default function Login() {
           name="password"
           style={{ ...inputStyles }}
         />
-        <div className="flex flex-col items-center">
-          <button className="bg-indigo-500 p-2 font-mono" type="submit">
-            Sign In
+
+        <div style={{ textAlign: 'center' }}>
+          <button className={styles['btn-signin']} type="submit">
+            Register
           </button>
         </div>
       </form>
