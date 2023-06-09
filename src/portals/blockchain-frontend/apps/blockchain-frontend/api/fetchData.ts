@@ -21,7 +21,7 @@ export async function GetUserByEmail(
   };
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/login`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/user/login`,
       options
     );
     if (response.status === 401) {
@@ -54,7 +54,7 @@ export async function CreateUserByEmail(
   };
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/signup`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/user/signup`,
       options
     );
     if (response.status === 401) {
@@ -78,10 +78,10 @@ export async function CreateUserByEmail(
 export async function createCourse(
   courseReq: CourseRequest
 ): Promise<CourseResponse> {
-  var myHeaders = new Headers();
+  const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
 
-  var requestOptions: RequestInit = {
+  const requestOptions: RequestInit = {
     method: 'POST',
     headers: myHeaders,
     body: JSON.stringify(courseReq),
@@ -89,7 +89,7 @@ export async function createCourse(
   };
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/course`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/course`,
       requestOptions
     );
     if (response.status === 500) {
@@ -117,7 +117,7 @@ export async function getCourse(pageNumber: number, pageSize: number
     };
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/courses?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}api/courses?pageNumber=${pageNumber}&pageSize=${pageSize}`,
         requestOptions
       );
       if (response.status === 500) {
@@ -139,10 +139,10 @@ export async function getCourse(pageNumber: number, pageSize: number
   export async function createTrainer(
     trainerReq: TrainerRequest
   ): Promise<TrainerResponse> {
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
   
-    var requestOptions: RequestInit = {
+    const requestOptions: RequestInit = {
       method: 'POST',
       headers: myHeaders,
       body: JSON.stringify(trainerReq),
@@ -150,7 +150,7 @@ export async function getCourse(pageNumber: number, pageSize: number
     };
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/trainer`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}api/trainer`,
         requestOptions
       );
       if (response.status === 500) {
@@ -178,7 +178,7 @@ export async function getCourse(pageNumber: number, pageSize: number
       };
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/trainers?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}api/trainers?pageNumber=${pageNumber}&pageSize=${pageSize}`,
           requestOptions
         );
         if (response.status === 500) {
@@ -200,10 +200,10 @@ export async function getCourse(pageNumber: number, pageSize: number
     export async function createTrainee(
       trainerReq: TraineeRequest
     ): Promise<TraineeResponse> {
-      var myHeaders = new Headers();
+      const myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
     
-      var requestOptions: RequestInit = {
+      const requestOptions: RequestInit = {
         method: 'POST',
         headers: myHeaders,
         body: JSON.stringify(trainerReq),
@@ -211,7 +211,7 @@ export async function getCourse(pageNumber: number, pageSize: number
       };
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/trainee`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}api/trainee`,
           requestOptions
         );
         if (response.status === 500) {
@@ -239,7 +239,7 @@ export async function getCourse(pageNumber: number, pageSize: number
         };
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/trainees?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}api/trainees?pageNumber=${pageNumber}&pageSize=${pageSize}`,
             requestOptions
           );
           if (response.status === 500) {

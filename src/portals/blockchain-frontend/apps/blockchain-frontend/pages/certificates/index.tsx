@@ -49,7 +49,7 @@ export function CartPageCertificates() {
   const getData = () => {
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/courses?pageSize=10&pageNumber=1`
+        `${process.env.NEXT_PUBLIC_BASE_URL}api/courses?pageSize=10&pageNumber=1`
       )
       .then((result) => {
         setCourses(result.data);
@@ -63,7 +63,7 @@ export function CartPageCertificates() {
   const getDataTrainee = () => {
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/trainees?pageSize=10&PageNumber=1`
+        `${process.env.NEXT_PUBLIC_BASE_URL}api/trainees?pageSize=10&PageNumber=1`
       )
       .then((result) => {
         setDataTrainee(result.data);
@@ -77,7 +77,7 @@ export function CartPageCertificates() {
   const getDataTrainer = () => {
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/trainers?pageSize=5&PageNumber=1`
+        `${process.env.NEXT_PUBLIC_BASE_URL}api/trainers?pageSize=5&PageNumber=1`
       )
       .then((result) => {
         setDataTrainer(result.data);
@@ -97,7 +97,7 @@ export function CartPageCertificates() {
       CertificateIssueDateDate: date,
     };
     const key = 'updatable';
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/certificates`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}api/certificates`;
     axios
       .post(url, data)
       .then((result) => {
