@@ -12,7 +12,7 @@ export function useComponentState() {
       Password: e.target.password.value,
     };
 
-    validateUser(raw);
+    await validateUser(raw);
   };
 
   async function validateUser(formData: UserRequest): Promise<void> {

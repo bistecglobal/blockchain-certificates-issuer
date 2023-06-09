@@ -34,9 +34,9 @@ export default function Login() {
           name="password"
           style={{ ...inputStyles }}
         />
-        <div className="flex flex-col items-center">
-          <button className="bg-indigo-500 p-2 font-mono" type="submit">
-            Sign In
+       <div style={{ textAlign: 'center' }}>
+          <button className={styles['btn-signin']} type="submit">
+            Sign in
           </button>
         </div>
       </form>
