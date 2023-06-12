@@ -4,8 +4,8 @@ import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
-import { EthProvider } from 'apps/blockchain-frontend/contexts/EthContext';
-import BlockchainVerifier from 'apps/blockchain-frontend/components/blockchain-verifier/BlockchainVerifier';
+import { EthProvider, useEth } from 'apps/blockchain-frontend/contexts/EthContext';
+import BlockchainVerifier from '../../contexts/EthContext/useEth';
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -23,7 +23,8 @@ export function CartPageCertificates() {
   const [trainers, setDataTrainer] = useState([]);
 
   const navigate = useRouter();
-
+  const { state } = useEth();
+  const { contract, accounts } = state;
   const certificateWrapper = React.createRef<HTMLDivElement>();
 
   const setSelectCourse = (value) => {
@@ -115,10 +116,6 @@ export function CartPageCertificates() {
 
   return (
     <div>
-      {contextHolder}
-      <EthProvider>
-        <BlockchainVerifier setValue={undefined} />
-      </EthProvider>
       <div className={styles['container']}>
         <div className={styles['content']}>
           <Form>
