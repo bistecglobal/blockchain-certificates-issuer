@@ -116,6 +116,7 @@ export function CartPageCertificates() {
 
   return (
     <div>
+       {contextHolder}
       <div className={styles['container']}>
         <div className={styles['content']}>
           <Form>
