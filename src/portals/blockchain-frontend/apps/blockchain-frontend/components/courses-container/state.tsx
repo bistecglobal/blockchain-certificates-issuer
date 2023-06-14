@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import axios from 'axios';
-import type { Course } from 'apps/blockchain-frontend/interfaces/models';
 import { CourseRequest, CourseResponse } from 'apps/blockchain-frontend/interfaces/viewModels';
 import { createCourse, getCourse } from 'apps/blockchain-frontend/api/fetchData';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';

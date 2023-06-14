@@ -29,7 +29,25 @@ namespace BlockchainCertificatesIssuer.API.Functions
 
             var created = await certificateRepository.CreateAsync(certificate);
             await response.WriteAsJsonAsync(created);
-            response.WriteString("Welcome to Issue Certification Application!");
+            return response;
+        }
+
+        [Function("GetCertificateById")]
+        public async Task<HttpResponseData> GetCertificateById([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "certificates/{id}")]
+        HttpRequestData req, string id)
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request to get a certificate by ID.");
+
+            var certificate = await certificateRepository.GetAsync(id);
+
+            if (certificate == null)
+            {
+                return req.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            await response.WriteAsJsonAsync(certificate);
+
             return response;
         }
     }

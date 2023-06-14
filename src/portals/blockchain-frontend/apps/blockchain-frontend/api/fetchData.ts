@@ -7,6 +7,8 @@ import type {
   TrainerResponse,
   TraineeResponse,
   TraineeRequest,
+  CertificateRequest,
+  CertificateResponse,
 } from 'apps/blockchain-frontend/interfaces/viewModels';
 
 export async function GetUserByEmail(
@@ -255,5 +257,37 @@ export async function getCourse(pageNumber: number, pageSize: number
         } catch (error) {
           console.error('Oh no, Error occured in getCourse()!', error);
           return null;
+        }
+      }
+
+
+      export async function createCertificate(
+        certificateReq: CertificateRequest
+      ): Promise<CertificateResponse> {
+        const myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+      
+        const requestOptions: RequestInit = {
+          method: 'POST',
+          headers: myHeaders,
+          body: JSON.stringify(certificateReq),
+          redirect: 'follow',
+        };
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}api/certificates`,
+            requestOptions
+          );
+          if (response.status === 500) {
+            console.error('Internal Server Error');
+            return null;
+          }
+          if (!response.ok) {
+            console.error('Unspecified error occured!');
+            return null;
+          }
+          return (await response.json()) as CertificateResponse;
+        } catch (error) {
+          console.error('Oh no, Error occured in createTrainer()!', error);
         }
       }
