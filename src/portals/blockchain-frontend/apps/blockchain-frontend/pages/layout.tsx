@@ -50,11 +50,6 @@ export default function RootLayout({ children }) {
                 key: '/certificates',
                 icon: <SafetyCertificateOutlined />,
               },
-              {
-                label: 'view-certificate',
-                key: '/view-certificate',
-                icon: <SafetyCertificateOutlined />,
-              },
             ]}
           ></Menu>
         </div>
