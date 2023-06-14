@@ -21,3 +21,10 @@ export interface Trainee {
   LastName : string;
   EmailAddress : string;
 }
+
+export interface Certificate {
+ Course : string,
+ Trainee : string,
+ Trainer : string,
+ certificateIssueDate : Date
+}

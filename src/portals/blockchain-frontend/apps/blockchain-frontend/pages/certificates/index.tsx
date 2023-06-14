@@ -1,135 +1,38 @@
 import styles from './cart-page-certificates.module.css';
-import { Select, Form, Button, notification, DatePicker } from 'antd';
+import { Select, Form, Button, DatePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
-import { EthProvider, useEth } from 'apps/blockchain-frontend/contexts/EthContext';
-import BlockchainVerifier from '../../contexts/EthContext/useEth';
-
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { usePageState } from './state';
 
 
 export function CartPageCertificates() {
-  const [api, contextHolder] = notification.useNotification();
-
-  const [courseval, setselectcourse] = useState('');
-  const [traineeval, setselecttrainee] = useState('');
-  const [trainerval, setselecttranier] = useState('');
-  const [date, setDate] = React.useState(false);
-  const [courses, setCourses] = useState([]);
-  const [tainees, setDataTrainee] = useState([]);
-  const [trainers, setDataTrainer] = useState([]);
-
-  const navigate = useRouter();
-  const { state } = useEth();
-  const { contract, accounts } = state;
+  const { formik, contextHolder, courseData, trainerData, traineeData } = usePageState();
   const certificateWrapper = React.createRef<HTMLDivElement>();
+  const {
+    handleSubmit,
+    setFieldValue,
+    values,
+  } = formik;
 
-  const setSelectCourse = (value) => {
-    setselectcourse(value);
-  };
-  const setSelectTrainee = (value) => {
-    setselecttrainee(value);
-  };
-
-  const setSelectTrainer = (value) => {
-    setselecttranier(value);
-  };
-  function setIssueDate(date, dateString) {
-    setDate(dateString);
-  }
-
-  useEffect(() => {
-    getData();
-    getDataTrainee();
-    getDataTrainer();
-  }, []);
-
-  const getData = () => {
-    axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}api/courses?pageSize=10&pageNumber=1`
-      )
-      .then((result) => {
-        setCourses(result.data);
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const getDataTrainee = () => {
-    axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}api/trainees?pageSize=10&PageNumber=1`
-      )
-      .then((result) => {
-        setDataTrainee(result.data);
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const getDataTrainer = () => {
-    axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}api/trainers?pageSize=5&PageNumber=1`
-      )
-      .then((result) => {
-        setDataTrainer(result.data);
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleSave = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    const data = {
-      Course: courseval,
-      Trainee: traineeval,
-      Trainer: trainerval,
-      CertificateIssueDateDate: date,
-    };
-    const key = 'updatable';
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}api/certificates`;
-    axios
-      .post(url, data)
-      .then((result) => {
-        console.log(result.data);
-        api.open({
-          key,
-          message: 'Issue Cerificate.',
-          description: 'Certificate created successfully',
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <div>
-       {contextHolder}
+      {contextHolder}
       <div className={styles['container']}>
         <div className={styles['content']}>
-          <Form>
+          <Form onFinish={handleSubmit}>
             <p>Select Course</p>
             <Select
               placeholder="Select Course"
               style={{ width: 150 }}
-              value={courseval}
-              onChange={(value) => {
-                setSelectCourse(value);
+              value={values.course}
+              onChange={value => {
+                setFieldValue("course", value);
               }}
             >
-              {courses.map((course, index) => (
+              {courseData.map((course, index) => (
                 <Select.Option key={index} value={course.Title}>
                   {course.Title}
                 </Select.Option>
@@ -140,12 +43,12 @@ export function CartPageCertificates() {
             <Select
               placeholder="Select Trainee"
               style={{ width: 150 }}
-              value={traineeval}
-              onChange={(value) => {
-                setSelectTrainee(value);
+              value={values.trainee}
+              onChange={value => {
+                setFieldValue("trainee", value);
               }}
             >
-              {tainees.map((trainee, index) => (
+              {traineeData.map((trainee, index) => (
                 <Select.Option key={index} value={trainee.FirstName}>
                   {trainee.FirstName}{' '}
                 </Select.Option>
@@ -155,12 +58,12 @@ export function CartPageCertificates() {
             <Select
               placeholder="Select Trainer"
               style={{ width: 150 }}
-              value={trainerval}
-              onChange={(value) => {
-                setSelectTrainer(value);
+              value={values.trainer}
+              onChange={value => {
+                setFieldValue("trainer", value);
               }}
             >
-              {trainers.map((trainer, index) => (
+              {trainerData.map((trainer, index) => (
                 <Select.Option key={index} value={trainer.FirstName}>
                   {trainer.FirstName}{' '}
                 </Select.Option>
@@ -169,7 +72,7 @@ export function CartPageCertificates() {
             <p>Select Certificate Issue Date</p>
 
             <div>
-              <DatePicker onChange={setIssueDate} />
+              <DatePicker onChange={(date) => setFieldValue('certificateIssueDate', date)} />
             </div>
 
             <p></p>
@@ -178,9 +81,7 @@ export function CartPageCertificates() {
                 htmlType="submit"
                 icon={<PlusOutlined />}
                 type="primary"
-                onClick={(e) => {
-                  handleSave(e);
-                }}
+
               >
                 Issue Certificate
               </Button>
@@ -194,9 +95,9 @@ export function CartPageCertificates() {
                 className={styles['certificateWrapper']}
                 ref={certificateWrapper}
               >
-                <p className={styles['p1']}>{courseval}</p>
-                <p className={styles['p2']}>{traineeval}</p>
-                <p className={styles['p3']}>{date}</p>
+                <p className={styles['p1']}>{values.course}</p>
+                <p className={styles['p2']}>{values.trainee}</p>
+                <p className={styles['p3']}>{values.certificateIssueDate}</p>
                 <Image
                   src="/issue-cert.png"
                   width={500}
