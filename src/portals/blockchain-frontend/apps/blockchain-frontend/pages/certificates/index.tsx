@@ -8,7 +8,7 @@ import { usePageState } from './state';
 
 
 export function CartPageCertificates() {
-  const { formik, contextHolder, courseData, trainerData, traineeData } = usePageState();
+  const { formik, contextHolder, courseData, trainerData, traineeData,certificateId,copyTextToClipboard,copied } = usePageState();
   const certificateWrapper = React.createRef<HTMLDivElement>();
   const {
     handleSubmit,
@@ -44,12 +44,13 @@ export function CartPageCertificates() {
               placeholder="Select Trainee"
               style={{ width: 150 }}
               value={values.trainee}
-              onChange={value => {
+              onChange={(value,walletAddress) => {
                 setFieldValue("trainee", value);
+                setFieldValue("data", walletAddress);
               }}
             >
-              {traineeData.map((trainee, index) => (
-                <Select.Option key={index} value={trainee.FirstName}>
+              {traineeData.map((trainee,index) => (
+                <Select.Option key={index} value={trainee.FirstName} walletAddress = {trainee.WalletAddress} >
                   {trainee.FirstName}{' '}
                 </Select.Option>
               ))}
@@ -129,6 +130,29 @@ export function CartPageCertificates() {
               Download
             </Button>
           </Form>
+
+          {certificateId && (
+        <div>
+          <label  style={{
+                position: 'absolute',
+                width: 200,
+                left: '98%',
+                top: '130%',
+              }}>{`${process.env.NEXT_PUBLIC_BASE_CERTIFICATE_URL}/view-certificate?view=${certificateId}`}</label>
+          <button  style={{
+                position: 'absolute',
+                width: 110,
+                left: '98%',
+                top: '150%',
+              }} onClick={copyTextToClipboard}>Copy URL</button>
+          {copied && <p style={{
+                position: 'absolute',
+                width: 100,
+                left: '98%',
+                top: '160%',
+              }}>URL Copied!</p>}
+        </div>
+      )}
         </div>
       </div>
     </div>

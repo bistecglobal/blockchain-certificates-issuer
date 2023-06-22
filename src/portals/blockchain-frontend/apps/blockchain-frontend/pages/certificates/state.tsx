@@ -13,6 +13,8 @@ export function usePageState() {
     const [courseData, setCourseData] = useState([]);
     const [trainerData, setTrainerData] = useState([]);
     const [traineeData, setTraineeData] = useState([]);
+    const [certificateId, setCertificateId] = useState('');
+    const [copied, setCopied] = useState(false);
 
     const createNewCertificate = async (values) => {
         let certificate: CertificateRequest = {
@@ -22,13 +24,24 @@ export function usePageState() {
             certificateIssueDate: values.certificateIssueDate,
 
         };
+        //alert(values.data.walletAddress)
         const certificateRes = await createCertificate(certificate);
-        api.open({
-            key: "updatable",
-            message: 'Issue Certificate.',
-            description: 'Certificate created successfully',
-        });
-        saveCertificateIdBlockchain(certificateRes.Id)
+        if (certificateRes) {
+            api.open({
+                key: "updatable",
+                message: 'Issue Certificate.',
+                description: 'Certificate created successfully',
+            });
+            setCertificateId(certificateRes.Id)
+            saveCertificateIdBlockchain(certificateId)
+        } else {
+            api.open({
+                key: "updatable",
+                message: 'Error',
+                description: 'Failed to create certificate',
+            });
+        }
+
     };
 
     const saveCertificateIdBlockchain = async (certificateId: string) => {
@@ -52,32 +65,49 @@ export function usePageState() {
 
     const fetchCourses = async (pageNumber: number, pageSize: number) => {
         let courseRes: CourseResponse[] = [await getCourse(pageNumber, pageSize)];
-        if (Array.isArray(courseRes)) {
-            courseRes = courseRes.flat();
+        debugger
+        if (courseRes[0]) {
+            if (Array.isArray(courseRes)) {
+                courseRes = courseRes.flat();
+            }
+            setCourseData(courseRes);
         }
-        setCourseData(courseRes);
+
     };
     const fetchTrainers = async (pageNumber: number, pageSize: number) => {
         let trainerRes: TrainerResponse[] = [await getTrainers(pageNumber, pageSize)];
-        if (Array.isArray(trainerRes)) {
-            trainerRes = trainerRes.flat();
+        if (trainerRes[0]) {
+            if (Array.isArray(trainerRes)) {
+                trainerRes = trainerRes.flat();
+            }
+            setTrainerData(trainerRes);
         }
-        setTrainerData(trainerRes);
     };
 
     const fetchTrainee = async (pageNumber: number, pageSize: number) => {
         let traineeRes: TraineeResponse[] = [await getTrainees(pageNumber, pageSize)];
-        if (Array.isArray(traineeRes)) {
-            traineeRes = traineeRes.flat();
+        if (traineeRes[0]) {
+            if (Array.isArray(traineeRes)) {
+                traineeRes = traineeRes.flat();
+            }
+            setTraineeData(traineeRes);
         }
-        setTraineeData(traineeRes);
     };
 
+    function copyTextToClipboard() {
+        navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_BASE_CERTIFICATE_URL}/view-certificate?view=${certificateId}`)
+            .then(() => {
+                setCopied(true)
+            })
+            .catch((error) => {
+                console.error('Failed to copy text: ', error);
+            });
+    }
     useEffect(() => {
-   
+
         fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
         fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
         fetchTrainee(DefaultPagination.pageNumber, DefaultPagination.pageSize);
     }, []);
-    return { formik, contextHolder, courseData,trainerData,traineeData }
+    return { formik, contextHolder, courseData, trainerData, traineeData, certificateId, copyTextToClipboard,copied}
 };

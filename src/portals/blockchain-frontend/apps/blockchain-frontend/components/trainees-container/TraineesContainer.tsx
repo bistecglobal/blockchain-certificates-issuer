@@ -97,6 +97,20 @@ export default function TraineesContainer() {
                                 {errors.emailAddress ? `${errors.emailAddress}` : null}
                             </sub>
                         </Form.Item>
+
+                        <Form.Item>
+                            <label htmlFor="walletAddress">Wallet Address</label>
+                            <Input
+                                name="walletAddress"
+                                type="text"
+                                placeholder="Wallet Address"
+                                onChange={handleChange}
+                                value={values.walletAddress}
+                            />
+                            <sub style={{ color: 'red' }}>
+                                {errors.walletAddress ? `${errors.walletAddress}` : null}
+                            </sub>
+                        </Form.Item>
                         <Form.Item>
                             <Button htmlType="submit" icon={<PlusOutlined />} type="primary">
                                 Add Trainee

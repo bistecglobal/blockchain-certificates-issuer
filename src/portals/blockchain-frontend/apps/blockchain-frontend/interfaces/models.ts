@@ -20,6 +20,7 @@ export interface Trainee {
   FirstName : string;
   LastName : string;
   EmailAddress : string;
+  WalletAddress : string;
 }
 
 export interface Certificate {

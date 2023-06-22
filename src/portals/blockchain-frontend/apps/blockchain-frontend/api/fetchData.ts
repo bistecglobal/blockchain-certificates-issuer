@@ -224,7 +224,7 @@ export async function getCourse(pageNumber: number, pageSize: number
           console.error('Unspecified error occured!');
           return null;
         }
-        return (await response.json()) as TrainerResponse;
+        return (await response.json()) as TraineeResponse;
       } catch (error) {
         console.error('Oh no, Error occured in createTrainer()!', error);
       }
@@ -291,3 +291,33 @@ export async function getCourse(pageNumber: number, pageSize: number
           console.error('Oh no, Error occured in createTrainer()!', error);
         }
       }
+
+      export async function getCertificateById(certificateId:any): Promise<CertificateResponse> {
+          let myHeaders = new Headers();
+          myHeaders.append('Content-Type', 'application/json');
+        
+          let  requestOptions: RequestInit = {
+            method: 'Get',
+            headers: myHeaders,   
+          };
+          try {
+            debugger
+            const response = await fetch(
+              `${process.env.NEXT_PUBLIC_BASE_URL}api/certificates/${certificateId}`,
+              requestOptions
+            );
+            if (response.status === 500) {
+              console.error('Internal Server Error');
+              return null;
+            }
+            if (!response.ok) {
+              console.error('Unspecified error occured!');
+              return null;
+            }
+            
+            return (await response.json()) as CertificateResponse;
+          } catch (error) {
+            console.error('Oh no, Error occured in getCertificate!', error);
+            return null;
+          }
+        }
