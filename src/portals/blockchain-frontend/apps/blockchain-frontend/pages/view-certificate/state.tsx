@@ -1,26 +1,38 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getCertificateById } from 'apps/blockchain-frontend/api/fetchData';
-import { CertificateResponse } from 'apps/blockchain-frontend/interfaces/viewModels';
+import { getCertificateById } from '../../api/fetchData';
+import { CertificateResponse } from '../../interfaces/viewModels';
+import { useEth } from '../../contexts/EthContext';
 export function usePageState() {
     const router = useRouter();
     const { view } = router.query;
     const certificateId = view;
     const [certificateDetail, setCertificateDetail] = useState<CertificateResponse[]>([]);
-    const fetchCertificate= async () => {
+    const { state } = useEth();
+    const { contract, accounts } = state;
+    const [isClick, setIsClick] = useState(false)
+
+
+    const fetchCertificate = async () => {
         let certificateRes: CertificateResponse[] = [await getCertificateById(certificateId)];
-        if(certificateRes[0]){
+        if (certificateRes[0]) {
             if (Array.isArray(certificateRes)) {
                 certificateRes = certificateRes.flat();
             }
-            setCertificateDetail(certificateRes)
-        }    
-    };
-    useEffect(() => {
-        if (certificateId) {
-            fetchCertificate();
-
+            setCertificateDetail(certificateRes);
         }
-    }, [certificateId]);
-    return { certificateDetail }
+    };
+    const viewCertificate = async () => {
+        try {
+            const certificate = await contract.methods.checkCertificateWithUser(certificateId ).call({ from: accounts[0] });
+            if (certificate){
+                fetchCertificate();
+            }
+        } catch (error) {
+            console.error(error);
+        }
+        setIsClick(true);
+    };
+
+    return { certificateDetail, isClick, viewCertificate }
 }

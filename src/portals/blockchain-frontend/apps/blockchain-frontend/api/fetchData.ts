@@ -301,7 +301,6 @@ export async function getCourse(pageNumber: number, pageSize: number
             headers: myHeaders,   
           };
           try {
-            debugger
             const response = await fetch(
               `${process.env.NEXT_PUBLIC_BASE_URL}api/certificates/${certificateId}`,
               requestOptions

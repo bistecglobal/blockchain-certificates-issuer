@@ -4,8 +4,9 @@ import { useFormik } from 'formik';
 import { notification } from 'antd';
 import { useEth } from '../../contexts/EthContext';
 import { useEffect, useState } from 'react';
-import { DefaultPagination } from '../..//interfaces/enums';
-import { useRouter } from 'next/router';
+import { DefaultPagination, UserType } from '../..//interfaces/enums';
+import {v4 as uuidv4} from 'uuid';
+
 export function usePageState() {
     const [api, contextHolder] = notification.useNotification();
     const { state } = useEth();
@@ -15,7 +16,8 @@ export function usePageState() {
     const [traineeData, setTraineeData] = useState([]);
     const [certificateId, setCertificateId] = useState('');
     const [copied, setCopied] = useState(false);
-
+    const [isRegister, setIRegister] = useState(false);
+    const issuerId = uuidv4();
     const createNewCertificate = async (values) => {
         let certificate: CertificateRequest = {
             Course: values.course,
@@ -24,31 +26,36 @@ export function usePageState() {
             certificateIssueDate: values.certificateIssueDate,
 
         };
-        //alert(values.data.walletAddress)
         const certificateRes = await createCertificate(certificate);
         if (certificateRes) {
-            api.open({
-                key: "updatable",
-                message: 'Issue Certificate.',
-                description: 'Certificate created successfully',
-            });
-            setCertificateId(certificateRes.Id)
-            saveCertificateIdBlockchain(certificateId)
+           
+            setCertificateId(certificateRes.Id);
+            issueCertificate(values.data.walletAddress, certificateRes.Id, values.data.id,);
         } else {
             api.open({
                 key: "updatable",
                 message: 'Error',
-                description: 'Failed to create certificate',
+                description: 'Failed to issue certificate',
             });
         }
 
     };
 
-    const saveCertificateIdBlockchain = async (certificateId: string) => {
+    const issueCertificate = async (walletAddress, certificateId, traineeId) => {
         try {
-            await contract.methods.saveCertificate(certificateId)
+            await contract.methods.issueCertificate(walletAddress, certificateId, traineeId, UserType.Holder)
                 .send({ from: accounts[0] });
+                api.open({
+                    key: "updatable",
+                    message: 'Issue Certificate.',
+                    description: 'Certificate issued successfully',
+                });
         } catch (error) {
+            api.open({
+                key: "updatable",
+                message: 'Error',
+                description: 'Failed to issue certificate',
+            });
             console.error(error);
         }
 
@@ -65,7 +72,6 @@ export function usePageState() {
 
     const fetchCourses = async (pageNumber: number, pageSize: number) => {
         let courseRes: CourseResponse[] = [await getCourse(pageNumber, pageSize)];
-        debugger
         if (courseRes[0]) {
             if (Array.isArray(courseRes)) {
                 courseRes = courseRes.flat();
@@ -103,11 +109,46 @@ export function usePageState() {
                 console.error('Failed to copy text: ', error);
             });
     }
-    useEffect(() => {
 
-        fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
-        fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
-        fetchTrainee(DefaultPagination.pageNumber, DefaultPagination.pageSize);
-    }, []);
-    return { formik, contextHolder, courseData, trainerData, traineeData, certificateId, copyTextToClipboard,copied}
+    const getUser = async () => {
+        try {
+            const userDetail = await contract.methods.getUser(accounts[0]).call();
+            if (userDetail[0] !== "0" && userDetail[1] === UserType.Issuer) {
+                setIRegister(true);
+                api.open({
+                    key: "updatable",
+                    message: 'Login successful ',
+                    description: 'Login successful',
+                });
+            } else {
+                setIRegister(false);
+                api.open({
+                    key: "updatable",
+                    message: 'Error',
+                    description: 'Invalid user',
+                });
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const registerIssuer = async () => {
+        try {
+             await contract.methods.registerUser(accounts[0], issuerId,UserType.Issuer ).send({ from: accounts[0] });
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        if (accounts) {
+            getUser();
+            fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+            fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+            fetchTrainee(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+        }
+    }, [accounts]);
+    return { formik, contextHolder, courseData, trainerData, traineeData, certificateId, copyTextToClipboard, copied ,isRegister,registerIssuer}
 };
