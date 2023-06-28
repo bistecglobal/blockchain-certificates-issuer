@@ -5,7 +5,7 @@ import { notification } from 'antd';
 import { useEth } from '../../contexts/EthContext';
 import { useEffect, useState } from 'react';
 import { DefaultPagination, UserType } from '../..//interfaces/enums';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export function usePageState() {
     const [api, contextHolder] = notification.useNotification();
@@ -28,7 +28,7 @@ export function usePageState() {
         };
         const certificateRes = await createCertificate(certificate);
         if (certificateRes) {
-           
+
             setCertificateId(certificateRes.Id);
             issueCertificate(values.data.walletAddress, certificateRes.Id, values.data.id,);
         } else {
@@ -45,11 +45,11 @@ export function usePageState() {
         try {
             await contract.methods.issueCertificate(walletAddress, certificateId, traineeId, UserType.Holder)
                 .send({ from: accounts[0] });
-                api.open({
-                    key: "updatable",
-                    message: 'Issue Certificate.',
-                    description: 'Certificate issued successfully',
-                });
+            api.open({
+                key: "updatable",
+                message: 'Issue Certificate.',
+                description: 'Certificate issued successfully',
+            });
         } catch (error) {
             api.open({
                 key: "updatable",
@@ -113,7 +113,7 @@ export function usePageState() {
     const getUser = async () => {
         try {
             const userDetail = await contract.methods.getUser(accounts[0]).call();
-            if (userDetail[0] !== "0" && userDetail[1] === UserType.Issuer) {
+            if (userDetail[0] !== "0" && Number(userDetail[1]) === UserType.Issuer) {
                 setIRegister(true);
                 api.open({
                     key: "updatable",
@@ -135,8 +135,8 @@ export function usePageState() {
 
     const registerIssuer = async () => {
         try {
-             await contract.methods.registerUser(accounts[0], issuerId,UserType.Issuer ).send({ from: accounts[0] });
-
+             await contract.methods.registerUser(accounts[0], issuerId, UserType.Issuer).send({ from: accounts[0]});
+            window.location.reload();
         } catch (error) {
             console.error(error);
         }
@@ -150,5 +150,5 @@ export function usePageState() {
             fetchTrainee(DefaultPagination.pageNumber, DefaultPagination.pageSize);
         }
     }, [accounts]);
-    return { formik, contextHolder, courseData, trainerData, traineeData, certificateId, copyTextToClipboard, copied ,isRegister,registerIssuer}
+    return { formik, contextHolder, courseData, trainerData, traineeData, certificateId, copyTextToClipboard, copied, isRegister, registerIssuer }
 };

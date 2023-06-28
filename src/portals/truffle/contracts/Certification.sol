@@ -76,24 +76,24 @@ contract Certification{
     
     }
 
-    function shareCertificate(address userAddress, string memory certificateId) public {
-    require(bytes(users[userAddress].id).length == 0, "User does not exist");
+    function shareCertificate(string memory certificateId) public {
+    require(bytes(users[msg.sender].id).length == 0, "User does not exist");
 
-    User storage user = users[userAddress];
+    User storage user = users[msg.sender];
     user.sharedCertificates.push(certificateId);
     }
 
-    function checkSharedCertificate(address userAddress, string memory certificateId) public  view returns (bool) {
-    require(bytes(users[userAddress].id).length == 0, "User does not exist");
-        User storage user = users[userAddress];
-       bool isShared = false;
-    for (uint i = 0; i < user.sharedCertificates.length; i++) {
+    function checkSharedCertificate(string memory certificateId) public  view returns (bool) {
+   
+        User storage user = users[msg.sender];
+        bool isShared = false;
+        for (uint i = 0; i < user.sharedCertificates.length; i++) {
         if (keccak256(bytes(user.sharedCertificates[i])) == keccak256(bytes(certificateId)))  {
             isShared = true;
             break;
+            }
         }
-    }
-    return isShared;
+        return isShared;
     }
 
     function checkCertificateWithUser(string memory certificateId) public  view returns (bool) {

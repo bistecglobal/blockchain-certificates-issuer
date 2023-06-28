@@ -10,7 +10,8 @@ export function usePageState() {
     const [certificateDetail, setCertificateDetail] = useState<CertificateResponse[]>([]);
     const { state } = useEth();
     const { contract, accounts } = state;
-    const [isClick, setIsClick] = useState(false)
+    const [isClick, setIsClick] = useState(false);
+    const [isShared, setIsShared] = useState(false);
 
 
     const fetchCertificate = async () => {
@@ -27,6 +28,7 @@ export function usePageState() {
             const certificate = await contract.methods.checkCertificateWithUser(certificateId ).call({ from: accounts[0] });
             if (certificate){
                 fetchCertificate();
+                checkShareButtonStatus();
             }
         } catch (error) {
             console.error(error);
@@ -34,5 +36,27 @@ export function usePageState() {
         setIsClick(true);
     };
 
-    return { certificateDetail, isClick, viewCertificate }
+    const checkShareButtonStatus= async () => {
+        try {
+            const shareStatus = await contract.methods.checkSharedCertificate(certificateId ).call({ from: accounts[0] });
+            if (shareStatus){
+                setIsShared(true);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    const shareCertificate= async () => {
+        try {
+            const shareStatus = await contract.methods.shareCertificate(certificateId ).call({ from: accounts[0] });
+            if (shareStatus){
+                setIsShared(true);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
+    return { certificateDetail, isClick, viewCertificate,isShared }
 }

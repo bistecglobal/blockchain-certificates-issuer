@@ -7,7 +7,7 @@ import { usePageState } from './state';
 import moment from 'moment';
 
 export function CartPageCertificates() {
-  const { certificateDetail, isClick, viewCertificate } = usePageState();
+  const { certificateDetail, isClick, viewCertificate,isShared } = usePageState();
   const certificateWrapper = React.createRef<HTMLDivElement>();
   return (
     <div>
@@ -49,7 +49,7 @@ export function CartPageCertificates() {
                   <br />
                   <br />
 
-                  <Button
+                  <Button disabled = {isShared}
                     style={{
                       position: 'absolute',
                       width: 110,
@@ -57,16 +57,8 @@ export function CartPageCertificates() {
                       top: '120%',
                     }}
                     type="primary"
-                    icon={<DownloadOutlined />}
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      const { exportComponentAsPNG } = await import(
-                        'react-component-export-image'
-                      );
-                      exportComponentAsPNG(certificateWrapper);
-                    }}
-                  >
-                    Download
+                    icon={<DownloadOutlined />}>
+                    Share
                   </Button>
                 </>) : (
                 <p>No Data</p>
