@@ -14,7 +14,8 @@ export function useComponentState() {
       let trainer: TraineeRequest = {
           FirstName : values.firstName,
           LastName : values.lastName,
-          EmailAddress : values.emailAddress
+          EmailAddress : values.emailAddress,
+          WalletAddress : values.walletAddress
       };
       const traineeRes = await createTrainee(trainer);
       
@@ -25,6 +26,7 @@ export function useComponentState() {
         firstName?: string;
         lastName?: string;
         emailAddress?: string;
+        walletAddress?: string;
       } = {};
   
       if (!values.firstName) {
@@ -38,6 +40,10 @@ export function useComponentState() {
       if (!values.emailAddress) {
         errors.emailAddress = 'Required';
       }
+
+      if (!values.walletAddress) {
+        errors.walletAddress = 'Required';
+      }
   
   
       return errors;
@@ -48,6 +54,7 @@ export function useComponentState() {
         firstName: '',
         lastName: '',
         emailAddress: '',
+        walletAddress: ''
       },
       validate,
       onSubmit: createNewTrainee,
