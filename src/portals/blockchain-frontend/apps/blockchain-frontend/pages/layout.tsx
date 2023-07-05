@@ -9,7 +9,7 @@ import {
 import { Menu } from 'antd';
 import { useRouter } from 'next/router'
 
-export default function RootLayout({ children,href  }) {
+export default function RootLayout({ children}) {
   const navigate = useRouter();
   const isHide = navigate.pathname.includes('/view-certificate') ||navigate.pathname.includes('/verify-certificate')  ;
   return (
