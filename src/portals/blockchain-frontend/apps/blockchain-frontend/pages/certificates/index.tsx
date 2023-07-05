@@ -8,8 +8,8 @@ import { usePageState } from './state';
 
 
 export function CartPageCertificates() {
-  const { formik, contextHolder, courseData, trainerData, traineeData, certificateId, copyTextToClipboard, copied, isRegister,
-    registerIssuer} = usePageState();
+  const { formik, contextHolder, courseData, trainerData, traineeData, copyTextToClipboard, copied, isRegister,
+    registerIssuer, url, isIssue } = usePageState();
   const certificateWrapper = React.createRef<HTMLDivElement>();
   const {
     handleSubmit,
@@ -25,12 +25,10 @@ export function CartPageCertificates() {
       <div className={styles['container']}>
         <div className={styles['content']}>
           {!isRegister && (
-            <div>   <button style={{
-              position: 'absolute',
-              width: 110,
-              left: '98%',
-              top: '150%',
-            }} onClick={registerIssuer}>Register</button></div>
+            <div>
+              <Button
+                type="primary"
+                onClick={registerIssuer}>Register Now</Button></div>
           )}
           {isRegister && (
             <div>
@@ -58,12 +56,12 @@ export function CartPageCertificates() {
                   value={values.trainee}
                   onChange={(value, data) => {
                     setFieldValue("trainee", value);
-                    setFieldValue("data", data);
+                    setFieldValue("traineeData", data);
 
                   }}
                 >
                   {traineeData.map((trainee, index) => (
-                    <Select.Option key={index} value={trainee.FirstName} walletAddress={trainee.WalletAddress} id={trainee.Id}>
+                    <Select.Option key={index} value={trainee.FirstName} data={trainee}>
                       {trainee.FirstName}{' '}
                     </Select.Option>
                   ))}
@@ -144,26 +142,14 @@ export function CartPageCertificates() {
                 </Button>
               </Form>
 
-              {certificateId && (
+              {isIssue &&(
                 <div>
-                  <label style={{
-                    position: 'absolute',
-                    width: 200,
-                    left: '98%',
-                    top: '130%',
-                  }}>{`${process.env.NEXT_PUBLIC_BASE_CERTIFICATE_URL}/view-certificate?view=${certificateId}`}</label>
-                  <button style={{
-                    position: 'absolute',
-                    width: 110,
-                    left: '98%',
-                    top: '150%',
-                  }} onClick={copyTextToClipboard}>Copy URL</button>
-                  {copied && <p style={{
-                    position: 'absolute',
-                    width: 100,
-                    left: '98%',
-                    top: '160%',
-                  }}>URL Copied!</p>}
+                  <Button  type="primary"
+                  onClick={copyTextToClipboard}>Copy URL</Button>
+                    <br />
+                  <label>{url}</label>
+                  <br />
+                  {copied && <p>URL Copied!</p>}
                 </div>
               )}
             </div>

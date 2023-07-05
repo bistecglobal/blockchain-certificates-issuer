@@ -7,15 +7,17 @@ import {
   SafetyCertificateOutlined,
 } from '@ant-design/icons';
 import { Menu } from 'antd';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router'
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children,href  }) {
   const navigate = useRouter();
+  const isHide = navigate.pathname.includes('/view-certificate') ||navigate.pathname.includes('/verify-certificate')  ;
   return (
     <div>
       <main>{children}</main>
       <div className={styles['container']}>
         <div className={styles['SideMenu']}>
+        {!isHide && (
           <Menu
             className={styles['SideMenuVertical']}
             mode="vertical"
@@ -52,6 +54,7 @@ export default function RootLayout({ children }) {
               },
             ]}
           ></Menu>
+        )}
         </div>
       </div>
     </div>

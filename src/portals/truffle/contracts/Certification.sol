@@ -44,18 +44,18 @@ contract Certification{
     
       
     }
-    function verifyCertificate(address userAddress, string memory certificateId) public {
-        require(users[userAddress].userType == UserType.Verifier, "Only verifiers can verify certificates");
-
-        User storage user = users[userAddress];
+    function verifyCertificate(address userAddress, string memory certificateId) public returns (Certificate[] memory) {
+         User storage user = users[userAddress];
         Certificate[] storage certificates = user.certificates;
-        
+
         for (uint i = 0; i < certificates.length; i++) {
             if (keccak256(bytes(certificates[i].certificateId)) == keccak256(bytes(certificateId))) {
                 certificates[i].verified = true;
-                break;
+                 break;
             }
         }
+
+        return user.certificates;
     }
 
     function getUser(address userAddress) public view returns (string memory, UserType) {
@@ -77,10 +77,11 @@ contract Certification{
     }
 
     function shareCertificate(string memory certificateId) public {
-    require(bytes(users[msg.sender].id).length == 0, "User does not exist");
 
-    User storage user = users[msg.sender];
-    user.sharedCertificates.push(certificateId);
+        User storage user = users[msg.sender];
+        user.sharedCertificates.push(certificateId);
+        
+   
     }
 
     function checkSharedCertificate(string memory certificateId) public  view returns (bool) {
@@ -111,5 +112,10 @@ contract Certification{
            
         }
     return isCorrect;
+    }
+    
+    function getSharedCertificates(address userAddress) public view returns (string[] memory) {
+        User storage user = users[userAddress];
+        return user.sharedCertificates;
     }
 }
