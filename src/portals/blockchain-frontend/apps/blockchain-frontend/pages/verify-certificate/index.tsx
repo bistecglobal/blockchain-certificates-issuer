@@ -1,4 +1,4 @@
-import styles from './view-certificate.module.css';
+import styles from './verify-certificate.module.css';
 import { Button } from 'antd';
 import React from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
@@ -7,7 +7,7 @@ import { usePageState } from './state';
 import moment from 'moment';
 
 export function CartPageCertificates() {
-  const { certificateDetail, isClick, viewCertificate, isShared, shareCertificate, contextHolder, url, copied, copyTextToClipboard } = usePageState();
+  const { certificateDetail, isClick, verifyCertificate,isVerify,contextHolder } = usePageState();
   const certificateWrapper = React.createRef<HTMLDivElement>();
   return (
     <div>
@@ -16,18 +16,17 @@ export function CartPageCertificates() {
         <div className={styles['content']}>
           <div className={styles['Meta']}>
             {!isClick && (
-              <div><Button type='primary' onClick={viewCertificate}>View Certificate</Button></div>
+              <div>   <Button type='primary' onClick={verifyCertificate}>Verify Certificate</Button></div>
             )}
           </div>
           {isClick && (
             <div>
-              {certificateDetail.length > 0 ? (
+              {certificateDetail.length > 0 && isVerify ? (
                 <>
                   <div className={styles['Meta']}>
                     <div
                       className={styles['certificateWrapper']}
-                      ref={certificateWrapper}
-                    >
+                      ref={certificateWrapper}>
                       <p className={styles['p1']}>{certificateDetail[0].Course}</p>
                       <p className={styles['p2']}>{certificateDetail[0].Trainee[0].FirstName}</p>
                       <p className={styles['p3']}>{moment(certificateDetail[0].certificateIssueDate).format('YYYY-MM-DD')}</p>
@@ -42,25 +41,8 @@ export function CartPageCertificates() {
                   </div>
                   <br />
                   <br />
-
-                  <Button disabled={isShared}
-                    type="primary"
-                    icon={<DownloadOutlined />}
-                    onClick={shareCertificate}>
-                    Share
-                  </Button>
-          <br/>
-                  {isShared && (
-                    <>
-                      <Button style={{marginTop :10}} type='primary' onClick={copyTextToClipboard}>Copy URL</Button>
-                      <br/>
-                      <p style={{marginTop :20,width:250}}>{url}</p>
-                      {copied && <p>URL Copied!</p>}
-                    </>
-                  )}
-                </>
-              ) : (
-                <p>No Data</p>
+                </>) : (
+                <p>Certificate verification failed</p>
               )}
             </div>
           )}

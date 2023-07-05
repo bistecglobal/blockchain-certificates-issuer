@@ -18,19 +18,23 @@ export function usePageState() {
     const [copied, setCopied] = useState(false);
     const [isRegister, setIRegister] = useState(false);
     const issuerId = uuidv4();
+    const [url, setUrl] = useState('');
+    const[isIssue ,setIssue] = useState(false);
+
+
     const createNewCertificate = async (values) => {
         let certificate: CertificateRequest = {
             Course: values.course,
-            Trainee: values.trainee,
+            Trainee: [values.traineeData.data],
             Trainer: values.trainer,
             certificateIssueDate: values.certificateIssueDate,
 
         };
         const certificateRes = await createCertificate(certificate);
         if (certificateRes) {
-
             setCertificateId(certificateRes.Id);
-            issueCertificate(values.data.walletAddress, certificateRes.Id, values.data.id,);
+            setUrl(`${process.env.NEXT_PUBLIC_BASE_CERTIFICATE_URL}/view-certificate?view=${certificateRes.Id}`);
+            issueCertificateToBlockchain(values.traineeData.data.WalletAddress, certificateRes.Id, values.traineeData.data.Id,);
         } else {
             api.open({
                 key: "updatable",
@@ -41,10 +45,11 @@ export function usePageState() {
 
     };
 
-    const issueCertificate = async (walletAddress, certificateId, traineeId) => {
+    const issueCertificateToBlockchain = async (walletAddress, certificateId, traineeId) => {
         try {
             await contract.methods.issueCertificate(walletAddress, certificateId, traineeId, UserType.Holder)
                 .send({ from: accounts[0] });
+                setIssue(true);
             api.open({
                 key: "updatable",
                 message: 'Issue Certificate.',
@@ -101,7 +106,7 @@ export function usePageState() {
     };
 
     function copyTextToClipboard() {
-        navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_BASE_CERTIFICATE_URL}/view-certificate?view=${certificateId}`)
+        navigator.clipboard.writeText(url)
             .then(() => {
                 setCopied(true)
             })
@@ -150,5 +155,6 @@ export function usePageState() {
             fetchTrainee(DefaultPagination.pageNumber, DefaultPagination.pageSize);
         }
     }, [accounts]);
-    return { formik, contextHolder, courseData, trainerData, traineeData, certificateId, copyTextToClipboard, copied, isRegister, registerIssuer }
+    return { formik, contextHolder, courseData, trainerData, traineeData, certificateId, 
+        copyTextToClipboard, copied, isRegister, registerIssuer,url,isIssue }
 };

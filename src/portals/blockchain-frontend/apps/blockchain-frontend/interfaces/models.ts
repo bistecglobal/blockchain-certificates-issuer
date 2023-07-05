@@ -25,7 +25,7 @@ export interface Trainee {
 
 export interface Certificate {
  Course : string,
- Trainee : string,
+ Trainee : Trainee[],
  Trainer : string,
  certificateIssueDate : Date
 }

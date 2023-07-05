@@ -6,6 +6,6 @@
     "test": "truffle test"
   },
   "dependencies": {
-    "@truffle/hdwallet-provider": "^2.1.7"
+    "@truffle/hdwallet-provider": "^2.1.12"
   }
 }

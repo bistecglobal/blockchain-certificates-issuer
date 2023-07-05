@@ -10,7 +10,7 @@ namespace BlockchainCertificatesIssuer.API.Models
     public class Certificate : Item
     {
         public string Course { get; set; }
-        public string Trainee { get; set; }
+        public List<Trainee> Trainee { get; set; }
         public string Trainer { get; set; }
         public DateTime CertificateIssueDate { get; set; }
     }

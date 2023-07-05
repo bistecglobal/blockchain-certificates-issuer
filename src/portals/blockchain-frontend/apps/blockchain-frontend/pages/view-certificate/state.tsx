@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { getCertificateById } from '../../api/fetchData';
 import { CertificateResponse } from '../../interfaces/viewModels';
 import { useEth } from '../../contexts/EthContext';
+import { notification } from 'antd';
 export function usePageState() {
     const router = useRouter();
     const { view } = router.query;
@@ -12,6 +13,9 @@ export function usePageState() {
     const { contract, accounts } = state;
     const [isClick, setIsClick] = useState(false);
     const [isShared, setIsShared] = useState(false);
+    const [api, contextHolder] = notification.useNotification();
+    const [copied, setCopied] = useState(false);
+    const [url, setUrl] = useState("");
 
 
     const fetchCertificate = async () => {
@@ -29,6 +33,7 @@ export function usePageState() {
             if (certificate){
                 fetchCertificate();
                 checkShareButtonStatus();
+                setUrl(`${process.env.NEXT_PUBLIC_BASE_CERTIFICATE_URL}/verify-certificate?verify=${certificateId}`);
             }
         } catch (error) {
             console.error(error);
@@ -48,15 +53,31 @@ export function usePageState() {
     };
     const shareCertificate= async () => {
         try {
-            const shareStatus = await contract.methods.shareCertificate(certificateId ).call({ from: accounts[0] });
-            if (shareStatus){
-                setIsShared(true);
-            }
+         await contract.methods.shareCertificate(certificateId).send({ from: accounts[0] });
+         api.open({
+            key: "updatable",
+            message: 'Certificate Share successful ',
+            description: 'Certificate Share successful',
+        });
+        setIsShared(true);
         } catch (error) {
             console.error(error);
+            api.open({
+                key: "updatable",
+                message: 'Error ',
+                description: 'Certificate Share Fail',
+            });
         }
     };
+    function copyTextToClipboard() {
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                setCopied(true)
+            })
+            .catch((error) => {
+                console.error('Failed to copy text: ', error);
+            });
+    }
 
-
-    return { certificateDetail, isClick, viewCertificate,isShared }
+    return { certificateDetail, isClick, viewCertificate,isShared,shareCertificate,contextHolder,copied,copyTextToClipboard,url }
 }
