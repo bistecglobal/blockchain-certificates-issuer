@@ -4,8 +4,9 @@ import { DeleteOutlined } from '@ant-design/icons';
 import styles from './CoursesContainer.module.css';
 import { useComponentState } from './state';
 import { DefaultPagination } from '../../interfaces/enums'
+
 export default function CoursesContainer() {
-  const { formik, deleteCourse,dataSource,fetchCourses } = useComponentState();
+  const { formik,dataSource,fetchCourses,handleDelete } = useComponentState();
   const {
     handleSubmit,
     handleChange,
@@ -45,13 +46,13 @@ export default function CoursesContainer() {
       render: (data) => {
         return (
           <>
-            <DeleteOutlined
-              onClick={() => {
-                deleteCourse(data.Id);
-              }}
-              style={{ color: 'red', marginLeft: 4 }}
-            />
-          </>
+          <DeleteOutlined
+           onClick={() => {
+            handleDelete(data.Type,data.Id,);
+          }}
+            style={{ color: 'red', marginLeft: 4 }}
+          />
+        </>
         );
       },
     },

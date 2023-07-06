@@ -1,14 +1,13 @@
-import { createTrainer, getTrainers } from "apps/blockchain-frontend/api/fetchData";
+import { createTrainer, deleteById, getTrainers } from "apps/blockchain-frontend/api/fetchData";
 import { TrainerRequest, TrainerResponse } from "apps/blockchain-frontend/interfaces/viewModels";
 import { useEffect, useState } from "react";
 import { useFormik } from 'formik';
 import { DefaultPagination } from "apps/blockchain-frontend/interfaces/enums";
+import { Modal, message } from "antd";
+import {ExclamationCircleOutlined } from '@ant-design/icons/lib/icons';
 
 export function useComponentState() {
     const [dataSource, setDataSource] = useState([]);
-    const deleteTrainer = (id) => {
-      throw new Error('Not implemented');
-    };
   
     const createNewTrainer = async (values) => {
       let trainer: TrainerRequest = {
@@ -17,7 +16,13 @@ export function useComponentState() {
           EmailAddress : values.emailAddress
       };
       const trainerRes = await createTrainer(trainer);
-      
+      if(trainerRes){
+        message.success(`Course created successfully`);
+        fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+        clearForm();
+      }else{
+        message.success(`Failed to create the course`);
+      }
     };
   
     const validate = (values) => {
@@ -68,5 +73,26 @@ export function useComponentState() {
       fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
     }, []);
   
-    return { formik, deleteTrainer, dataSource, fetchTrainers };
+    const handleDelete =( itemName, id) => {
+      Modal.confirm({
+        title: `Are you sure you want to delete this ${itemName}?`,
+        icon: <ExclamationCircleOutlined />,
+        onOk() {
+        deleteById(id,itemName).then((success) => {
+            if (success) {
+              message.success(`${itemName} deleted successfully`);
+              fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+            } else {
+              message.error(`Failed to delete ${itemName}`);
+            }
+          });
+        },
+        onCancel() { },
+      });
+    }  
+    
+    const clearForm = () => {
+      formik.resetForm();
+    };
+    return { formik, handleDelete, dataSource, fetchTrainers };
   }

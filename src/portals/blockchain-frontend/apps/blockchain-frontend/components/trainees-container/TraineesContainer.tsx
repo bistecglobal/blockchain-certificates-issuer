@@ -1,12 +1,13 @@
 import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
 import styles from './TraineesContainer.module.css';
-import { useComponentState, useFetchTraineesEffect } from './state';
+import { useComponentState } from './state';
 import { DeleteOutlined } from '@ant-design/icons';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
+
 export default function TraineesContainer() {
     const { Title } = Typography;
-    const { formik, deleteTrainee, dataSource, fetchTrainees } = useComponentState();
+    const { formik, handleDelete, dataSource, fetchTrainees } = useComponentState();
     const {
         handleSubmit,
         handleChange,
@@ -36,18 +37,18 @@ export default function TraineesContainer() {
             render: (data) => {
                 return (
                     <>
-                        <DeleteOutlined
-                            onClick={() => {
-                                deleteTrainee(data.Id);
-                            }}
-                            style={{ color: 'red', marginLeft: 4 }}
-                        />
-                    </>
+                    <DeleteOutlined
+                     onClick={() => {
+                      handleDelete(data.Type,data.Id,);
+                    }}
+                      style={{ color: 'red', marginLeft: 4 }}
+                    />
+                  </>
                 );
             },
         },
     ];
-    useFetchTraineesEffect(fetchTrainees)
+
     const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
         fetchTrainees(pageNumber, pageSize ?? DefaultPagination.pageSize);
     };
@@ -64,7 +65,7 @@ export default function TraineesContainer() {
                                 type="text"
                                 placeholder="First Name"
                                 onChange={handleChange}
-                                value={values.title}
+                                value={values.firstName}
                             />
                             <sub style={{ color: 'red' }}>
                                 {errors.firstName ? `${errors.firstName}` : null}
@@ -78,7 +79,7 @@ export default function TraineesContainer() {
                                 type="text"
                                 placeholder="Last Name"
                                 onChange={handleChange}
-                                value={values.title}
+                                value={values.lastName}
                             />
                             <sub style={{ color: 'red' }}>
                                 {errors.lastName ? `${errors.lastName}` : null}

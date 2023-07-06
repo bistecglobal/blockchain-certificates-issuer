@@ -89,5 +89,32 @@ namespace BlockchainCertificatesIssuer.API.Functions
                 return req.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        [Function("DeleteTranee")]
+        public async Task<HttpResponseData> DeleteCourse(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "trainee/{id}")] HttpRequestData req,
+         string id)
+        {
+            _logger.LogInformation($"Deleting trainee with ID '{id}'.");
+
+            try
+            {
+
+                var trainee = await traineeRepository.GetAsync(id);
+                if (trainee == null)
+                {
+                    return req.CreateResponse(HttpStatusCode.NotFound);
+                }
+
+                await traineeRepository.DeleteAsync(id);
+
+                return req.CreateResponse(HttpStatusCode.NoContent);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return req.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
     }
 }

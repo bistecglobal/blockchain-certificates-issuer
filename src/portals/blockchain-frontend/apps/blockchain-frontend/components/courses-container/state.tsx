@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { CourseRequest, CourseResponse } from 'apps/blockchain-frontend/interfaces/viewModels';
-import { createCourse, getCourse } from 'apps/blockchain-frontend/api/fetchData';
+import { createCourse, deleteById, getCourse } from 'apps/blockchain-frontend/api/fetchData';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
+import {ExclamationCircleOutlined } from '@ant-design/icons/lib/icons';
+import {message, Modal } from 'antd';
 
 export function useComponentState() {
   const [dataSource, setDataSource] = useState([]);
-  const deleteCourse = (id) => {
-    throw new Error('Not implemented');
-  };
+
 
   const createNewCourse = async (values) => {
     let course: CourseRequest = {
@@ -18,6 +18,13 @@ export function useComponentState() {
       EndDate: values.endDate,
     };
     const courseRes = await createCourse(course);
+    if(courseRes){
+      message.success(`Course created successfully`);
+      fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+      clearForm();
+    }else{
+      message.success(`Failed to create the course`);
+    }
   };
 
   const validate = (values) => {
@@ -67,16 +74,39 @@ export function useComponentState() {
     if (Array.isArray(courseRes)) {
       courseRes = courseRes.flat();
     }
-    const formattedData = courseRes.map((item) => {
-      const formattedStartDate = new Date(item.StartDate).toLocaleDateString();
-      const formattedEndDate = new Date(item.EndDate).toLocaleDateString();
-      return { ...item, StartDate: formattedStartDate, EndDate: formattedEndDate,key: item.Id};
-    });
-    setDataSource(formattedData);
+      const formattedData = courseRes.map((item) => {
+        const formattedStartDate = new Date(item.StartDate).toLocaleDateString();
+        const formattedEndDate = new Date(item.EndDate).toLocaleDateString();
+        return { ...item, StartDate: formattedStartDate, EndDate: formattedEndDate,key: item.Id};
+      });
+      setDataSource(formattedData);
+    
+    
   };
 
   useEffect(() => {
     fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
   }, []);
-  return { formik, deleteCourse, dataSource, fetchCourses };
+
+  const handleDelete =( itemName, id) => {
+    Modal.confirm({
+      title: `Are you sure you want to delete this ${itemName}?`,
+      icon: <ExclamationCircleOutlined />,
+      onOk() {
+      deleteById(id,itemName).then((success) => {
+          if (success) {
+            message.success(`${itemName} deleted successfully`);
+            fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+          } else {
+            message.error(`Failed to delete ${itemName}`);
+          }
+        });
+      },
+      onCancel() { },
+    });
+  };
+  const clearForm = () => {
+    formik.resetForm();
+  };
+  return { formik, dataSource, fetchCourses,handleDelete };
 }
