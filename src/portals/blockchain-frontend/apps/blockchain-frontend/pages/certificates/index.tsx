@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import React from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import Image from 'next/image';
-import { usePageState } from './state';
+import { usePageState } from '../../components/pages-state/certificates-state/state';
 
 
 export function CartPageCertificates() {

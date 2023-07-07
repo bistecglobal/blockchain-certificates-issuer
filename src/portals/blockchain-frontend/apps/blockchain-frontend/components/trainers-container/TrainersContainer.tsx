@@ -4,9 +4,10 @@ import { useComponentState } from './state';
 import { DeleteOutlined } from '@ant-design/icons';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
+
 export default function TrainersContainer() {
     const { Title } = Typography;
-    const { formik, deleteTrainer, dataSource, fetchTrainers } = useComponentState();
+    const { formik, handleDelete, dataSource, fetchTrainers } = useComponentState();
     const {
         handleSubmit,
         handleChange,
@@ -36,13 +37,13 @@ export default function TrainersContainer() {
             render: (data) => {
                 return (
                     <>
-                        <DeleteOutlined
-                            onClick={() => {
-                                deleteTrainer(data.Id);
-                            }}
-                            style={{ color: 'red', marginLeft: 4 }}
-                        />
-                    </>
+                    <DeleteOutlined
+                     onClick={() => {
+                      handleDelete(data.Type,data.Id,);
+                    }}
+                      style={{ color: 'red', marginLeft: 4 }}
+                    />
+                  </>
                 );
             },
         },
@@ -64,7 +65,7 @@ export default function TrainersContainer() {
                                 type="text"
                                 placeholder="First Name"
                                 onChange={handleChange}
-                                value={values.title}
+                                value={values.firstName}
                             />
                             <sub style={{ color: 'red' }}>
                                 {errors.firstName ? `${errors.firstName}` : null}
@@ -78,7 +79,7 @@ export default function TrainersContainer() {
                                 type="text"
                                 placeholder="Last Name"
                                 onChange={handleChange}
-                                value={values.title}
+                                value={values.lastName}
                             />
                             <sub style={{ color: 'red' }}>
                                 {errors.lastName ? `${errors.lastName}` : null}

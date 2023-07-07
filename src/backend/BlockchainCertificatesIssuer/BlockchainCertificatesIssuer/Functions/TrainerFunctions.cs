@@ -42,7 +42,7 @@ namespace BlockchainCertificatesIssuer.API.Functions
             }
         }
 
-        [Function("GetTraiers")]
+        [Function("GetTrainers")]
         public async Task<HttpResponseData> GetTraiers(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "trainers")] HttpRequestData req)
         {
@@ -81,6 +81,33 @@ namespace BlockchainCertificatesIssuer.API.Functions
                     await response.WriteAsJsonAsync(trainers.Items);
                     return response;
          
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return req.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [Function("DeleteTrainer")]
+        public async Task<HttpResponseData> DeleteCourse(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "trainer/{id}")] HttpRequestData req,
+        string id)
+        {
+            _logger.LogInformation($"Deleting trainer with ID '{id}'.");
+
+            try
+            {
+
+                var traier = await trainerRepository.GetAsync(id);
+                if (traier == null)
+                {
+                    return req.CreateResponse(HttpStatusCode.NotFound);
+                }
+
+                await trainerRepository.DeleteAsync(id);
+
+                return req.CreateResponse(HttpStatusCode.NoContent);
             }
             catch (Exception ex)
             {

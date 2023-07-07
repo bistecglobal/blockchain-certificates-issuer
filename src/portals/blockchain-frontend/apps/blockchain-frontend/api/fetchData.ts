@@ -320,3 +320,29 @@ export async function getCourse(pageNumber: number, pageSize: number
             return null;
           }
         }
+        export async function deleteById(id: string,itemName : string ): Promise<boolean> {
+          let myHeaders = new Headers();
+          myHeaders.append('Content-Type', 'application/json');
+          let requestOptions: RequestInit = {
+            method: 'DELETE',
+            headers: myHeaders,
+          };
+          try {
+            const response = await fetch(
+              `${process.env.NEXT_PUBLIC_BASE_URL}api/${itemName}/${id}`,
+              requestOptions
+            );
+            if (response.status === 500) {
+              console.error('Internal Server Error');
+              return false;
+            }
+            if (!response.ok) {
+              console.error('Unspecified error occured!');
+              return false;
+            }
+            return true;
+          } catch (error) {
+            console.error('Oh no, Error occured in deleteTrainee()!', error);
+            return false;
+          }
+        }
