@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getCertificateById } from '../../api/fetchData';
-import { CertificateResponse } from '../../interfaces/viewModels';
-import { useEth } from '../../contexts/EthContext';
+import { getCertificateById } from '../../../api/fetchData';
+import { CertificateResponse } from '../../../interfaces/viewModels';
+import { useEth } from '../../../contexts/EthContext';
 import { notification } from 'antd';
 export function usePageState() {
     const router = useRouter();

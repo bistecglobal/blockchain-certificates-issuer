@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import React from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import Image from 'next/image';
-import { usePageState } from './state';
+import { usePageState } from '../../components/pages-state/verify-certificate-state/state';
 import moment from 'moment';
 
 export function CartPageCertificates() {
