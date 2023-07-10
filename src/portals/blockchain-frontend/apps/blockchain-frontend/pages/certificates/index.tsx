@@ -25,7 +25,10 @@ export function CartPageCertificates() {
       <div className={styles['container']}>
         <div className={styles['content']}>
           {!isRegister && (
-            <div>
+            <div className={styles['register']}>
+              <h2>You have not Registered yet !</h2>
+              <h4>Click on the below button to register,</h4>
+              <b/>
               <Button
                 type="primary"
                 onClick={registerIssuer}>Register Now</Button></div>
@@ -84,7 +87,9 @@ export function CartPageCertificates() {
                 <p>Select Certificate Issue Date</p>
 
                 <div>
-                  <DatePicker onChange={(date) => setFieldValue('certificateIssueDate', date)} />
+                  <DatePicker  onChange={value => {
+                    setFieldValue("certificateIssueDate",value.format('YYYY-MM-DD'));
+                  }}/>
                 </div>
 
                 <p></p>

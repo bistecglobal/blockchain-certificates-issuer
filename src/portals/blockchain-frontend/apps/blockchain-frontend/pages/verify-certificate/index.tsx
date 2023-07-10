@@ -29,7 +29,7 @@ export function CartPageCertificates() {
                       ref={certificateWrapper}>
                       <p className={styles['p1']}>{certificateDetail[0].Course}</p>
                       <p className={styles['p2']}>{certificateDetail[0].Trainee[0].FirstName}</p>
-                      <p className={styles['p3']}>{moment(certificateDetail[0].certificateIssueDate).format('YYYY-MM-DD')}</p>
+                      <p className={styles['p3']}>{moment(certificateDetail[0].CertificateIssueDate).format('YYYY-MM-DD')}</p>
 
                       <Image
                         src="/issue-cert.png"

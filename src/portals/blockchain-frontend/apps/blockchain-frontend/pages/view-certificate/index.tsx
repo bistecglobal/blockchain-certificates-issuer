@@ -7,22 +7,30 @@ import { usePageState } from '../../components/pages-state/view-certificate-stat
 import moment from 'moment';
 
 export function CartPageCertificates() {
-  const { certificateDetail, isClick, viewCertificate, isShared, shareCertificate, contextHolder, url, copied, copyTextToClipboard } = usePageState();
+  const { certificateDetail, isClick, viewCertificate, isShared, shareCertificate, contextHolder, url, copied, copyTextToClipboard,backToView } = usePageState();
   const certificateWrapper = React.createRef<HTMLDivElement>();
   return (
     <div>
       {contextHolder}
       <div className={styles['container']}>
         <div className={styles['content']}>
-          <div className={styles['Meta']}>
+        
             {!isClick && (
-              <div><Button type='primary' onClick={viewCertificate}>View Certificate</Button></div>
+              <div className={styles['viewCertificate']}>
+                <h3>Your Certificate is Ready!</h3>
+                <Button type='primary' onClick={viewCertificate}>Show Certificate</Button>
+                </div>
             )}
-          </div>
+
           {isClick && (
             <div>
               {certificateDetail.length > 0 ? (
                 <>
+                <p>Course:{certificateDetail[0].Course}</p>
+                <p>Trainee:{certificateDetail[0].Trainee[0].FirstName + certificateDetail[0].Trainee[0].LastName}</p>
+                <p>Trainer:{certificateDetail[0].Trainer}</p>
+                <p>Issue date:{moment(certificateDetail[0].CertificateIssueDate).format('YYYY-MM-DD')}</p>
+                
                   <div className={styles['Meta']}>
                     <div
                       className={styles['certificateWrapper']}
@@ -30,7 +38,7 @@ export function CartPageCertificates() {
                     >
                       <p className={styles['p1']}>{certificateDetail[0].Course}</p>
                       <p className={styles['p2']}>{certificateDetail[0].Trainee[0].FirstName}</p>
-                      <p className={styles['p3']}>{moment(certificateDetail[0].certificateIssueDate).format('YYYY-MM-DD')}</p>
+                      <p className={styles['p3']}>{moment(certificateDetail[0].CertificateIssueDate).format('YYYY-MM-DD')}</p>
 
                       <Image
                         src="/issue-cert.png"
@@ -47,7 +55,7 @@ export function CartPageCertificates() {
                     type="primary"
                     icon={<DownloadOutlined />}
                     onClick={shareCertificate}>
-                    Share
+                    Share Certificate with a Verifier
                   </Button>
           <br/>
                   {isShared && (
@@ -60,7 +68,14 @@ export function CartPageCertificates() {
                   )}
                 </>
               ) : (
-                <p>No Data</p>
+                <div  className={styles['viewCertificate']}>
+                <h3>Your account has no access to view this certificate !</h3>
+                <Button
+                    type="primary"
+                    onClick={backToView}>
+                    Back
+                  </Button>
+                </div>
               )}
             </div>
           )}

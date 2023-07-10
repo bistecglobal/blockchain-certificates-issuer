@@ -21,7 +21,7 @@
 .container .content{
     display: flex;
     position: absolute;
-    width: 300px;
+    width: 350px;
     /* background-color: rgba(0, 0, 0, 0.05) ; */
 }
 
@@ -65,4 +65,7 @@
     left: 380px;
     top: 440px;
     font-size: 10pt;
+  }
+  .viewCertificate{
+    text-align: center;
   }

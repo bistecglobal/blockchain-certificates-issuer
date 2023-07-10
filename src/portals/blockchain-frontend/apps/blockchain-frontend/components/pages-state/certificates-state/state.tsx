@@ -27,13 +27,14 @@ export function usePageState() {
             Course: values.course,
             Trainee: [values.traineeData.data],
             Trainer: values.trainer,
-            certificateIssueDate: values.certificateIssueDate,
+            CertificateIssueDate: values.certificateIssueDate,
 
         };
         const certificateRes = await createCertificate(certificate);
         if (certificateRes) {
             setCertificateId(certificateRes.Id);
-            setUrl(`${process.env.NEXT_PUBLIC_BASE_CERTIFICATE_URL}/view-certificate?view=${certificateRes.Id}`);
+            const publishedUrl = window.location.origin;
+            setUrl(`${publishedUrl}/view-certificate?view=${certificateRes.Id}`);
             issueCertificateToBlockchain(values.traineeData.data.WalletAddress, certificateRes.Id, values.traineeData.data.Id,);
         } else {
             api.open({
@@ -42,7 +43,6 @@ export function usePageState() {
                 description: 'Failed to issue certificate',
             });
         }
-
     };
 
     const issueCertificateToBlockchain = async (walletAddress, certificateId, traineeId) => {

@@ -29,11 +29,12 @@ export function usePageState() {
     };
     const viewCertificate = async () => {
         try {
-            const certificate = await contract.methods.checkCertificateWithUser(certificateId ).call({ from: accounts[0] });
-            if (certificate){
+            const certificate = await contract.methods.checkCertificateWithUser(certificateId).call({ from: accounts[0] });
+            if (certificate) {
                 fetchCertificate();
                 checkShareButtonStatus();
-                setUrl(`${process.env.NEXT_PUBLIC_BASE_CERTIFICATE_URL}/verify-certificate?verify=${certificateId}`);
+                const publishedUrl = window.location.origin;
+                setUrl(`${publishedUrl}/verify-certificate?verify=${certificateId}`);
             }
         } catch (error) {
             console.error(error);
@@ -41,25 +42,25 @@ export function usePageState() {
         setIsClick(true);
     };
 
-    const checkShareButtonStatus= async () => {
+    const checkShareButtonStatus = async () => {
         try {
-            const shareStatus = await contract.methods.checkSharedCertificate(certificateId ).call({ from: accounts[0] });
-            if (shareStatus){
+            const shareStatus = await contract.methods.checkSharedCertificate(certificateId).call({ from: accounts[0] });
+            if (shareStatus) {
                 setIsShared(true);
             }
         } catch (error) {
             console.error(error);
         }
     };
-    const shareCertificate= async () => {
+    const shareCertificate = async () => {
         try {
-         await contract.methods.shareCertificate(certificateId).send({ from: accounts[0] });
-         api.open({
-            key: "updatable",
-            message: 'Certificate Share successful ',
-            description: 'Certificate Share successful',
-        });
-        setIsShared(true);
+            await contract.methods.shareCertificate(certificateId).send({ from: accounts[0] });
+            api.open({
+                key: "updatable",
+                message: 'Certificate Share successful ',
+                description: 'Certificate Share successful',
+            });
+            setIsShared(true);
         } catch (error) {
             console.error(error);
             api.open({
@@ -78,6 +79,9 @@ export function usePageState() {
                 console.error('Failed to copy text: ', error);
             });
     }
+    function backToView() {
+        setIsClick(false);
+    }
 
-    return { certificateDetail, isClick, viewCertificate,isShared,shareCertificate,contextHolder,copied,copyTextToClipboard,url }
+    return { certificateDetail, isClick, viewCertificate, isShared, shareCertificate, contextHolder, copied, copyTextToClipboard, url, backToView }
 }
