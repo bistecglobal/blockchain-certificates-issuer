@@ -18,7 +18,7 @@ export function useComponentState() {
       };
       const traineeRes = await createTrainee(trainer);
       if(traineeRes){
-        message.success(`Course created successfully`);
+        message.success(`Trainee created successfully`);
         fetchTrainees(DefaultPagination.pageNumber, DefaultPagination.pageSize);
         clearForm();
       }else{
