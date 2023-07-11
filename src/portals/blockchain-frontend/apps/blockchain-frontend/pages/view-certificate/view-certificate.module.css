@@ -69,3 +69,8 @@
   .viewCertificate{
     text-align: center;
   }
+
+  .title{
+    position: absolute;
+    margin-top: -25%;
+  }

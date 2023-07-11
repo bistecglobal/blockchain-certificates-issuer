@@ -1,7 +1,7 @@
 import styles from './view-certificate.module.css';
 import { Button } from 'antd';
 import React from 'react';
-import { DownloadOutlined } from '@ant-design/icons';
+import { ShareAltOutlined,DownloadOutlined,EyeOutlined,CopyOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { usePageState } from '../../components/pages-state/view-certificate-state/state';
 import moment from 'moment';
@@ -18,7 +18,7 @@ export function CartPageCertificates() {
             {!isClick && (
               <div className={styles['viewCertificate']}>
                 <h3>Your Certificate is Ready!</h3>
-                <Button type='primary' onClick={viewCertificate}>Show Certificate</Button>
+                <Button type='primary' icon={<EyeOutlined />}  onClick={viewCertificate}>Show Certificate</Button>
                 </div>
             )}
 
@@ -26,6 +26,7 @@ export function CartPageCertificates() {
             <div>
               {certificateDetail.length > 0 ? (
                 <>
+                <div className={styles['title']}><h2>Certificate of Completion</h2></div>
                 <p>Course:{certificateDetail[0].Course}</p>
                 <p>Trainee:{certificateDetail[0].Trainee[0].FirstName + certificateDetail[0].Trainee[0].LastName}</p>
                 <p>Trainer:{certificateDetail[0].Trainer}</p>
@@ -53,14 +54,30 @@ export function CartPageCertificates() {
 
                   <Button disabled={isShared}
                     type="primary"
-                    icon={<DownloadOutlined />}
+                    icon={<ShareAltOutlined />}
                     onClick={shareCertificate}>
                     Share Certificate with a Verifier
+                  </Button>
+     
+                  <Button
+                 style={{
+                  top: '3%',
+                }}
+                    type="primary"
+                    icon={<DownloadOutlined />}
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      const { exportComponentAsPNG } = await import(
+                        'react-component-export-image'
+                      );
+                      exportComponentAsPNG(certificateWrapper);
+                    }}>
+                    Download
                   </Button>
           <br/>
                   {isShared && (
                     <>
-                      <Button style={{marginTop :10}} type='primary' onClick={copyTextToClipboard}>Copy URL</Button>
+                      <Button style={{marginTop :30}} type='primary' icon={<CopyOutlined />} onClick={copyTextToClipboard}>Copy URL</Button>
                       <br/>
                       <p style={{marginTop :20,width:250}}>{url}</p>
                       {copied && <p>URL Copied!</p>}
