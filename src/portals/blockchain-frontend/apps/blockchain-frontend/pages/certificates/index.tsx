@@ -2,7 +2,7 @@ import styles from './cart-page-certificates.module.css';
 import { Select, Form, Button, DatePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import React from 'react';
-import { DownloadOutlined } from '@ant-design/icons';
+import { DownloadOutlined,CopyOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { usePageState } from '../../components/pages-state/certificates-state/state';
 
@@ -149,7 +149,7 @@ export function CartPageCertificates() {
 
               {isIssue &&(
                 <div>
-                  <Button  type="primary"
+                  <Button  type="primary" icon={<CopyOutlined/>}
                   onClick={copyTextToClipboard}>Copy URL</Button>
                     <br />
                   <label>{url}</label>

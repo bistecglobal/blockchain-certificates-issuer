@@ -21,15 +21,15 @@
 .container .content{
     display: flex;
     position: absolute;
-    width: 300px;
     /* background-color: rgba(0, 0, 0, 0.05) ; */
 }
 
 .container .content .Meta{
-    position: absolute;
     height: 100px;
     top:0;
-    left:80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
@@ -65,4 +65,14 @@
     left: 380px;
     top: 440px;
     font-size: 10pt;
+  }
+
+
+  .viewCertificate{
+    text-align: center;
+  }
+
+  .title{
+    margin-top: -25%;
+    text-align: center;
   }

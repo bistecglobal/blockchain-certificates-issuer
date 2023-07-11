@@ -1,29 +1,33 @@
 import styles from './verify-certificate.module.css';
 import { Button } from 'antd';
 import React from 'react';
-import { DownloadOutlined } from '@ant-design/icons';
+import { VerifiedOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { usePageState } from '../../components/pages-state/verify-certificate-state/state';
 import moment from 'moment';
 
 export function CartPageCertificates() {
-  const { certificateDetail, isClick, verifyCertificate,isVerify,contextHolder } = usePageState();
+  const { certificateDetail, isClick, verifyCertificate, isVerify, contextHolder } = usePageState();
   const certificateWrapper = React.createRef<HTMLDivElement>();
   return (
     <div>
       {contextHolder}
       <div className={styles['container']}>
         <div className={styles['content']}>
-          <div className={styles['Meta']}>
-            {!isClick && (
-              <div>   <Button type='primary' onClick={verifyCertificate}>Verify Certificate</Button></div>
-            )}
-          </div>
+           
+              {!isClick && (
+                 <div className={styles['viewCertificate']}>
+                 <h3>Your Certificate is Ready!</h3>
+                <div>   <Button type='primary' icon={<VerifiedOutlined />} onClick={verifyCertificate}>Verify Certificate</Button></div>
+                </div>
+              )}
+     
           {isClick && (
             <div>
               {certificateDetail.length > 0 && isVerify ? (
                 <>
                   <div className={styles['Meta']}>
+                  <div className={styles['title']}><h2>Certificate of Completion</h2></div>
                     <div
                       className={styles['certificateWrapper']}
                       ref={certificateWrapper}>

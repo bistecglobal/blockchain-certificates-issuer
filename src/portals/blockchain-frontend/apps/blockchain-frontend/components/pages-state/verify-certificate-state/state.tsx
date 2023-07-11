@@ -29,8 +29,8 @@ export function usePageState() {
     const verifyCertificate = async () => {
         if (certificateDetail[0]) {
             try {
-                const certificate = await contract.methods.verifyCertificate(certificateDetail[0].Trainee[0].WalletAddress, certificateId).call({ from: accounts[0] });
-                setIsVerify(certificate[0].verified);
+                const  verify = await contract.methods.verifyCertificate(certificateDetail[0].Trainee[0].WalletAddress, certificateId).call({ from: accounts[0] });
+                setIsVerify(verify);
                 api.open({
                     key: "updatable",
                     message: 'Certificate verified successfully',

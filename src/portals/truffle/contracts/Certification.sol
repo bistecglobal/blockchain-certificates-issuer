@@ -44,18 +44,18 @@ contract Certification{
     
       
     }
-    function verifyCertificate(address userAddress, string memory certificateId) public returns (Certificate[] memory) {
+    function verifyCertificate(address userAddress, string memory certificateId) public view returns (bool) {
          User storage user = users[userAddress];
         Certificate[] storage certificates = user.certificates;
-
+        bool verifyed = false;
         for (uint i = 0; i < certificates.length; i++) {
             if (keccak256(bytes(certificates[i].certificateId)) == keccak256(bytes(certificateId))) {
-                certificates[i].verified = true;
+                verifyed = true;
                  break;
             }
         }
 
-        return user.certificates;
+        return verifyed;
     }
 
     function getUser(address userAddress) public view returns (string memory, UserType) {
