@@ -1,5 +1,5 @@
 import styles from './cart-page-certificates.module.css';
-import { Select, Form, Button, DatePicker } from 'antd';
+import { Select, Form, Button, DatePicker, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import React from 'react';
 import { DownloadOutlined,CopyOutlined } from '@ant-design/icons';
@@ -9,7 +9,7 @@ import { usePageState } from '../../components/pages-state/certificates-state/st
 
 export function CartPageCertificates() {
   const { formik, contextHolder, courseData, trainerData, traineeData, copyTextToClipboard, copied, isRegister,
-    registerIssuer, url, isIssue } = usePageState();
+    registerIssuer, url, isIssue,isLording } = usePageState();
   const certificateWrapper = React.createRef<HTMLDivElement>();
   const {
     handleSubmit,
@@ -19,11 +19,11 @@ export function CartPageCertificates() {
 
 
   return (
-    <div>
-
+    <div className={`${isLording ? styles.loading : ''}`}>
       {contextHolder}
       <div className={styles['container']}>
         <div className={styles['content']}>
+        {isLording && <Spin size="large" className={styles.spinner} />}
           {!isRegister && (
             <div className={styles['register']}>
               <h2>You have not Registered yet !</h2>
@@ -91,8 +91,7 @@ export function CartPageCertificates() {
                     setFieldValue("certificateIssueDate",value.format('YYYY-MM-DD'));
                   }}/>
                 </div>
-
-                <p></p>
+                <br/>
                 <Form.Item>
                   <Button
                     htmlType="submit"
@@ -148,7 +147,8 @@ export function CartPageCertificates() {
               </Form>
 
               {isIssue &&(
-                <div>
+                <div className={styles['certificateUrl']}>
+                  <p> <a href={url} target='_blank' >View Certificate</a></p>
                   <Button  type="primary" icon={<CopyOutlined/>}
                   onClick={copyTextToClipboard}>Copy URL</Button>
                     <br />

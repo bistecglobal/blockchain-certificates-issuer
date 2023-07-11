@@ -8,29 +8,27 @@
 
 .container {
   position: absolute;
-  top: 20%;
+
   /* bottom: 50%; */
   left: 25%;
   right: auto;
   display: flex;
   flex-direction: column;
   /* align-items: center; */
-  width: 100vw;
   height: 100vh;
 }
+.tileContainer{
+  border-radius: 25px;
+  background: #ffffff;
+  border: 2px solid #1677ff;
+  padding: 20px; 
+  width: 200px;
+  height: 150px; 
+  margin-top: 50px; 
+  margin-left: 100px;
+  text-align: center;
+}
 
-.content {
-  position: absolute;
-  display: flex;
-  flex: 1;
-  justify-content: flex-start;
-  align-items: flex-start;
-  background-color: rgba(0, 0, 0, 0.05);
-}
-.container .content .img {
-  display: flex;
-}
-.container .content h1 {
-  position: absolute;
-  justify-content: center;
+.title{
+  text-align: center;
 }

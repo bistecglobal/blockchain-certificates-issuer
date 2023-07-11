@@ -20,16 +20,19 @@ export function usePageState() {
     const issuerId = uuidv4();
     const [url, setUrl] = useState('');
     const[isIssue ,setIssue] = useState(false);
+    const[isLording ,setIsLording] = useState(true);
 
 
     const createNewCertificate = async (values) => {
+        const currentDate = new Date().toISOString().slice(0, 10);
         let certificate: CertificateRequest = {
             Course: values.course,
             Trainee: [values.traineeData.data],
             Trainer: values.trainer,
-            CertificateIssueDate: values.certificateIssueDate,
+            CertificateIssueDate: values.certificateIssueDate || currentDate,
 
         };
+        setIsLording(true)
         const certificateRes = await createCertificate(certificate);
         if (certificateRes) {
             setCertificateId(certificateRes.Id);
@@ -47,9 +50,11 @@ export function usePageState() {
 
     const issueCertificateToBlockchain = async (walletAddress, certificateId, traineeId) => {
         try {
+            setIsLording(true);
             await contract.methods.issueCertificate(walletAddress, certificateId, traineeId, UserType.Holder)
                 .send({ from: accounts[0] });
                 setIssue(true);
+           
             api.open({
                 key: "updatable",
                 message: 'Issue Certificate.',
@@ -63,7 +68,7 @@ export function usePageState() {
             });
             console.error(error);
         }
-
+        setIsLording(false);
     };
     const formik = useFormik({
         initialValues: {
@@ -140,10 +145,12 @@ export function usePageState() {
 
     const registerIssuer = async () => {
         try {
+            setIsLording(true);
              await contract.methods.registerUser(accounts[0], issuerId, UserType.Issuer).send({ from: accounts[0]});
             window.location.reload();
         } catch (error) {
             console.error(error);
+            setIsLording(false);
         }
     };
 
@@ -153,8 +160,9 @@ export function usePageState() {
             fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
             fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
             fetchTrainee(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+            setIsLording(false);
         }
     }, [accounts]);
     return { formik, contextHolder, courseData, trainerData, traineeData, certificateId, 
-        copyTextToClipboard, copied, isRegister, registerIssuer,url,isIssue }
+        copyTextToClipboard, copied, isRegister, registerIssuer,url,isIssue,isLording }
 };

@@ -69,3 +69,38 @@
 .register{
   text-align: center;
 }
+
+.certificateUrl{
+margin-top: -20%;
+}
+
+
+.loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Transparent black overlay */
+  z-index: 1;
+}
+.loader {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3); /* Transparent border */
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+  background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
