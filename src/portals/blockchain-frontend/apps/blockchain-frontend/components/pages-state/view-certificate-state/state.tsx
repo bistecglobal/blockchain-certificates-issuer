@@ -16,6 +16,7 @@ export function usePageState() {
     const [api, contextHolder] = notification.useNotification();
     const [copied, setCopied] = useState(false);
     const [url, setUrl] = useState("");
+    const[isLording ,setIsLording] = useState(false);
 
 
     const fetchCertificate = async () => {
@@ -54,6 +55,7 @@ export function usePageState() {
     };
     const shareCertificate = async () => {
         try {
+            setIsLording(true);
             await contract.methods.shareCertificate(certificateId).send({ from: accounts[0] });
             api.open({
                 key: "updatable",
@@ -61,6 +63,7 @@ export function usePageState() {
                 description: 'Certificate Share successful',
             });
             setIsShared(true);
+            setIsLording(false);
         } catch (error) {
             console.error(error);
             api.open({
@@ -68,6 +71,7 @@ export function usePageState() {
                 message: 'Error ',
                 description: 'Certificate Share Fail',
             });
+            setIsLording(false);
         }
     };
     function copyTextToClipboard() {
@@ -83,5 +87,6 @@ export function usePageState() {
         setIsClick(false);
     }
 
-    return { certificateDetail, isClick, viewCertificate, isShared, shareCertificate, contextHolder, copied, copyTextToClipboard, url, backToView }
+    return { certificateDetail, isClick, viewCertificate, isShared, shareCertificate, contextHolder, copied, copyTextToClipboard, url, backToView
+    ,isLording }
 }

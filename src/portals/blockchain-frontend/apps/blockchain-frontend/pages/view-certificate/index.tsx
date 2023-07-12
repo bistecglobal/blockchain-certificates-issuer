@@ -1,5 +1,5 @@
 import styles from './view-certificate.module.css';
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
 import React from 'react';
 import { ShareAltOutlined,DownloadOutlined,EyeOutlined,CopyOutlined } from '@ant-design/icons';
 import Image from 'next/image';
@@ -7,14 +7,14 @@ import { usePageState } from '../../components/pages-state/view-certificate-stat
 import moment from 'moment';
 
 export function CartPageCertificates() {
-  const { certificateDetail, isClick, viewCertificate, isShared, shareCertificate, contextHolder, url, copied, copyTextToClipboard,backToView } = usePageState();
+  const { certificateDetail, isClick, viewCertificate, isShared, shareCertificate, contextHolder, url, copied, copyTextToClipboard,backToView,isLording } = usePageState();
   const certificateWrapper = React.createRef<HTMLDivElement>();
   return (
-    <div>
+    <div  className={`${isLording ? styles.loading : ''}`}>
       {contextHolder}
       <div className={styles['container']}>
         <div className={styles['content']}>
-        
+        {isLording && <Spin size="large" className={styles.spinner} />}
             {!isClick && (
               <div className={styles['viewCertificate']}>
                 <h3>Your Certificate is Ready!</h3>
@@ -77,6 +77,8 @@ export function CartPageCertificates() {
           <br/>
                   {isShared && (
                     <>
+                    <br/>
+                       <p> <a href={url} target='_blank' >View Certificate</a></p>
                       <Button style={{marginTop :30}} type='primary' icon={<CopyOutlined />} onClick={copyTextToClipboard}>Copy URL</Button>
                       <br/>
                       <p style={{marginTop :20,width:250}}>{url}</p>
