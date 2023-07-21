@@ -10,6 +10,7 @@ export default function Auth() {
     ? 'Already have an account?'
     : "Don't have an account?";
   const linkContent = isRegister ? 'Login here' : 'Sign up now';
+  const title = isRegister ? 'Sign up' : 'Login';
 
   const onClickHandler = () => toggleRegister();
 
@@ -17,39 +18,14 @@ export default function Auth() {
     setIsRegister(!isRegister);
   };
   return (
-    <div className={styles['container']}>
-      <div className={styles['main-login']}>
-        <div className={styles['login-contain']}>
-          <div className={styles['left-side']}>
-            {isRegister ? <SignUp /> : <Login />}
-            <div className={styles['toggle-text']}>
-              <span style={{ color: '#000' }}>
-                {userMessage}
-                <button
-                  style={{
-                    textDecoration: 'underline',
-                    cursor: 'pointer',
-                    color: 'blue',
-                    border: 'none',
-                    background: 'none',
-                    padding: '0',
-                    margin: '0',
-                    font: 'inherit',
-                  }}
-                  onClick={onClickHandler}
-                >
-                  {linkContent}
-                </button>
-              </span>
-            </div>
-          </div>
-          <div className={styles['right-side']}>
-            <div className={styles['welcomeNote']}></div>
-            <div className={styles['welcomeImg']}>
-              <img src={'/image1.jpg'} id={styles['wel-img-id']} alt="" />
-            </div>
-          </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 shadow-md rounded-md w-96">
+        <div className="text-center">
+          <img src={'/bg.png'} alt="Logo" className="h-16 mx-auto mb-4" />
+          <h1 className="text-2xl font-semibold mb-6">{title}</h1>
         </div>
+        {isRegister ? <SignUp /> : <Login />}
+        <p className='px-6 pt-6'>{userMessage}   <a onClick={onClickHandler} className="text-blue-500 hover:underline cursor-pointer">{linkContent} </a></p>
       </div>
     </div>
   );
