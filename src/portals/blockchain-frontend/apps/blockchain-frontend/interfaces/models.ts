@@ -1,6 +1,7 @@
 export interface User {
   Email: string;
   Password: string;
+  PasswordConfirmation? : string
 }
 
 export interface Course {
