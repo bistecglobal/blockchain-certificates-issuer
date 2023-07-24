@@ -1,4 +1,4 @@
-# Blockchain-certificates-issuer
+# Blockchain certificates issuer
 
 Prerequisites
 
