@@ -113,7 +113,7 @@ export default function TraineesContainer() {
                             </sub>
                         </Form.Item>
                         <Form.Item>
-                            <Button htmlType="submit" icon={<PlusOutlined />} type="primary">
+                            <Button htmlType="submit" style={{backgroundColor:'#4096ff'}} icon={<PlusOutlined />} type="primary">
                                 Add Trainee
                             </Button>
                         </Form.Item>

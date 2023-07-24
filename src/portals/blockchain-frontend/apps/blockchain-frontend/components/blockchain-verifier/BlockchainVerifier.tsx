@@ -58,6 +58,7 @@ const BlockchainVerifier = ({setValue})=>{
         <Form>
             
         <Button  style={{position:"absolute",
+        backgroundColor:'#4096ff',
         width:110,
         left:"80%",
         top:"86.8%"
