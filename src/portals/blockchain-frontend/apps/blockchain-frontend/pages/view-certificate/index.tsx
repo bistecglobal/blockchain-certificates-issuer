@@ -18,7 +18,7 @@ export function CartPageCertificates() {
             {!isClick && (
               <div className={styles['viewCertificate']}>
                 <h3>Your Certificate is Ready!</h3>
-                <Button type='primary' icon={<EyeOutlined />}  onClick={viewCertificate}>Show Certificate</Button>
+                <Button type='primary'style={{backgroundColor:'#4096ff'}} icon={<EyeOutlined />}  onClick={viewCertificate}>Show Certificate</Button>
                 </div>
             )}
 
@@ -26,7 +26,7 @@ export function CartPageCertificates() {
             <div>
               {certificateDetail.length > 0 ? (
                 <>
-                <div className={styles['title']}><h2>Certificate of Completion</h2></div>
+                <div className='mt-2'><h2>Certificate of Completion</h2></div>
                 <p>Course:{certificateDetail[0].Course}</p>
                 <p>Trainee:{certificateDetail[0].Trainee[0].FirstName + certificateDetail[0].Trainee[0].LastName}</p>
                 <p>Trainer:{certificateDetail[0].Trainer}</p>
@@ -51,17 +51,19 @@ export function CartPageCertificates() {
                   </div>
                   <br />
                   <br />
-
+<p>
                   <Button disabled={isShared}
                     type="primary"
+                    style={{backgroundColor:'#4096ff'}}
                     icon={<ShareAltOutlined />}
                     onClick={shareCertificate}>
                     Share Certificate with a Verifier
                   </Button>
-     
+                  </p>
                   <Button
                  style={{
                   top: '3%',
+                  backgroundColor:'#4096ff'
                 }}
                     type="primary"
                     icon={<DownloadOutlined />}
@@ -79,7 +81,7 @@ export function CartPageCertificates() {
                     <>
                     <br/>
                        <p> <a href={url} target='_blank' >View Certificate</a></p>
-                      <Button style={{marginTop :30}} type='primary' icon={<CopyOutlined />} onClick={copyTextToClipboard}>Copy URL</Button>
+                      <Button style={{marginTop :30,backgroundColor:'#4096ff'}} type='primary' icon={<CopyOutlined />} onClick={copyTextToClipboard}>Copy URL</Button>
                       <br/>
                       <p style={{marginTop :20,width:250}}>{url}</p>
                       {copied && <p>URL Copied!</p>}
@@ -91,6 +93,7 @@ export function CartPageCertificates() {
                 <h3>Your account has no access to view this certificate !</h3>
                 <Button
                     type="primary"
+                    style={{backgroundColor:'#4096ff'}}
                     onClick={backToView}>
                     Back
                   </Button>

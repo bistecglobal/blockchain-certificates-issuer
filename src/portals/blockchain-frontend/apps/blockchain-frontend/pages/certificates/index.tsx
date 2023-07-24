@@ -31,6 +31,7 @@ export function CartPageCertificates() {
               <b/>
               <Button
                 type="primary"
+                style={{backgroundColor:'#4096ff'}}
                 onClick={registerIssuer}>Register Now</Button></div>
           )}
           {isRegister && (
@@ -97,7 +98,7 @@ export function CartPageCertificates() {
                     htmlType="submit"
                     icon={<PlusOutlined />}
                     type="primary"
-
+                    style={{backgroundColor:'#4096ff'}}
                   >
                     Issue Certificate
                   </Button>
@@ -130,7 +131,8 @@ export function CartPageCertificates() {
                     position: 'absolute',
                     width: 110,
                     left: '98%',
-                    top: '120%',
+                    top: '550px',
+                    backgroundColor:'#4096ff'
                   }}
                   type="primary"
                   icon={<DownloadOutlined />}
@@ -149,12 +151,14 @@ export function CartPageCertificates() {
               {isIssue &&(
                 <div className={styles['certificateUrl']}>
                   <p> <a href={url} target='_blank' >View Certificate</a></p>
-                  <Button  type="primary" icon={<CopyOutlined/>}
+                  <div className='mt-4'>
+                  <Button  type="primary" style={{backgroundColor:'#4096ff'}} icon={<CopyOutlined/>}
                   onClick={copyTextToClipboard}>Copy URL</Button>
                     <br />
                   <label>{url}</label>
                   <br />
                   {copied && <p>URL Copied!</p>}
+                  </div>
                 </div>
               )}
             </div>

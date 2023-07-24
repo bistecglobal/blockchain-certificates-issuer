@@ -76,3 +76,7 @@
     margin-top: -25%;
     text-align: center;
   }
+  .certificateWrapper img {
+    max-width: none !important;
+    height: 500px !important;
+  }

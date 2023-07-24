@@ -14,14 +14,14 @@
     /* left: 40%;
     right: auto;
     justify-content: center; */
-    width: 100vw;
+    width: 80vw;
     height: 100vh;
 }
 
 .container .content{
     display: flex;
     position: absolute;
-    width: 350px;
+    width: 360px;
     /* background-color: rgba(0, 0, 0, 0.05) ; */
 }
 
@@ -103,4 +103,8 @@
     100% {
       transform: rotate(360deg);
     }
+  }
+  .certificateWrapper img {
+    max-width: none !important;
+    height: 500px !important;
   }
