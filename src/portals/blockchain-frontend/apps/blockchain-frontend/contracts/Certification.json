@@ -17635,13 +17635,8 @@
     "5777": {
       "events": {},
       "links": {},
-<<<<<<< HEAD
       "address": "0x07Ee7a4c42DDbcf5Fcbc11105c3344263611D792",
       "transactionHash": "0x1964c1684abb6358cfa42fc01dd7669c9a50ceafacd1c3ab801baa7c5ce1797e"
-=======
-      "address": "0xD2e9b397c3c510bF84f3939DEF066Ac3895c476f",
-      "transactionHash": "0x706271e50a650fb3f177b4facc0155301e7dd181e50c4d02d7fbd04f97ca244b"
->>>>>>> a6d7f24c5994490d2dff69fdd41dd1bc1465aa99
     },
     "11155111": {
       "events": {},
