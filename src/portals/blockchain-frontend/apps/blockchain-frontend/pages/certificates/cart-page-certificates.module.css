@@ -14,7 +14,7 @@
     /* left: 40%;
     right: auto;
     justify-content: center; */
-    width: 100vw;
+    width: 80vw;
     height: 100vh;
 }
 
@@ -103,4 +103,9 @@ margin-top: -20%;
   100% {
     transform: rotate(360deg);
   }
+}
+
+.certificateWrapper img {
+  max-width: none !important;
+  height: 500px !important;
 }

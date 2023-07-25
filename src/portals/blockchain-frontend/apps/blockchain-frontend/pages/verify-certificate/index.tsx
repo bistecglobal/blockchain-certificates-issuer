@@ -18,7 +18,7 @@ export function CartPageCertificates() {
               {!isClick && (
                  <div className={styles['viewCertificate']}>
                  <h3>Your Certificate is Ready!</h3>
-                <div>   <Button type='primary' icon={<VerifiedOutlined />} onClick={verifyCertificate}>Verify Certificate</Button></div>
+                <div>   <Button type='primary' style={{backgroundColor:'#4096ff'}} icon={<VerifiedOutlined />} onClick={verifyCertificate}>Verify Certificate</Button></div>
                 </div>
               )}
      
@@ -27,7 +27,8 @@ export function CartPageCertificates() {
               {certificateDetail.length > 0 && isVerify ? (
                 <>
                   <div className={styles['Meta']}>
-                  <div className={styles['title']}><h2>Certificate of Completion</h2></div>
+                  <div className="mt-2 text-center"><h2>Certificate of Completion</h2></div>
+                  <div className='mt-2'>
                     <div
                       className={styles['certificateWrapper']}
                       ref={certificateWrapper}>
@@ -42,6 +43,7 @@ export function CartPageCertificates() {
                         alt=""
                       />
                     </div>
+                  </div>
                   </div>
                   <br />
                   <br />
