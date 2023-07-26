@@ -1,5 +1,5 @@
-import CoursesContainer from 'apps/blockchain-frontend//components/courses-container/CoursesContainer';
+import CoursesMain from '../../components/courses-container/CoursesMain';
 
 export default function CoursesPage() {
-  return <CoursesContainer />;
+  return <CoursesMain />;
 }

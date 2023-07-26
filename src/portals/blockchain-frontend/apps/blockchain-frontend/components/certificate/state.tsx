@@ -1,10 +1,10 @@
-import { createCertificate, getCourse, getTrainees, getTrainers } from '../../../api/fetchData';
-import { CertificateRequest, CourseResponse, TraineeResponse, TrainerResponse } from '../../../interfaces/viewModels';
+import { createCertificate, getCourse, getTrainees, getTrainers } from '../../api/fetchData';
+import { CertificateRequest, CourseResponse, TraineeResponse, TrainerResponse } from '../../interfaces/viewModels';
 import { useFormik } from 'formik';
 import { notification } from 'antd';
-import { useEth } from '../../../contexts/EthContext';
+import { useEth } from '../../contexts/EthContext';
 import { useEffect, useState } from 'react';
-import { DefaultPagination, UserType } from '../../../interfaces/enums';
+import { DefaultPagination, UserType } from '../../interfaces/enums';
 import { v4 as uuidv4 } from 'uuid';
 
 export function usePageState() {
