@@ -100,7 +100,7 @@ export default function CoursesContainer() {
             </span>
           </h1>
         </div>
-        <div className="px-[100px]">
+        <div className="lg:px-[100px]">
           <Card className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4  ">
             <Form onFinish={handleSubmit}>
               <div className="relative z-0 w-full mb-6 group ">
