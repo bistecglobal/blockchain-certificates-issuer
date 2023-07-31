@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { getCertificateById } from '../../api/fetchData';
+import { getUserCertificateById } from '../../api/fetchData';
 import { CertificateResponse } from '../../interfaces/viewModels';
 import { useEth } from '../../contexts/EthContext';
 import { notification } from 'antd';
+import { decryptData } from '../utils';
 export function usePageState() {
     const router = useRouter();
     const { view } = router.query;
@@ -16,16 +17,14 @@ export function usePageState() {
     const [api, contextHolder] = notification.useNotification();
     const [copied, setCopied] = useState(false);
     const [url, setUrl] = useState("");
-    const[isLording ,setIsLording] = useState(false);
+    const [isLording, setIsLording] = useState(false);
 
 
     const fetchCertificate = async () => {
-        let certificateRes: CertificateResponse[] = [await getCertificateById(certificateId)];
-        if (certificateRes[0]) {
-            if (Array.isArray(certificateRes)) {
-                certificateRes = certificateRes.flat();
-            }
-            setCertificateDetail(certificateRes);
+        const getCertificateDetail = await getUserCertificateById(certificateId);
+        if (getCertificateDetail) {
+            const certificateRes: CertificateResponse = JSON.parse(await decryptData(getCertificateDetail));
+            setCertificateDetail([certificateRes]);
         }
     };
     const viewCertificate = async () => {
@@ -35,7 +34,7 @@ export function usePageState() {
                 fetchCertificate();
                 checkShareButtonStatus();
                 const publishedUrl = window.location.origin;
-                setUrl(`${publishedUrl}/verify-certificate?verify=${certificateId}`);
+                setUrl(`${publishedUrl}/share-certificate?share=${certificateId}`);
             }
         } catch (error) {
             console.error(error);
@@ -87,6 +86,8 @@ export function usePageState() {
         setIsClick(false);
     }
 
-    return { certificateDetail, isClick, viewCertificate, isShared, shareCertificate, contextHolder, copied, copyTextToClipboard, url, backToView
-    ,isLording }
+    return {
+        certificateDetail, isClick, viewCertificate, isShared, shareCertificate, contextHolder, copied, copyTextToClipboard, url, backToView
+        , isLording
+    }
 }

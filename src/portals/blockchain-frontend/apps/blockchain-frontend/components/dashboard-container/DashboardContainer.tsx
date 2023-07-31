@@ -15,7 +15,7 @@ export default function DashboardContainer() {
             </span>
           </h1>
         </div>
-        <div className="container mx-auto lg:p-4 lg:ml-[100px] ">
+        <div className="container mx-auto lg:p-4">
           <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-1">
             {items.map((item, index) => (
               <div

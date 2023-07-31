@@ -1,6 +1,6 @@
-import VerifyCertificateContainer from "../../components/verify-certificate/VerifyCertificateContainer";
-
+import VerifyCertificateContainer from "../../components/verify-certificate-container/VerifyCertificateContainer";
+import EthProvider from "../../contexts/EthContext/EthProvider";
 
 export default function VerifyPage() {
-  return <VerifyCertificateContainer />;
+  return <EthProvider><VerifyCertificateContainer /></EthProvider>;
 }
