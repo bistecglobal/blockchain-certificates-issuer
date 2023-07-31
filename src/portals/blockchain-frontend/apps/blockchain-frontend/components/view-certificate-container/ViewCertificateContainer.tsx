@@ -1,4 +1,4 @@
-import styles from './viewCertificateContainer.module.css';
+import styles from './ViewCertificateContainer.module.css';
 import { Button, Spin } from 'antd';
 import React from 'react';
 import { ShareAltOutlined,DownloadOutlined,EyeOutlined,CopyOutlined } from '@ant-design/icons';
