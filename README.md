@@ -1,6 +1,9 @@
 # Blockchain-Certificates-Issuer
 
-Prerequisites
+## Official Docs
+[https://bistecglobal.github.io/blockchain-certificates-issuer/](https://bistecglobal.github.io/blockchain-certificates-issuer)
+
+## Prerequisites
 
 1. VS code
 2. dotnet cli
