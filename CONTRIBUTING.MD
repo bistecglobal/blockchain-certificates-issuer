@@ -18,6 +18,6 @@ We welcome contributions in the form of pull requests. Before submitting a pull 
 
 ## License
 
-By contributing to this project, you agree that your contributions will be licensed under the project's [LICENSE](link-to-license.md).
+By contributing to this project, you agree that your contributions will be licensed under the project's [LICENSE](https://github.com/bistecglobal/blockchain-certificates-issuer/blob/main/LICENSE).
 
 Thank you for your contribution!
