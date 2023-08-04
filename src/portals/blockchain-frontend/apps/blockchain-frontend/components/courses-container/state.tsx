@@ -20,10 +20,11 @@ export function useComponentState() {
     const courseRes = await createCourse(course);
     if(courseRes){
       message.success(`Course created successfully`);
+      setDataSource([]);
       fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
       clearForm();
     }else{
-      message.success(`Failed to create the course`);
+      message.error(`Failed to create the course`);
     }
   };
 
@@ -36,17 +37,17 @@ export function useComponentState() {
     } = {};
 
     if (!values.title) {
-      errors.title = 'Required';
+      errors.title = 'Course name is required';
     } else if (values.title.length > 50) {
       errors.title = 'Must be 50 characters or less';
     }
 
     if (!values.startDate) {
-      errors.startDate = 'Required';
+      errors.startDate = 'Start date required';
     }
 
     if (!values.endDate) {
-      errors.endDate = 'Required';
+      errors.endDate = 'End date is required';
     } else if (values.endDate < values.startDate) {
       errors.endDate = 'End date must be later than start date';
     }
