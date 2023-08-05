@@ -6,9 +6,7 @@ import SignUp from '../signup/Signup';
 export default function Auth() {
   const [isRegister, setIsRegister] = useState(false);
 
-  const userMessage = isRegister
-    ? 'Already have an account?'
-    : "Don't have an account?";
+  const userMessage = isRegister ? 'Already have an account?' : "Don't have an account?";
   const linkContent = isRegister ? 'Login here' : 'Sign up now';
   const title = isRegister ? 'Sign up' : 'Login';
 
@@ -25,7 +23,12 @@ export default function Auth() {
           <h1 className="text-2xl font-semibold mb-6">{title}</h1>
         </div>
         {isRegister ? <SignUp /> : <Login />}
-        <p className='px-6 pt-6'>{userMessage}   <a onClick={onClickHandler} className="text-blue-500 hover:underline cursor-pointer">{linkContent} </a></p>
+        <p className="px-6 pt-6">
+          {userMessage}{' '}
+          <a onClick={onClickHandler} className="text-blue-500 hover:underline cursor-pointer">
+            {linkContent}{' '}
+          </a>
+        </p>
       </div>
     </div>
   );

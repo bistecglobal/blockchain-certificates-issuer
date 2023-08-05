@@ -54,7 +54,7 @@ export function usePageState() {
             await contract.methods.issueCertificate(walletAddress, certificateId, traineeId, UserType.Holder)
                 .send({ from: accounts[0] });
                 setIssue(true);
-           
+
             api.open({
                 key: "updatable",
                 message: 'Issue Certificate.',
@@ -163,6 +163,6 @@ export function usePageState() {
             setIsLording(false);
         }
     }, [accounts]);
-    return { formik, contextHolder, courseData, trainerData, traineeData, certificateId, 
+    return { formik, contextHolder, courseData, trainerData, traineeData, certificateId,
         copyTextToClipboard, copied, isRegister, registerIssuer,url,isIssue,isLording }
-};
+}
