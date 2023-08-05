@@ -10,7 +10,7 @@ export function useComponentState() {
     const [dataSource, setDataSource] = useState([]);
   
     const createNewTrainer = async (values) => {
-      let trainer: TrainerRequest = {
+      const trainer: TrainerRequest = {
           FirstName : values.firstName,
           LastName : values.lastName,
           EmailAddress : values.emailAddress
