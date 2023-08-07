@@ -1,11 +1,13 @@
-import { createCertificate, getCourse, getTrainees, getTrainers } from '../../../api/fetchData';
-import { CertificateRequest, CourseResponse, TraineeResponse, TrainerResponse } from '../../../interfaces/viewModels';
+import { createCertificate, getCourse, getTrainees, getTrainers } from '../../api/fetchData';
+import { CertificateRequest, CertificateResponse, CourseResponse, TraineeResponse, TrainerResponse } from '../../interfaces/viewModels';
 import { useFormik } from 'formik';
 import { notification } from 'antd';
-import { useEth } from '../../../contexts/EthContext';
+import { useEth } from '../../contexts/EthContext';
 import { useEffect, useState } from 'react';
-import { DefaultPagination, UserType } from '../../../interfaces/enums';
+import { DefaultPagination, UserType } from '../../interfaces/enums';
 import { v4 as uuidv4 } from 'uuid';
+import { decryptData } from '../utils';
+
 
 export function usePageState() {
     const [api, contextHolder] = notification.useNotification();
@@ -32,13 +34,15 @@ export function usePageState() {
             CertificateIssueDate: values.certificateIssueDate || currentDate,
 
         };
+        
         setIsLording(true)
-        const certificateRes = await createCertificate(certificate);
+        const certificateDetail = await createCertificate(certificate);
+        const certificateRes :CertificateResponse = JSON.parse(await decryptData(certificateDetail)) ;
         if (certificateRes) {
             setCertificateId(certificateRes.Id);
             const publishedUrl = window.location.origin;
             setUrl(`${publishedUrl}/view-certificate?view=${certificateRes.Id}`);
-            issueCertificateToBlockchain(values.traineeData.data.WalletAddress, certificateRes.Id, values.traineeData.data.Id,);
+            issueCertificateToBlockchain(values.traineeData.data.WalletAddress, certificateRes.Id, certificateDetail,values.traineeData.data.Id);
         } else {
             api.open({
                 key: "updatable",
@@ -47,11 +51,10 @@ export function usePageState() {
             });
         }
     };
-
-    const issueCertificateToBlockchain = async (walletAddress, certificateId, traineeId) => {
+    const issueCertificateToBlockchain = async (walletAddress, certificateId, certificateDetail,traineeId) => {
         try {
             setIsLording(true);
-            await contract.methods.issueCertificate(walletAddress, certificateId, traineeId, UserType.Holder)
+            await contract.methods.issueCertificate(walletAddress, certificateId, certificateDetail,traineeId, UserType.Holder)
                 .send({ from: accounts[0] });
                 setIssue(true);
            

@@ -109,240 +109,269 @@ export async function createCourse(
 }
 
 export async function getCourse(pageNumber: number, pageSize: number
-  ): Promise<CourseResponse> {
-    let myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-  
-    let  requestOptions: RequestInit = {
-      method: 'Get',
-      headers: myHeaders,   
-    };
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}api/courses?pageNumber=${pageNumber}&pageSize=${pageSize}`,
-        requestOptions
-      );
-      if (response.status === 500) {
-        console.error('Internal Server Error');
-        return null;
-      }
-      if (!response.ok) {
-        console.error('Unspecified error occured!');
-        return null;
-      }
-      
-      return (await response.json()) as CourseResponse;
-    } catch (error) {
-      console.error('Oh no, Error occured in getCourse()!', error);
+): Promise<CourseResponse> {
+  let myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  let requestOptions: RequestInit = {
+    method: 'Get',
+    headers: myHeaders,
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/courses?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
       return null;
     }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+
+    return (await response.json()) as CourseResponse;
+  } catch (error) {
+    console.error('Oh no, Error occured in getCourse()!', error);
+    return null;
   }
+}
 
-  export async function createTrainer(
-    trainerReq: TrainerRequest
-  ): Promise<TrainerResponse> {
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-  
-    const requestOptions: RequestInit = {
-      method: 'POST',
-      headers: myHeaders,
-      body: JSON.stringify(trainerReq),
-      redirect: 'follow',
-    };
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}api/trainer`,
-        requestOptions
-      );
-      if (response.status === 500) {
-        console.error('Internal Server Error');
-        return null;
-      }
-      if (!response.ok) {
-        console.error('Unspecified error occured!');
-        return null;
-      }
-      return (await response.json()) as TrainerResponse;
-    } catch (error) {
-      console.error('Oh no, Error occured in createTrainer()!', error);
+export async function createTrainer(
+  trainerReq: TrainerRequest
+): Promise<TrainerResponse> {
+  const myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(trainerReq),
+    redirect: 'follow',
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/trainer`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
     }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+    return (await response.json()) as TrainerResponse;
+  } catch (error) {
+    console.error('Oh no, Error occured in createTrainer()!', error);
   }
+}
 
-  export async function getTrainers(pageNumber: number, pageSize: number
-    ): Promise<TrainerResponse> {
-      let myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/json');
-    
-      let  requestOptions: RequestInit = {
-        method: 'Get',
-        headers: myHeaders,   
-      };
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}api/trainers?pageNumber=${pageNumber}&pageSize=${pageSize}`,
-          requestOptions
-        );
-        if (response.status === 500) {
-          console.error('Internal Server Error');
-          return null;
-        }
-        if (!response.ok) {
-          console.error('Unspecified error occured!');
-          return null;
-        }
-        
-        return (await response.json()) as TrainerResponse;
-      } catch (error) {
-        console.error('Oh no, Error occured in getCourse()!', error);
-        return null;
-      }
+export async function getTrainers(pageNumber: number, pageSize: number
+): Promise<TrainerResponse> {
+  let myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  let requestOptions: RequestInit = {
+    method: 'Get',
+    headers: myHeaders,
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/trainers?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
+    }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
     }
 
-    export async function createTrainee(
-      trainerReq: TraineeRequest
-    ): Promise<TraineeResponse> {
-      const myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/json');
-    
-      const requestOptions: RequestInit = {
-        method: 'POST',
-        headers: myHeaders,
-        body: JSON.stringify(trainerReq),
-        redirect: 'follow',
-      };
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}api/trainee`,
-          requestOptions
-        );
-        if (response.status === 500) {
-          console.error('Internal Server Error');
-          return null;
-        }
-        if (!response.ok) {
-          console.error('Unspecified error occured!');
-          return null;
-        }
-        return (await response.json()) as TraineeResponse;
-      } catch (error) {
-        console.error('Oh no, Error occured in createTrainer()!', error);
-      }
+    return (await response.json()) as TrainerResponse;
+  } catch (error) {
+    console.error('Oh no, Error occured in getCourse()!', error);
+    return null;
+  }
+}
+
+export async function createTrainee(
+  trainerReq: TraineeRequest
+): Promise<TraineeResponse> {
+  const myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(trainerReq),
+    redirect: 'follow',
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/trainee`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
     }
-  
-    export async function getTrainees(pageNumber: number, pageSize: number
-      ): Promise<TraineeResponse> {
-        let myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
-      
-        let  requestOptions: RequestInit = {
-          method: 'Get',
-          headers: myHeaders,   
-        };
-        try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}api/trainees?pageNumber=${pageNumber}&pageSize=${pageSize}`,
-            requestOptions
-          );
-          if (response.status === 500) {
-            console.error('Internal Server Error');
-            return null;
-          }
-          if (!response.ok) {
-            console.error('Unspecified error occured!');
-            return null;
-          }
-          
-          return (await response.json()) as TraineeResponse;
-        } catch (error) {
-          console.error('Oh no, Error occured in getCourse()!', error);
-          return null;
-        }
-      }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+    return (await response.json()) as TraineeResponse;
+  } catch (error) {
+    console.error('Oh no, Error occured in createTrainer()!', error);
+  }
+}
+
+export async function getTrainees(pageNumber: number, pageSize: number
+): Promise<TraineeResponse> {
+  let myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  let requestOptions: RequestInit = {
+    method: 'Get',
+    headers: myHeaders,
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/trainees?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
+    }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+
+    return (await response.json()) as TraineeResponse;
+  } catch (error) {
+    console.error('Oh no, Error occured in getCourse()!', error);
+    return null;
+  }
+}
 
 
-      export async function createCertificate(
-        certificateReq: CertificateRequest
-      ): Promise<CertificateResponse> {
-        const myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
-      
-        const requestOptions: RequestInit = {
-          method: 'POST',
-          headers: myHeaders,
-          body: JSON.stringify(certificateReq),
-          redirect: 'follow',
-        };
-        try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}api/certificates`,
-            requestOptions
-          );
-          if (response.status === 500) {
-            console.error('Internal Server Error');
-            return null;
-          }
-          if (!response.ok) {
-            console.error('Unspecified error occured!');
-            return null;
-          }
-          return (await response.json()) as CertificateResponse;
-        } catch (error) {
-          console.error('Oh no, Error occured in createTrainer()!', error);
-        }
-      }
+export async function createCertificate(
+  certificateReq: CertificateRequest
+): Promise<CertificateResponse> {
+  const myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
 
-      export async function getCertificateById(certificateId:any): Promise<CertificateResponse> {
-          let myHeaders = new Headers();
-          myHeaders.append('Content-Type', 'application/json');
-        
-          let  requestOptions: RequestInit = {
-            method: 'Get',
-            headers: myHeaders,   
-          };
-          try {
-            const response = await fetch(
-              `${process.env.NEXT_PUBLIC_BASE_URL}api/certificates/${certificateId}`,
-              requestOptions
-            );
-            if (response.status === 500) {
-              console.error('Internal Server Error');
-              return null;
-            }
-            if (!response.ok) {
-              console.error('Unspecified error occured!');
-              return null;
-            }
-            
-            return (await response.json()) as CertificateResponse;
-          } catch (error) {
-            console.error('Oh no, Error occured in getCertificate!', error);
-            return null;
-          }
-        }
-        export async function deleteById(id: string,itemName : string ): Promise<boolean> {
-          let myHeaders = new Headers();
-          myHeaders.append('Content-Type', 'application/json');
-          let requestOptions: RequestInit = {
-            method: 'DELETE',
-            headers: myHeaders,
-          };
-          try {
-            const response = await fetch(
-              `${process.env.NEXT_PUBLIC_BASE_URL}api/${itemName}/${id}`,
-              requestOptions
-            );
-            if (response.status === 500) {
-              console.error('Internal Server Error');
-              return false;
-            }
-            if (!response.ok) {
-              console.error('Unspecified error occured!');
-              return false;
-            }
-            return true;
-          } catch (error) {
-            console.error('Oh no, Error occured in deleteTrainee()!', error);
-            return false;
-          }
-        }
+  const requestOptions: RequestInit = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(certificateReq),
+    redirect: 'follow',
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/certificates`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
+    }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+    return (await response.json()) as CertificateResponse;
+  } catch (error) {
+    console.error('Oh no, Error occured in createTrainer()!', error);
+  }
+}
+
+export async function getCertificateById(certificateId: any): Promise<CertificateResponse> {
+  let myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  let requestOptions: RequestInit = {
+    method: 'Get',
+    headers: myHeaders,
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/certificates/${certificateId}`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
+    }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+
+    return (await response.json()) as CertificateResponse;
+  } catch (error) {
+    console.error('Oh no, Error occured in getCertificate!', error);
+    return null;
+  }
+}
+export async function deleteById(id: string, itemName: string): Promise<boolean> {
+  let myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  let requestOptions: RequestInit = {
+    method: 'DELETE',
+    headers: myHeaders,
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/${itemName}/${id}`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return false;
+    }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('Oh no, Error occured in deleteTrainee()!', error);
+    return false;
+  }
+}
+
+export async function getUserCertificateById(certificateId:any): Promise<any> {
+  let myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  let  requestOptions: RequestInit = {
+    method: 'Get',
+    headers: myHeaders,   
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/usercertificates/${certificateId}`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
+    }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+    
+    return (await response.json());
+  } catch (error) {
+    console.error('Oh no, Error occured in getCertificate!', error);
+    return null;
+  }
+}

@@ -1,4 +1,6 @@
 using System.Net;
+using System.Text;
+using System.Text.Json;
 using BlockchainCertificatesIssuer.API.Models;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.Functions.Worker;
@@ -26,9 +28,11 @@ namespace BlockchainCertificatesIssuer.API.Functions
             var certificate = await System.Text.Json.JsonSerializer.DeserializeAsync<Certificate>(req.Body);
 
             var response = req.CreateResponse(HttpStatusCode.OK);
-
             var created = await certificateRepository.CreateAsync(certificate);
-            await response.WriteAsJsonAsync(created);
+            var certificateJson = JsonSerializer.Serialize(created);
+            var encryptData = Convert.ToBase64String(Encoding.UTF8.GetBytes(certificateJson));
+            await response.WriteAsJsonAsync(encryptData);
+
             return response;
         }
 
@@ -50,5 +54,26 @@ namespace BlockchainCertificatesIssuer.API.Functions
 
             return response;
         }
+
+        [Function("GetUserCertificateById")]
+        public async Task<HttpResponseData> GetUserCertificateById([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "usercertificates/{id}")]
+        HttpRequestData req, string id)
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request to get a certificate by ID(User View).");
+
+            var certificate = await certificateRepository.GetAsync(id);
+
+            if (certificate == null)
+            {
+                return req.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+            var certificateJson = JsonSerializer.Serialize(certificate);
+            var encryptData = Convert.ToBase64String(Encoding.UTF8.GetBytes(certificateJson));
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            await response.WriteAsJsonAsync(encryptData);
+
+            return response;
+            }
     }
 }

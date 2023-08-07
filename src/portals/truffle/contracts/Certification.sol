@@ -13,6 +13,7 @@ contract Certification{
 
     struct Certificate {
         string certificateId;
+        string certificateDetail;
         address Issuer;
         bool verified;
     }
@@ -28,7 +29,7 @@ contract Certification{
         user.userType = userType;
     }
 
-    function issueCertificate(address userAddress, string memory certificateId,string memory id , UserType userType ) public {
+    function issueCertificate(address userAddress, string memory certificateId,string memory certificateDetail,string memory id , UserType userType ) public {
       
       if (bytes(users[userAddress].id).length == 0) {
         registerUser(userAddress, id, userType);
@@ -38,7 +39,7 @@ contract Certification{
         Certificate memory certificate;
         certificate.certificateId = certificateId;
         certificate.Issuer = msg.sender;
-
+        certificate.certificateDetail = certificateDetail;
          user.certificates.push(certificate);
 
     
@@ -74,6 +75,27 @@ contract Certification{
     User storage user = users[userAddress];
     return user.certificates;
     
+    }
+
+
+     function getUserCertificateById(address userAddress ,string memory certificateId) public view returns (Certificate[] memory) {
+        if (bytes(users[userAddress].id).length == 0) {
+        return new Certificate[](0);
+    }
+
+        User storage user = users[userAddress];
+        Certificate[] storage certificates = user.certificates;
+        Certificate[] memory result;
+
+        for (uint i = 0; i < certificates.length; i++) {
+            if (keccak256(bytes(certificates[i].certificateId)) == keccak256(bytes(certificateId))) {
+                 result = new Certificate[](1);
+            result[0] = certificates[i];
+            return result;
+            }
+      
+        }
+        return new Certificate[](0);   
     }
 
     function shareCertificate(string memory certificateId) public {
