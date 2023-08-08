@@ -99,9 +99,6 @@ export function useComponentState() {
       fetchTrainees(DefaultPagination.pageNumber, DefaultPagination.pageSize);
     }, []);
 
-    console.log("=====ds",dataSource);
-    
-
     const clearForm = () => {
       formik.resetForm();
     };
