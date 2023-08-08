@@ -17,7 +17,7 @@ export default function TrainerMain() {
         <>
         <div className="mx-auto px-4 py-16 text-center"> 
             <div className="text-center md:text-left mt-8">
-                <span className="ml-8 mt-4 text-2xl font-bold">{title}</span>
+                <span className="ml-8 mt-4 text-2xl font-bold">Trainer</span>
             </div>
             <div className="ml-8 mt-4 text-center md:text-left">
                 <button className="bg-blue-500 text-white py-2 px-4 rounded flex items-center space-x-2 hover:bg-blue-600" onClick={onClickHandler} >
