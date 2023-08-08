@@ -30,3 +30,7 @@ export interface CertificateResponse extends Certificate {
   Id: string;
   Type: string;
 }
+export interface PaginationContainerProps {
+  data: any[];
+  handlePaginationChange: (pageNumber: number, pageSize: number) => void;
+}

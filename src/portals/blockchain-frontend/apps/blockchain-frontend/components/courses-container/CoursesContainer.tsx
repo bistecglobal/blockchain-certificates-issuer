@@ -6,7 +6,7 @@ import { useComponentState } from './state';
 import { DefaultPagination } from '../../interfaces/enums'
 
 export default function CoursesContainer() {
-  const { formik,dataSource,fetchCourses,handleDelete } = useComponentState();
+  const { formik,dataSource,fetchCourses } = useComponentState();
   const {
     handleSubmit,
     handleChange,
@@ -48,7 +48,7 @@ export default function CoursesContainer() {
           <>
           <DeleteOutlined
            onClick={() => {
-            handleDelete(data.Type,data.Id,);
+
           }}
             style={{ color: 'red', marginLeft: 4 }}
           />
