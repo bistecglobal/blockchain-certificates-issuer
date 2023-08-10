@@ -89,6 +89,8 @@ Replace the following keys in"**_local.settings.json_**" with active values:
 1. Open the solution in Visual Studio.
 2. Run the backend by executing the necessary tasks or launching the application
 
+***
+**Blockchain**(optional)
 ### MetaMask
 
 <p align="center">
