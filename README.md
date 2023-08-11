@@ -58,22 +58,36 @@ In Visual Studio Code, go to File > Open Folder and navigate to blockchain-certi
 
 **Install Dependencies:**
 Open a terminal in the src/portals/blockchain-frontend folder.
-Run the command: `npm install`
+Run the command: 
+```sh
+npm install
+```
 
 **Run Development Server:**
 Ensure you're still in the src/portals/blockchain-frontend directory.
 Open a terminal within Visual Studio Code.
-Run the command: `nx run blockchain-frontend:serve:development or npm start`
+Run the command: 
+```sh 
+nx run blockchain-frontend:serve:development
+```
+
+ or 
+```sh
+npm start
+```
 
 **Further Reading:**
 For more information, explore [nx.dev](https://nx.dev/) to dive deeper into Nx.
 Refer to the [next guide](https://nextjs.org/docs/getting-started) for additional insights into Next.js.
 
 ### Backend Setup:
-Navigate to the backend folder by opening a terminal and using the command: `cd path\to\blockchain-certificates-issuer\src\backend\BlockchainCertificatesIssuer`
+Navigate to the backend folder by opening a terminal and using the command: 
+```sh
+cd path\to\blockchain-certificates-issuer\src\backend\BlockchainCertificatesIssuer
+```
 
 **Install Cosmos DB Emulator:**
-Install the Cosmos DB Emulator on your machine.
+Install the [Cosmos DB Emulator](https://learn.microsoft.com/en-us/azure/cosmos-db/local-emulator?tabs=ssl-netstd21) on your machine.
 
 **Configure Local Settings:**
 Locate the file "**local.settings-copy.json**" in the src/backend/BlockchainCertificatesIssuer directory.
@@ -82,14 +96,17 @@ Rename "**_local.settings-copy.json_**" to "**_local.settings.json_**".
 **Update Connection Details:**
 Open the "**_local.settings.json_**" file.
 Replace the following keys in"**_local.settings.json_**" with active values:
-`"RepositoryOptions:CosmosConnectionString": "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",`
-`"RepositoryOptions:DatabaseId": "CertificatesDB"`
+```sh
+"RepositoryOptions:CosmosConnectionString": "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
+"RepositoryOptions:DatabaseId": "CertificatesDB"
+```
 
 **Run the Backend:**
 1. Open the solution in Visual Studio.
 2. Run the backend by executing the necessary tasks or launching the application
 
 ***
+
 **Blockchain**(optional)
 ### MetaMask
 
@@ -114,13 +131,12 @@ Choose " **Add a network manually** " at the bottom of the network list.
 **Step 4**: Add Sepolia Network:
 In the " **Add a network manually** " section, fill in the following details:
 
-`Network Name: Sepolia`
-
-`New RPC URL: "https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID" (replace "YOUR_INFURA_PROJECT_ID" with your actual Infura project ID)`
-
-`Chain ID: 11155111`
-
-`Symbol (optional): ETH`
+``` sh
+Network Name: Sepolia
+New RPC URL: "https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID" (replace "YOUR_INFURA_PROJECT_ID" with your actual Infura project ID)
+Chain ID: 11155111
+Symbol (optional): ETH
+```
 
 **Step 5**: Save and Switch:
 Click "**Save**" to add the Sepolia network.
@@ -150,16 +166,14 @@ Find the networks section in the configuration file.
 Replace below configuration for the Sepolia  network. 
 Replace "YOUR_INFURA_PROJECT_ID" with your actual Infura project ID:
 
-`sepolia : { provider: () => new HDWalletProvider(MNEMONIC, https://ropsten.infura.io/v3/YOUR_INFURA_PROJECT_ID), `
-
-`network_id: 3, // Ropsten's network ID gas: 5500000, // Gas limit used for deploys `
-
-`confirmations: 2, // Number of confirmations to wait between deployments `
-
-`timeoutBlocks: 200, // Timeout in blocks for transactions `
-
-`skipDryRun: true // Skip dry run before migrations? (default: false for public nets ) `
-`} } `
+```sh 
+sepolia : { provider: () => new HDWalletProvider(MNEMONIC, https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID),
+network_id: 11155111,
+confirmations: 2, // Number of confirmations to wait between deployments
+timeoutBlocks: 200, // Timeout in blocks for transactions
+skipDryRun: true // Skip dry run before migrations? (default: false for public nets )
+} } 
+```
 
 **Step 4**: Obtain Sepolia  Ether:
 Get Sepolia  Ether for testing from a Sepolia Faucet like [https://sepoliafaucet.com/](https://sepoliafaucet.com/)
@@ -167,4 +181,6 @@ Get Sepolia  Ether for testing from a Sepolia Faucet like [https://sepoliafaucet
 **Step 5**: Deploy to Sepolia :
 Open a terminal in the src/portals/truffle folder.
 Run the following command to deploy your contracts to the Sepoli  network:
-`truffle migrate --network sepolia`
+```sh
+truffle migrate --network sepolia
+```
