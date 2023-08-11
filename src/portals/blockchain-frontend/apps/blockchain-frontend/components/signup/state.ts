@@ -19,6 +19,7 @@ export function useComponentState({updateIsRegister}) {
     };
     if (userDetail.Password !== userDetail.PasswordConfirmation) {
       setIsMatch(false);
+      setIsLodging(false);
 
     } else {
       setIsMatch(true);
