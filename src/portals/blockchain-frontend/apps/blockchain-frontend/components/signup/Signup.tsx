@@ -1,7 +1,7 @@
 import React from 'react';
 import { useComponentState } from './state';
-export default function SignUp() {
-  const { handleSignupFormSubmit, isAvailable, isMatch,isLodging } = useComponentState();
+export default function SignUp({ updateIsRegister }) {
+  const { handleSignupFormSubmit, isAvailable, isMatch,isLodging } = useComponentState({ updateIsRegister });
   return (
     <form onSubmit={handleSignupFormSubmit}>
       <div className="mb-4">

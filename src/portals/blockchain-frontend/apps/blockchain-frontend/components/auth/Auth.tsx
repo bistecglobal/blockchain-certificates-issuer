@@ -24,7 +24,7 @@ export default function Auth() {
           <img src={'/bg.png'} alt="Logo" className="h-16 mx-auto mb-4" />
           <h1 className="text-2xl font-semibold mb-6">{title}</h1>
         </div>
-        {isRegister ? <SignUp /> : <Login />}
+        {isRegister ? <SignUp updateIsRegister={toggleRegister} /> : <Login />}
         <p className='px-6 pt-6'>{userMessage}   <a onClick={onClickHandler} className="text-blue-500 hover:underline cursor-pointer">{linkContent} </a></p>
       </div>
     </div>
