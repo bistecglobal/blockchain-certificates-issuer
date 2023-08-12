@@ -66,6 +66,7 @@ export default function TraineesContainer() {
                                 placeholder="First Name"
                                 onChange={handleChange}
                                 value={values.firstName}
+                                maxLength={50}
                             />
                             <sub style={{ color: 'red' }}>
                                 {errors.firstName ? `${errors.firstName}` : null}
@@ -80,6 +81,7 @@ export default function TraineesContainer() {
                                 placeholder="Last Name"
                                 onChange={handleChange}
                                 value={values.lastName}
+                                maxLength={50}
                             />
                             <sub style={{ color: 'red' }}>
                                 {errors.lastName ? `${errors.lastName}` : null}
@@ -93,6 +95,7 @@ export default function TraineesContainer() {
                                 placeholder="Email Address"
                                 onChange={handleChange}
                                 value={values.emailAddress}
+                                maxLength={70}
                             />
                             <sub style={{ color: 'red' }}>
                                 {errors.emailAddress ? `${errors.emailAddress}` : null}
