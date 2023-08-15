@@ -7,21 +7,6 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-
-
-
-// import SignUp from "./SignUp"
-
-// const signUp = new SignUp()
-
-// // eslint-disable-next-line @typescript-eslint/no-namespace
-// declare namespace Cypress {
-//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//   interface Chainable<Subject> {
-//     //login(email: string, password: string): void;
-//     userSignUp(lastEmail: string, password: string): void;
-//   }
-// }
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => {

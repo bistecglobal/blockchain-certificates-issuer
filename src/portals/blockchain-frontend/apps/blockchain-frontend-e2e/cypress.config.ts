@@ -28,6 +28,7 @@ export default defineConfig({
       'src/e2e/SignUpTest.cy.ts',
       'src/e2e/LoginTest.cy.ts'
     ],
+    baseUrl: 'http://192.168.1.5:7250/'
   },
 
 });
