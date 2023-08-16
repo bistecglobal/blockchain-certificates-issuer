@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useComponentState } from './state';
-import TraineesContainer from './TraineesContainer';
+//import TraineesContainer from './TraineesContainer';
+import TraineeForm from './TraineeForm';
 import TraineesCardView from './TraineesCardView';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
@@ -54,7 +55,7 @@ function TraineesMain() {
           {isCardView ? (
             <TraineesCardView traineeData={dataSource} />
           ) : (
-            <TraineesContainer />
+            <TraineeForm />
           )}
         </div>
       </div>
