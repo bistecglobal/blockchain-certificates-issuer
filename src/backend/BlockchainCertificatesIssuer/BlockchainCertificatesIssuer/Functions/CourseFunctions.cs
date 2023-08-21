@@ -22,7 +22,7 @@ namespace BlockchainCertificatesIssuer.API.Functions
         }
 
         [Function("CreateCourse")]
-        public async Task<HttpResponseData> CreateCourse([HttpTrigger(AuthorizationLevel.Anonymous,"post", Route ="course")] HttpRequestData req)
+        public async Task<HttpResponseData> CreateCourse([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "course")] HttpRequestData req)
         {
             _logger.LogInformation("Create a course.");
 
@@ -80,9 +80,9 @@ namespace BlockchainCertificatesIssuer.API.Functions
                     await response.WriteAsJsonAsync(new Course[0]);
                     return response;
                 }
-                    await response.WriteAsJsonAsync(courses.Items);
-                    return response;
-                
+                await response.WriteAsJsonAsync(courses.Items);
+                return response;
+
             }
             catch (Exception ex)
             {
@@ -117,5 +117,69 @@ namespace BlockchainCertificatesIssuer.API.Functions
                 return req.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        [Function("GetCourseById")]
+        public async Task<HttpResponseData> GetCourseById([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "course/{id}")]
+        HttpRequestData req, string id)
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request to get a course by ID.");
+            try
+            {
+                var course = await courseRepository.GetAsync(id);
+
+                if (course == null)
+                {
+                    return req.CreateResponse(HttpStatusCode.NotFound);
+
+                }
+
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                await response.WriteAsJsonAsync(course);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while processing the request.");
+                return req.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+         [Function("UpdateCourse")]
+         public async Task<HttpResponseData> UpdateCourse([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "courseupdate/{id}")] 
+        HttpRequestData req,string id)
+         {
+            _logger.LogInformation($"Update course with ID: {id}");
+                
+             try
+             {
+                var existingCourse = await courseRepository.GetAsync(id);
+                if (existingCourse == null)
+                {
+                    return req.CreateResponse(HttpStatusCode.NotFound);
+                }
+
+                var updatedCourse = await JsonSerializer.DeserializeAsync<Course>(req.Body);
+                if (updatedCourse == null)
+                {
+                    return req.CreateResponse(HttpStatusCode.BadRequest);
+                }
+
+                // Update the existing course with the new data
+                existingCourse.Title = updatedCourse.Title;
+                existingCourse.Description = updatedCourse.Description;
+                existingCourse.StartDate = updatedCourse.StartDate;
+                existingCourse.EndDate = updatedCourse.EndDate;
+
+                var updated = await courseRepository.UpdateAsync(existingCourse);
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                await response.WriteAsJsonAsync(updated);
+                return response;
+             }
+            catch (Exception ex)
+             {
+                _logger.LogError(ex.Message);
+                return req.CreateResponse(HttpStatusCode.InternalServerError);
+              }
+         }
     }
 }

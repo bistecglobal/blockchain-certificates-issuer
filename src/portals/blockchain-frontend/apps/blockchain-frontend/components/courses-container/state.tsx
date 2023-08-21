@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { CourseRequest, CourseResponse } from 'apps/blockchain-frontend/interfaces/viewModels';
-import { createCourse, deleteById, getCourse } from 'apps/blockchain-frontend/api/fetchData';
+import { createCourse, deleteById, getCourse, getCourseById, updateCourse } from 'apps/blockchain-frontend/api/fetchData';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 import { message } from 'antd';
+import { useRouter } from 'next/router';
+import dayjs from 'dayjs';
 
 export function useComponentState() {
   const [dataSource, setDataSource] = useState([]);
@@ -13,6 +15,13 @@ export function useComponentState() {
   const [deleteItemType, setDeleteItemType] = useState(null);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isCancelDisable, setIsCancelDisable] = useState(true);
+  const [selectedCourse, setSelectedCourse] = useState([]);
+  const router = useRouter();
+  const { query } = router;
+  const defaultView = 'card';
+  const view = query.view || defaultView;
+  const id = query.id || null
+
 
   const createNewCourse = async (values) => {
     let course: CourseRequest = {
@@ -21,15 +30,24 @@ export function useComponentState() {
       StartDate: values.startDate,
       EndDate: values.endDate,
     };
-    const courseRes = await createCourse(course);
-    if (courseRes) {
-      message.success(`Course created successfully`);
-      setDataSource([]);
-      fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
-      clearForm();
+    if (!id) {
+      const courseRes = await createCourse(course);
+      if (courseRes) {
+        message.success(`Course created successfully`);
+        success();
+      } else {
+        message.error(`Failed to create the course`);
+      }
     } else {
-      message.error(`Failed to create the course`);
+      const courseRes = await updateCourse(course, id);
+      if (courseRes) {
+        message.success(`Course updated successfully`);
+        success();
+      } else {
+        message.error(`Failed to updated the course`);
+      }
     }
+
   };
 
   const validate = (values) => {
@@ -86,10 +104,13 @@ export function useComponentState() {
     });
     setLoading(false);
     setDataSource(formattedData);
-};
+  };
 
   useEffect(() => {
     fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+    if (id) {
+      fetchCourseById(id);
+    }
   }, []);
 
   const clearForm = () => {
@@ -125,15 +146,47 @@ export function useComponentState() {
     setIsCancelModalOpen(false);
   };
   const confirmCancel = () => {
-    clearForm();
+    if (!id) {
+      clearForm();
+    } else {
+      setFormValues(selectedCourse);
+    }
+
     setIsCancelModalOpen(false);
     setIsCancelDisable(true);
   };
   const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
     fetchCourses(pageNumber, pageSize ?? DefaultPagination.pageSize);
   };
+
+  const fetchCourseById = async (id: any) => {
+    let courseRes: CourseResponse[] = [await getCourseById(id)];
+    if (courseRes[0]) {
+      setSelectedCourse(courseRes);
+      setFormValues(courseRes)
+
+    } else {
+      router.push('/courses?view=card');
+      message.error('Course not found.');
+    }
+  };
+
+  const success = () => {
+    setDataSource([]);
+    fetchCourses(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+    clearForm();
+    router.push('/courses?view=card');
+  }
+  const setFormValues = (courseRes) => {
+    formik.setValues({
+      title: courseRes[0].Title,
+      description: courseRes[0].Description,
+      startDate: dayjs(courseRes[0].StartDate),
+      endDate: dayjs(courseRes[0].EndDate),
+    });
+  }
   return {
     formik, dataSource, fetchCourses, loading, handlePaginationChange, openDeleteModal, isDeleteModalOpen, closeDeleteModal, confirmDelete,
-    handleCancel, isCancelModalOpen, closeModalOpen, confirmCancel,isCancelDisable
+    handleCancel, isCancelModalOpen, closeModalOpen, confirmCancel, isCancelDisable, view, id
   };
 }
