@@ -3,7 +3,7 @@ import type { UserRequest, UserResponse } from '../../interfaces/viewModels';
 import { CreateUserByEmail } from '../../api/fetchData';
 import { useState } from 'react';
 
-export function useComponentState() {
+export function useComponentState({updateIsRegister}) {
   const router = useRouter();
   const [isAvailable, setIsAvailable] = useState(true);
   const [isMatch, setIsMatch] = useState(true);
@@ -19,6 +19,7 @@ export function useComponentState() {
     };
     if (userDetail.Password !== userDetail.PasswordConfirmation) {
       setIsMatch(false);
+      setIsLodging(false);
 
     } else {
       setIsMatch(true);
@@ -35,8 +36,11 @@ export function useComponentState() {
       setIsAvailable(false);
       setIsLodging(false);
       return;
-    }
-    await router.push('/dashboard');
+    } else{
+      setIsLodging(false);
+      updateIsRegister && updateIsRegister();
+      await router.push('/');
+    } 
   }
 
   return { handleSignupFormSubmit, isAvailable,isMatch,isLodging };

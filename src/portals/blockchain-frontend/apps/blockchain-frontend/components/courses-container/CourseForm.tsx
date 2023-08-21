@@ -86,7 +86,9 @@ export default function CourseForm() {
             <div className='grid grid-cols-2 gap-4 mb-2'>
               <button
                 type="submit"
-                className="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none"
+                className={`w-full py-2 px-4 rounded-md focus:outline-none ${
+                  formik.isValid ? 'bg-blue-500 text-white font-semibold hover:bg-blue-600' : 'bg-blue-500 text-white font-semibold cursor-not-allowed'
+                }`}
               >
                 Submit
               </button>
