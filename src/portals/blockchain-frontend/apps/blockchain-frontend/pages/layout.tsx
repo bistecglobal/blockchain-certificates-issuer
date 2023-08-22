@@ -65,26 +65,31 @@ export default function RootLayout({ children }) {
               label: 'Home',
               icon: <AppstoreOutlined />,
               key: '/dashboard',
+              className: navigate.pathname === '/dashboard' ? 'ant-menu-item-selected' : '',
             },
             {
               label: 'Courses',
               key: '/courses',
               icon: <ShopOutlined />,
+              className: navigate.pathname === '/courses' ? 'ant-menu-item-selected' : '',
             },
             {
               label: 'Trainers',
               key: '/trainers',
               icon: <UserOutlined />,
+              className: navigate.pathname === '/trainers' ? 'ant-menu-item-selected' : '',
             },
             {
               label: 'Trainees',
               key: '/trainees',
               icon: <UserOutlined />,
+              className: navigate.pathname === '/trainees' ? 'ant-menu-item-selected' : '',
             },
             {
               label: 'Certificates',
               key: '/certificates',
               icon: <SafetyCertificateOutlined />,
+              className: navigate.pathname === '/certificates' ? 'ant-menu-item-selected' : '',
             },
             {
               label: 'Logout',
