@@ -61,7 +61,7 @@ export function useComponentState() {
       errors.title = 'Course name is required';
     } else if (values.title.length > 50) {
       errors.title = 'Must be 50 characters or less';
-    } else if (values.title.trim() === ''){
+    } else if (values.title.trim() === '') {
       errors.title = 'Course name cannot be empty';
     }
 

@@ -68,9 +68,9 @@ export default function TrainersContainer() {
                                 onChange={handleChange}
                                 value={values.firstName}
                             />
-                            <sub className="text-left text-red-500 mb-2">
-                                {errors.firstName ? `${errors.fisrtName}` : null}
-                            </sub>
+                            <p className="text-left text-red-500 text-center mb-2">
+                                {errors.firstName ? `${errors.firstName}` : null}
+                            </p>
                         </Form.Item>
 
                         <Form.Item>
@@ -83,9 +83,9 @@ export default function TrainersContainer() {
                                 onChange={handleChange}
                                 value={values.lastName}
                             />
-                            <sub className="text-left text-red-500 mb-2">
+                            <p className="text-left text-red-500 text-center mb-2">
                                 {errors.lastName ? `${errors.lastName}` : null}
-                            </sub>
+                            </p>
                         </Form.Item>
                         <Form.Item>
                             <label htmlFor="emailAddress" className="block text-left font-medium text-gray-800">Email Address</label>
@@ -97,9 +97,9 @@ export default function TrainersContainer() {
                                 onChange={handleChange}
                                 value={values.emailAddress}
                             />
-                            <sub className="text-left text-red-500 mb-2">
+                            <p className="text-left text-red-500 text-center mb-2">
                                 {errors.emailAddress ? `${errors.emailAddress}` : null}
-                            </sub>
+                            </p>
                         </Form.Item>
                         <Form.Item>
                           <div className="flex justify-center items-center">

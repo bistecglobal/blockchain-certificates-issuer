@@ -33,15 +33,15 @@ export function useComponentState() {
       } = {};
   
       if (!values.firstName) {
-        errors.firstName = 'Required';
+        errors.firstName = 'First Name is required';
       } 
   
       if (!values.lastName) {
-        errors.lastName = 'Required';
+        errors.lastName = 'Last Name is required';
       }
   
       if (!values.emailAddress) {
-        errors.emailAddress = 'Required';
+        errors.emailAddress = 'Email is required';
       }
   
   
