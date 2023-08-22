@@ -374,4 +374,64 @@ export async function getUserCertificateById(certificateId:any): Promise<any> {
     console.error('Oh no, Error occured in getCertificate!', error);
     return null;
   }
+  
+}
+export async function getCourseById(courseId: any): Promise<CourseResponse> {
+  let myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  let requestOptions: RequestInit = {
+    method: 'Get',
+    headers: myHeaders,
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/course/${courseId}`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
+    }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+
+    return (await response.json()) as CourseResponse;
+  } catch (error) {
+    console.error('Oh no, Error!', error);
+    return null;
+  }
+}
+
+export async function updateCourse(
+  courseReq: CourseRequest,courseId:any
+): Promise<CourseResponse> {
+  const myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  const requestOptions: RequestInit = {
+    method: 'PUT',
+    headers: myHeaders,
+    body: JSON.stringify(courseReq),
+    redirect: 'follow',
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/courseupdate/${courseId}`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
+    }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+    return (await response.json()) as CourseResponse;
+  } catch (error) {
+    console.error('Oh no, Error occured in updateCourse()!', error);
+  }
 }

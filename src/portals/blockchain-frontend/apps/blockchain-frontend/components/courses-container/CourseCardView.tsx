@@ -16,7 +16,7 @@ export default function CourseCardView() {
                             <div key={index} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                 <div className="flex">
                                     <div className="ml-auto">
-                                        <ArrowsAltOutlined />
+                                    <a href={`/courses?view=edit&id=${course.Id}`}><ArrowsAltOutlined /></a>
                                     </div>
                                 </div>
                                 <div>
