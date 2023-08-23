@@ -3,7 +3,7 @@ import { DeleteOutlined, ArrowsAltOutlined } from '@ant-design/icons';
 import SpinnerContainer from '../shared/spinner/SpinnerContainer';
 import { useComponentState } from './state';
 
-export default function TrainerCardView() {
+export default function TrainerCardView({ trainersData }) {
     const {dataSource, loading, handleDelete } = useComponentState();
     return (
         <>

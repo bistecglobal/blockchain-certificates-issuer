@@ -27,7 +27,7 @@ export default function TrainerMain() {
                 </button>
             </div>
             <div className="mt-8 ml-8">
-            {isCardView ?  <CourseCardView /> : <CourseForm />}
+            {isCardView ?  <CourseCardView  trainersData={dataSource} /> : <CourseForm />}
                
             </div>
         </div>
