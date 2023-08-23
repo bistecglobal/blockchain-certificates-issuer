@@ -1,3 +1,11 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.ant-btn.css-dev-only-do-not-override-diro6f.ant-btn-primary {
+    background-color: #1677ff;
+}
+
+.ant-btn.css-dev-only-do-not-override-diro6f.ant-btn-primary:hover {
+    background-color: #4096ff;
+}

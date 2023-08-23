@@ -74,7 +74,7 @@ namespace BlockchainCertificatesIssuer.API.Functions
                 {
                     _logger.LogWarning("No data.");
                     response = req.CreateResponse(HttpStatusCode.NotFound);
-                    await response.WriteAsJsonAsync("No data");
+                    await response.WriteAsJsonAsync(new Trainer[0]);
                     return response;
                 }
  
