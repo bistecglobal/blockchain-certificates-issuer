@@ -8,6 +8,7 @@ import {ExclamationCircleOutlined } from '@ant-design/icons/lib/icons';
 
 export function useComponentState() {
     const [dataSource, setDataSource] = useState([]);
+    const [loading, setLoading] = useState(true);
   
     const createNewTrainer = async (values) => {
       const trainer: TrainerRequest = {
@@ -59,6 +60,7 @@ export function useComponentState() {
     });
   
     const fetchTrainers = async (pageNumber: number, pageSize: number) => {
+      setLoading(true);
       let trainerRes: TrainerResponse[]= [await getTrainers(pageNumber, pageSize)];
       if (Array.isArray(trainerRes)) {
         trainerRes = trainerRes.flat();
@@ -66,6 +68,7 @@ export function useComponentState() {
       const formattedData = trainerRes.map((item) => {
         return { ...item,key : item.Id};
       });
+      setLoading(false);
       setDataSource(formattedData);
  
     };
@@ -94,5 +97,5 @@ export function useComponentState() {
     const clearForm = () => {
       formik.resetForm();
     };
-    return { formik, handleDelete, dataSource, fetchTrainers };
+    return { formik, handleDelete, dataSource, fetchTrainers, loading };
   }

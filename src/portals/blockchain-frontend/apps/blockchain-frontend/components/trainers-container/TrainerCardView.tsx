@@ -1,10 +1,15 @@
 import { Card } from "antd";
 import { DeleteOutlined, ArrowsAltOutlined } from '@ant-design/icons';
+import SpinnerContainer from '../shared/spinner/SpinnerContainer';
+import { useComponentState } from './state';
 
-export default function TrainerCardView({ trainersData }) {
+export default function TrainerCardView() {
+    const {dataSource, loading, handleDelete } = useComponentState();
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {trainersData.map((trainer, index) => (
+        <>
+        {dataSource.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {dataSource.map((trainer, index) => (
                 <div key={index} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div className="flex">
                         <div className="ml-auto">
@@ -17,11 +22,19 @@ export default function TrainerCardView({ trainersData }) {
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
                     <div className="flex">
                         <div className="ml-auto">
-                            <DeleteOutlined />
+                        <button onClick={() => {
+                                handleDelete(trainer.Type, trainer.Id);
+                            }}><DeleteOutlined /></button>
                         </div>
                     </div>
                 </div>
             ))}
-        </div>
+          </div>
+            ) : (<div className='fixed inset-0 ml-40 z-[-1] flex items-center justify-center'>
+
+            {loading ? (<div>
+                <SpinnerContainer />
+            </div>) : (<div className="text-lg text-gray-600">No data available.</div>)}</div>)}
+        </>
     );
 }
