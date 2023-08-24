@@ -19,16 +19,19 @@ export default function TrainersContainer() {
             key: '1',
             title: 'First Name',
             dataIndex: 'FirstName',
+            width: '25%',
         },
         {
             key: '2',
             title: 'Last Name',
             dataIndex: 'LastName',
+            width: '25%',
         },
         {
             key: '3',
             title: 'Email',
             dataIndex: 'EmailAddress',
+            width: '33%',
         },
 
         {
