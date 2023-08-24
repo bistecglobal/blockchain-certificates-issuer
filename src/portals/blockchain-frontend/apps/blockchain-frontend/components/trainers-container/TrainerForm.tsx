@@ -60,8 +60,8 @@ export default function TrainersContainer() {
             <div className="bg-white p-4 shadow-md rounded-md sm:w-full md:w-full lg:w-2/3 xl:w-2/3">
                 <div id="trainer-add-form">
                     <Title level={3}>Add Trainer</Title>
-                    <Form onFinish={handleSubmit}>
-                        <Form.Item>
+                    <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
                             <label htmlFor="firstName" className="block text-left font-medium text-gray-800">First Name</label>
                             <Input
                                 name="firstName"
@@ -71,12 +71,13 @@ export default function TrainersContainer() {
                                 onChange={handleChange}
                                 value={values.firstName}
                             />
-                            <p className="text-left text-red-500 text-center mb-2">
+                            </div>
+                            <p className="text-left text-red-500 mb-2">
                                 {errors.firstName ? `${errors.firstName}` : null}
                             </p>
-                        </Form.Item>
+                       
 
-                        <Form.Item>
+                            <div className="mb-4">
                             <label htmlFor="lastName" className="block text-left font-medium text-gray-800">Last Name</label>
                             <Input
                                 name="lastName"
@@ -86,11 +87,12 @@ export default function TrainersContainer() {
                                 onChange={handleChange}
                                 value={values.lastName}
                             />
-                            <p className="text-left text-red-500 text-center mb-2">
+                            </div>
+                            <p className="text-left text-red-500 mb-2">
                                 {errors.lastName ? `${errors.lastName}` : null}
                             </p>
-                        </Form.Item>
-                        <Form.Item>
+                        
+                            <div className="mb-4">
                             <label htmlFor="emailAddress" className="block text-left font-medium text-gray-800">Email Address</label>
                             <Input
                                 name="emailAddress"
@@ -100,10 +102,11 @@ export default function TrainersContainer() {
                                 onChange={handleChange}
                                 value={values.emailAddress}
                             />
-                            <p className="text-left text-red-500 text-center mb-2">
+                            </div>
+                            <p className="text-left text-red-500 mb-2">
                                 {errors.emailAddress ? `${errors.emailAddress}` : null}
                             </p>
-                        </Form.Item>
+                       
                         <Form.Item>
                           <div className="flex justify-center items-center">
                             <Button htmlType="submit"  className="w-7/12 bg-blue-500 text-white font-semibold flex items-center justify-center py-4 px-4 rounded-md hover:bg-blue-600 focus:outline-none">
@@ -111,7 +114,7 @@ export default function TrainersContainer() {
                             </Button>
                           </div>
                         </Form.Item>
-                    </Form>
+                    </form>
                 </div>
                 <div id="trainer-grid">
                     <Table
