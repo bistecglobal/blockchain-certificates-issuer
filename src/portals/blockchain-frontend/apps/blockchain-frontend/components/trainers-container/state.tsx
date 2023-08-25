@@ -80,13 +80,8 @@ export function useComponentState() {
     };
     useEffect(() => {
       fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
-    }, []);
-  
-    const openDeleteModal = (id, type) => {
-      setDeleteItemId(id);
-      setDeleteItemType(type)
-      setIsDeleteModalOpen(true);
-    };
+    }, []);  
+    
     const handleDelete =( itemName, id) => {
       Modal.confirm({
         title: `Are you sure you want to delete this ${itemName}?`,
@@ -107,9 +102,7 @@ export function useComponentState() {
     const confirmCancel = () => {
       if (!id) {
         clearForm();
-      } else {
-        setFormValues(selectedCourse);
-      }
+      } 
   
       setIsCancelModalOpen(false);
       setIsCancelDisable(true);
@@ -123,5 +116,5 @@ export function useComponentState() {
     const clearForm = () => {
       formik.resetForm();
     };
-    return { formik,isCancelModalOpen,isCancelDisable,handleCancel,closeModalOpen,confirmCancel, handleDelete, dataSource, fetchTrainers,openDeleteModal, loading,id };
+    return { formik,isCancelModalOpen,isCancelDisable,handleCancel,closeModalOpen,confirmCancel, handleDelete, dataSource, fetchTrainers, loading,id };
   }
