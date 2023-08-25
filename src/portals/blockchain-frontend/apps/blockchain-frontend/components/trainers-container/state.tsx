@@ -5,10 +5,16 @@ import { useFormik } from 'formik';
 import { DefaultPagination } from "apps/blockchain-frontend/interfaces/enums";
 import { Modal, message } from "antd";
 import {ExclamationCircleOutlined } from '@ant-design/icons/lib/icons';
+import { useRouter } from 'next/router';
 
 export function useComponentState() {
     const [dataSource, setDataSource] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+    const [isCancelDisable, setIsCancelDisable] = useState(true);
+    const router = useRouter();
+    const { query } = router;
+    const id = query.id || null
   
     const createNewTrainer = async (values) => {
       const trainer: TrainerRequest = {
@@ -45,7 +51,7 @@ export function useComponentState() {
         errors.emailAddress = 'Email is required';
       }
   
-  
+      setIsCancelDisable(false);
       return errors;
     };
   
@@ -76,6 +82,11 @@ export function useComponentState() {
       fetchTrainers(DefaultPagination.pageNumber, DefaultPagination.pageSize);
     }, []);
   
+    const openDeleteModal = (id, type) => {
+      setDeleteItemId(id);
+      setDeleteItemType(type)
+      setIsDeleteModalOpen(true);
+    };
     const handleDelete =( itemName, id) => {
       Modal.confirm({
         title: `Are you sure you want to delete this ${itemName}?`,
@@ -93,9 +104,24 @@ export function useComponentState() {
         onCancel() { },
       });
     }  
-    
+    const confirmCancel = () => {
+      if (!id) {
+        clearForm();
+      } else {
+        setFormValues(selectedCourse);
+      }
+  
+      setIsCancelModalOpen(false);
+      setIsCancelDisable(true);
+    };
+    const handleCancel = () => {
+      setIsCancelModalOpen(true);
+    };
+    const closeModalOpen = () => {
+      setIsCancelModalOpen(false);
+    };
     const clearForm = () => {
       formik.resetForm();
     };
-    return { formik, handleDelete, dataSource, fetchTrainers, loading };
+    return { formik,isCancelModalOpen,isCancelDisable,handleCancel,closeModalOpen,confirmCancel, handleDelete, dataSource, fetchTrainers,openDeleteModal, loading,id };
   }
