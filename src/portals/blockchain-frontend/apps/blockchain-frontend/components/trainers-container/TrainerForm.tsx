@@ -7,7 +7,7 @@ import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 
 export default function TrainersContainer() {
     const { Title } = Typography;
-    const { formik, handleDelete, dataSource, fetchTrainers } = useComponentState();
+    const { formik, handleDelete, dataSource, fetchTrainers, total } = useComponentState();
     const {
         handleSubmit,
         handleChange,
@@ -120,7 +120,7 @@ export default function TrainersContainer() {
                         dataSource={dataSource}
                         pagination={{
                             pageSize: DefaultPagination.pageSize,
-                            total: DefaultPagination.pageNumber,
+                            total: total,
                             onChange: handlePaginationChange,
                         }}
                     ></Table>

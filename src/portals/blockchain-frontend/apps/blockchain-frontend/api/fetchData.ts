@@ -9,6 +9,7 @@ import type {
   TraineeRequest,
   CertificateRequest,
   CertificateResponse,
+  PaginationResponse,
 } from 'apps/blockchain-frontend/interfaces/viewModels';
 
 export async function GetUserByEmail(
@@ -170,7 +171,7 @@ export async function createTrainer(
 }
 
 export async function getTrainers(pageNumber: number, pageSize: number
-): Promise<TrainerResponse> {
+): Promise<PaginationResponse> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
 
@@ -192,7 +193,7 @@ export async function getTrainers(pageNumber: number, pageSize: number
       return null;
     }
 
-    return (await response.json()) as TrainerResponse;
+    return (await response.json()) as PaginationResponse;
   } catch (error) {
     console.error('Oh no, Error occured in getCourse()!', error);
     return null;
