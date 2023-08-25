@@ -34,7 +34,7 @@ export interface PaginationContainerProps {
   data: any[];
   handlePaginationChange: (pageNumber: number, pageSize: number) => void;
 }
-export interface PaginationResponse extends Trainer{
+export interface PaginationResponse extends Trainer {
   Total: number;
   Size : number;
   Items : any[];
