@@ -8,7 +8,7 @@ import CancelConfirmationModal from '../shared/cancelConfirmation/CancelConfirma
 
 export default function TrainersContainer() {
     const { Title } = Typography;
-    const { formik,isCancelModalOpen,handleCancel,closeModalOpen,confirmCancel, handleDelete, dataSource, fetchTrainers,isCancelDisable } = useComponentState();
+    const { formik,isCancelModalOpen,handleCancel,closeModalOpen,confirmCancel, handleDelete, dataSource, fetchTrainers,isCancelDisable, total } = useComponentState();
     const {
         handleSubmit,
         handleChange,
@@ -141,7 +141,7 @@ export default function TrainersContainer() {
                         dataSource={dataSource}
                         pagination={{
                             pageSize: DefaultPagination.pageSize,
-                            total: DefaultPagination.pageNumber,
+                            total: total,
                             onChange: handlePaginationChange,
                         }}
                     ></Table>

@@ -1,5 +1,5 @@
 import { createTrainer, deleteById, getTrainers } from "apps/blockchain-frontend/api/fetchData";
-import { TrainerRequest, TrainerResponse } from "apps/blockchain-frontend/interfaces/viewModels";
+import { PaginationResponse, TrainerRequest, TrainerResponse } from "apps/blockchain-frontend/interfaces/viewModels";
 import { useEffect, useState } from "react";
 import { useFormik } from 'formik';
 import { DefaultPagination } from "apps/blockchain-frontend/interfaces/enums";
@@ -15,7 +15,8 @@ export function useComponentState() {
     const router = useRouter();
     const { query } = router;
     const id = query.id || null
-  
+    const [total, setTotal] = useState(0);
+
     const createNewTrainer = async (values) => {
       const trainer: TrainerRequest = {
           FirstName : values.firstName,
@@ -67,7 +68,9 @@ export function useComponentState() {
   
     const fetchTrainers = async (pageNumber: number, pageSize: number) => {
       setLoading(true);
-      let trainerRes: TrainerResponse[]= [await getTrainers(pageNumber, pageSize)];
+      let response: PaginationResponse = await getTrainers(pageNumber, pageSize);
+      let trainerRes = response.Items;
+      setTotal(response.Total);
       if (Array.isArray(trainerRes)) {
         trainerRes = trainerRes.flat();
       }
@@ -116,5 +119,5 @@ export function useComponentState() {
     const clearForm = () => {
       formik.resetForm();
     };
-    return { formik,isCancelModalOpen,isCancelDisable,handleCancel,closeModalOpen,confirmCancel, handleDelete, dataSource, fetchTrainers, loading,id };
+    return { formik,isCancelModalOpen,isCancelDisable,handleCancel,closeModalOpen,confirmCancel, handleDelete, dataSource, fetchTrainers, loading,id, total };
   }
