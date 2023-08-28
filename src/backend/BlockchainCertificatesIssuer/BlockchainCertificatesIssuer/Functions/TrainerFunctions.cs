@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using BlockchainCertificatesIssuer.API.Models;
+using BlockchainCertificatesIssuer.API.ViewModels;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.CosmosRepository.Paging;
 using Microsoft.Azure.Functions.Worker;
@@ -70,15 +71,22 @@ namespace BlockchainCertificatesIssuer.API.Functions
                 IPage<Trainer> trainers =
                     await trainerRepository.PageAsync(pageNumber: page, pageSize: size);
 
+                var resource = new PaginationResultVM<Trainer>
+                {
+                    Size = trainers.Size,
+                    Total = await trainerRepository.CountAsync(x => x.Type == nameof(Trainer)),
+                    Items = trainers.Items
+                };
+
                 if (trainers == null || !trainers.Items.Any())
                 {
                     _logger.LogWarning("No data.");
                     response = req.CreateResponse(HttpStatusCode.NotFound);
-                    await response.WriteAsJsonAsync(new Trainer[0]);
+                    await response.WriteAsJsonAsync(resource);
                     return response;
                 }
  
-                    await response.WriteAsJsonAsync(trainers.Items);
+                    await response.WriteAsJsonAsync(resource);
                     return response;
          
             }

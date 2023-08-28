@@ -1,5 +1,5 @@
 import { createCertificate, getCourse, getTrainees, getTrainers } from '../../api/fetchData';
-import { CertificateRequest, CertificateResponse, CourseResponse, TraineeResponse, TrainerResponse } from '../../interfaces/viewModels';
+import { CertificateRequest, CertificateResponse, CourseResponse, PaginationResponse, TraineeResponse, TrainerResponse } from '../../interfaces/viewModels';
 import { useFormik } from 'formik';
 import { notification } from 'antd';
 import { useEth } from '../../contexts/EthContext';
@@ -94,7 +94,8 @@ export function usePageState() {
 
     };
     const fetchTrainers = async (pageNumber: number, pageSize: number) => {
-        let trainerRes: TrainerResponse[] = [await getTrainers(pageNumber, pageSize)];
+        let response: PaginationResponse = await getTrainers(pageNumber, pageSize);
+        let trainerRes = response.Items;
         if (trainerRes[0]) {
             if (Array.isArray(trainerRes)) {
                 trainerRes = trainerRes.flat();
