@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using BlockchainCertificatesIssuer.API.Models;
 using Microsoft.Azure.CosmosRepository.Paging;
+using BlockchainCertificatesIssuer.API.ViewModels;
 
 namespace BlockchainCertificatesIssuer.API.Functions
 {
@@ -73,14 +74,21 @@ namespace BlockchainCertificatesIssuer.API.Functions
                 IPage<Course> courses =
                     await courseRepository.PageAsync(pageNumber: page, pageSize: size);
 
+                var resource = new PaginationResultVM<Course>
+                {
+                    Size = courses.Size,
+                    Total = await courseRepository.CountAsync(x => x.Type == nameof(Course)),
+                    Items = courses.Items
+                };
+
                 if (courses == null || !courses.Items.Any())
                 {
                     _logger.LogWarning("No data.");
                     response = req.CreateResponse(HttpStatusCode.NotFound);
-                    await response.WriteAsJsonAsync(new Course[0]);
+                    await response.WriteAsJsonAsync(resource);
                     return response;
                 }
-                await response.WriteAsJsonAsync(courses.Items);
+                await response.WriteAsJsonAsync(resource);
                 return response;
 
             }

@@ -6,7 +6,7 @@ import DeleteConfirmationModal from '../shared/deleteConfirmation/DeleteConfirma
 import { CourseResponse } from '../../interfaces/viewModels';
 
 export default function CourseCardView() {
-    const { dataSource, loading, handlePaginationChange, openDeleteModal, isDeleteModalOpen, closeDeleteModal, confirmDelete } = useComponentState();
+    const { dataSource, loading, handlePaginationChange, openDeleteModal, isDeleteModalOpen, closeDeleteModal, confirmDelete, total } = useComponentState();
     return (
         <>
             {dataSource.length > 0 ? (
@@ -35,7 +35,7 @@ export default function CourseCardView() {
                             </div>
                         ))}
                     </div>
-                    <div><PaginationContainer data={dataSource} handlePaginationChange={handlePaginationChange} /></div></div>)
+                    <div><PaginationContainer data={dataSource} handlePaginationChange={handlePaginationChange} total={total} /></div></div>)
                 : (<div className='fixed inset-0 ml-40 z-[-1] flex items-center justify-center'>
 
                     {loading ? (<div>

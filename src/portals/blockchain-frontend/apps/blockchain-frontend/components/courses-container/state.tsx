@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { CourseRequest, CourseResponse } from 'apps/blockchain-frontend/interfaces/viewModels';
+import { CourseRequest, CourseResponse, PaginationResponse } from 'apps/blockchain-frontend/interfaces/viewModels';
 import { createCourse, deleteById, getCourse, getCourseById, updateCourse } from 'apps/blockchain-frontend/api/fetchData';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 import { message } from 'antd';
@@ -21,6 +21,7 @@ export function useComponentState() {
   const defaultView = 'card';
   const view = query.view || defaultView;
   const id = query.id || null
+  const [total, setTotal] = useState(0);
 
 
   const createNewCourse = async (values) => {
@@ -95,7 +96,9 @@ export function useComponentState() {
 
   const fetchCourses = async (pageNumber: number, pageSize: number) => {
     setLoading(true);
-    let courseRes: CourseResponse[] = [await getCourse(pageNumber, pageSize)];
+    let response: PaginationResponse = await getCourse(pageNumber, pageSize);
+    let courseRes = response.Items;
+    setTotal(response.Total);
     if (Array.isArray(courseRes)) {
       courseRes = courseRes.flat();
     }
@@ -189,6 +192,6 @@ export function useComponentState() {
   }
   return {
     formik, dataSource, fetchCourses, loading, handlePaginationChange, openDeleteModal, isDeleteModalOpen, closeDeleteModal, confirmDelete,
-    handleCancel, isCancelModalOpen, closeModalOpen, confirmCancel, isCancelDisable, view, id
+    handleCancel, isCancelModalOpen, closeModalOpen, confirmCancel, isCancelDisable, view, id, total
   };
 }

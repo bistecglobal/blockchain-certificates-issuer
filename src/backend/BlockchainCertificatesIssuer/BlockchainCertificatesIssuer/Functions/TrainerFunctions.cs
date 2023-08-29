@@ -86,8 +86,8 @@ namespace BlockchainCertificatesIssuer.API.Functions
                     return response;
                 }
  
-                    await response.WriteAsJsonAsync(resource);
-                    return response;
+                await response.WriteAsJsonAsync(resource);
+                return response;
          
             }
             catch (Exception ex)

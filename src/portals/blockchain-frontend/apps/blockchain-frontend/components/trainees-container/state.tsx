@@ -1,5 +1,5 @@
 import { createTrainee, deleteById, getTrainees } from "apps/blockchain-frontend/api/fetchData";
-import { TraineeRequest, TraineeResponse } from "apps/blockchain-frontend/interfaces/viewModels";
+import { PaginationResponse, TraineeRequest, TraineeResponse } from "apps/blockchain-frontend/interfaces/viewModels";
 import { useEffect, useState } from "react";
 import { useFormik } from 'formik';
 import { DefaultPagination } from "apps/blockchain-frontend/interfaces/enums";
@@ -8,6 +8,11 @@ import {ExclamationCircleOutlined } from '@ant-design/icons/lib/icons';
 
 export function useComponentState() {
     const [dataSource, setDataSource] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [deleteItemId, setDeleteItemId] = useState(null);
+    const [deleteItemType, setDeleteItemType] = useState(null);
     
     const createNewTrainee = async (values) => {
       let trainer: TraineeRequest = {
@@ -64,17 +69,24 @@ export function useComponentState() {
       validate,
       onSubmit: createNewTrainee,
     });
+
+    const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
+      fetchTrainees(pageNumber, pageSize ?? DefaultPagination.pageSize);
+    };
   
     const fetchTrainees = async (pageNumber: number, pageSize: number) => {
-      let trainerRes: TraineeResponse[]= [await getTrainees(pageNumber, pageSize)];
+      setLoading(true);
+      let response: PaginationResponse = await getTrainees(pageNumber, pageSize);
+      let trainerRes = response.Items;
+      setTotal(response.Total);
       if (Array.isArray(trainerRes)) {
         trainerRes = trainerRes.flat();
       }
       const formattedData = trainerRes.map((item) => {
         return { ...item,key : item.Id};
       });
+      setLoading(false);
       setDataSource(formattedData);
- 
     };
   
     const handleDelete =( itemName, id) => {
@@ -93,7 +105,31 @@ export function useComponentState() {
         },
         onCancel() { },
       });
-    }  
+    }
+
+    const openDeleteModal = (id, type) => {
+      setDeleteItemId(id);
+      setDeleteItemType(type)
+      setIsDeleteModalOpen(true);
+    };
+
+    const closeDeleteModal = () => {
+      setIsDeleteModalOpen(false);
+    };
+
+    const confirmDelete = () => {
+      if (deleteItemId) {
+        deleteById(deleteItemId, deleteItemType).then((success) => {
+          if (success) {
+            message.success(`${deleteItemType} deleted successfully`);
+            fetchTrainees(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+          } else {
+            message.error(`Failed to delete ${deleteItemType}`);
+          }
+        });
+      }
+      closeDeleteModal();
+    };
 
     useEffect(() => {
       fetchTrainees(DefaultPagination.pageNumber, DefaultPagination.pageSize);
@@ -102,5 +138,6 @@ export function useComponentState() {
     const clearForm = () => {
       formik.resetForm();
     };
-    return { formik, handleDelete, dataSource, fetchTrainees };
+    return { formik, loading, handleDelete, dataSource, fetchTrainees, handlePaginationChange, total, openDeleteModal, 
+      isDeleteModalOpen, closeDeleteModal, confirmDelete };
   }
