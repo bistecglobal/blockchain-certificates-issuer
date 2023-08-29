@@ -9,3 +9,7 @@
 .ant-btn.css-dev-only-do-not-override-diro6f.ant-btn-primary:hover {
     background-color: #4096ff;
 }
+
+.leading-4 {
+    line-height: 16px;
+}

@@ -110,7 +110,7 @@ export async function createCourse(
 }
 
 export async function getCourse(pageNumber: number, pageSize: number
-): Promise<CourseResponse> {
+): Promise<PaginationResponse> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
 
@@ -132,7 +132,7 @@ export async function getCourse(pageNumber: number, pageSize: number
       return null;
     }
 
-    return (await response.json()) as CourseResponse;
+    return (await response.json()) as PaginationResponse;
   } catch (error) {
     console.error('Oh no, Error occured in getCourse()!', error);
     return null;
@@ -232,7 +232,7 @@ export async function createTrainee(
 }
 
 export async function getTrainees(pageNumber: number, pageSize: number
-): Promise<TraineeResponse> {
+): Promise<PaginationResponse> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
 
@@ -254,7 +254,7 @@ export async function getTrainees(pageNumber: number, pageSize: number
       return null;
     }
 
-    return (await response.json()) as TraineeResponse;
+    return (await response.json()) as PaginationResponse;
   } catch (error) {
     console.error('Oh no, Error occured in getCourse()!', error);
     return null;

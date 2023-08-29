@@ -53,7 +53,7 @@ function TraineesMain() {
         </div>
         <div className="mt-8 ml-8">
           {isCardView ? (
-            <TraineesCardView traineeData={dataSource} />
+            <TraineesCardView />
           ) : (
             <TraineeForm />
           )}

@@ -65,6 +65,10 @@ export function useComponentState() {
       validate,
       onSubmit: createNewTrainer,
     });
+
+    const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
+      fetchTrainers(pageNumber, pageSize ?? DefaultPagination.pageSize);
+    };
   
     const fetchTrainers = async (pageNumber: number, pageSize: number) => {
       setLoading(true);
@@ -119,5 +123,5 @@ export function useComponentState() {
     const clearForm = () => {
       formik.resetForm();
     };
-    return { formik,isCancelModalOpen,isCancelDisable,handleCancel,closeModalOpen,confirmCancel, handleDelete, dataSource, fetchTrainers, loading,id, total };
+    return { formik,isCancelModalOpen,isCancelDisable,handleCancel,closeModalOpen,confirmCancel, handleDelete, dataSource, fetchTrainers, loading,id, total, handlePaginationChange };
   }

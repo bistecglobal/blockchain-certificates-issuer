@@ -33,6 +33,7 @@ export interface CertificateResponse extends Certificate {
 export interface PaginationContainerProps {
   data: any[];
   handlePaginationChange: (pageNumber: number, pageSize: number) => void;
+  total: number;
 }
 export interface PaginationResponse extends Trainer {
   Total: number;
