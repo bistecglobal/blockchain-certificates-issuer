@@ -23,6 +23,7 @@ export function usePageState() {
     const [url, setUrl] = useState('');
     const[isIssue ,setIssue] = useState(false);
     const[isLording ,setIsLording] = useState(true);
+    const [total, setTotal] = useState(0);
 
 
     const createNewCertificate = async (values) => {
@@ -84,7 +85,9 @@ export function usePageState() {
     });
 
     const fetchCourses = async (pageNumber: number, pageSize: number) => {
-        let courseRes: CourseResponse[] = [await getCourse(pageNumber, pageSize)];
+        let response: PaginationResponse = await getCourse(pageNumber, pageSize);
+        let courseRes = response.Items;
+        setTotal(response.Total);
         if (courseRes[0]) {
             if (Array.isArray(courseRes)) {
                 courseRes = courseRes.flat();
@@ -105,7 +108,9 @@ export function usePageState() {
     };
 
     const fetchTrainee = async (pageNumber: number, pageSize: number) => {
-        let traineeRes: TraineeResponse[] = [await getTrainees(pageNumber, pageSize)];
+        let response: PaginationResponse = await getTrainees(pageNumber, pageSize);
+        let traineeRes = response.Items;
+        setTotal(response.Total);
         if (traineeRes[0]) {
             if (Array.isArray(traineeRes)) {
                 traineeRes = traineeRes.flat();
