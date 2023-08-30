@@ -40,19 +40,19 @@ export function useComponentState() {
       } = {};
   
       if (!values.firstName) {
-        errors.firstName = 'Required';
+        errors.firstName = 'First name is required';
       } 
   
       if (!values.lastName) {
-        errors.lastName = 'Required';
+        errors.lastName = 'Last name is required';
       }
   
       if (!values.emailAddress) {
-        errors.emailAddress = 'Required';
+        errors.emailAddress = 'Email address is required';
       }
 
       if (!values.walletAddress) {
-        errors.walletAddress = 'Required';
+        errors.walletAddress = 'Wallet Address is required';
       }
   
   
