@@ -1,10 +1,11 @@
-import { createTrainee, deleteById, getTrainees } from "apps/blockchain-frontend/api/fetchData";
+import { createTrainee, deleteById, getTrainees,getTraineeById,updateTrainee } from "apps/blockchain-frontend/api/fetchData";
 import { PaginationResponse, TraineeRequest, TraineeResponse } from "apps/blockchain-frontend/interfaces/viewModels";
 import { useEffect, useState } from "react";
 import { useFormik } from 'formik';
 import { DefaultPagination } from "apps/blockchain-frontend/interfaces/enums";
 import { Modal, message } from "antd";
 import {ExclamationCircleOutlined } from '@ant-design/icons/lib/icons';
+import { useRouter } from "next/router";
 
 export function useComponentState() {
     const [dataSource, setDataSource] = useState([]);
@@ -13,6 +14,12 @@ export function useComponentState() {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [deleteItemId, setDeleteItemId] = useState(null);
     const [deleteItemType, setDeleteItemType] = useState(null);
+    const [selectedTrainee, setSelectedTrainee] = useState([]);
+    const router = useRouter();
+    const defaultView = 'card';
+    const { query } = router;
+    const view = query.view || defaultView;
+    const id = query.id || null
     
     const createNewTrainee = async (values) => {
       let trainer: TraineeRequest = {
@@ -21,13 +28,23 @@ export function useComponentState() {
           EmailAddress : values.emailAddress,
           WalletAddress : values.walletAddress
       };
-      const traineeRes = await createTrainee(trainer);
+      if (!id) {
+        const traineeRes = await createTrainee(trainer);
       if(traineeRes){
         message.success(`Trainee created successfully`);
         fetchTrainees(DefaultPagination.pageNumber, DefaultPagination.pageSize);
         clearForm();
       }else{
-        message.success(`Failed to create the course`);
+        message.success(`Failed to create the trainee`);
+      }
+      } else {
+        const courseRes = await updateTrainee(trainer, id);
+        if (courseRes) {
+          message.success(`Trainee updated successfully`);
+          clearForm();
+        } else {
+          message.error(`Failed to updated the trainee`);
+        }
       }
     };
   
@@ -131,13 +148,37 @@ export function useComponentState() {
       closeDeleteModal();
     };
 
+    const fetchTraineeById = async (id: any) => {
+      let traineeRes: TraineeResponse[] = [await getTraineeById(id)];
+      if (traineeRes[0]) {
+        setSelectedTrainee(traineeRes);
+        setFormValues(traineeRes)
+  
+      } else {
+        router.push('/courses?view=card');
+        message.error('Course not found.');
+      }
+    };
+
+    const setFormValues = (traineeRes) => {
+      formik.setValues({
+        firstName: traineeRes[0].FirstName,
+        lastName: traineeRes[0].LastName,
+        emailAddress: traineeRes[0].EmailAddress,
+        walletAddress: traineeRes[0].WalletAddress,
+      });
+    }
+
     useEffect(() => {
       fetchTrainees(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+      if (id) {
+        fetchTraineeById(id);
+      }
     }, []);
 
     const clearForm = () => {
       formik.resetForm();
     };
     return { formik, loading, handleDelete, dataSource, fetchTrainees, handlePaginationChange, total, openDeleteModal, 
-      isDeleteModalOpen, closeDeleteModal, confirmDelete };
+      isDeleteModalOpen,view, id, closeDeleteModal, confirmDelete };
   }
