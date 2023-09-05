@@ -124,5 +124,70 @@ namespace BlockchainCertificatesIssuer.API.Functions
                 return req.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        [Function("GetTraineesById")]
+        public async Task<HttpResponseData> GetTraineesById([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "trainee/{id}")]
+        HttpRequestData req, string id)
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request to get a course by ID.");
+            try
+            {
+                var course = await traineeRepository.GetAsync(id);
+
+                if (course == null)
+                {
+                    return req.CreateResponse(HttpStatusCode.NotFound);
+
+                }
+
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                await response.WriteAsJsonAsync(course);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while processing the request.");
+                return req.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+
+        [Function("UpdateTrainee")]
+        public async Task<HttpResponseData> UpdateCourse([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "traineeupdate/{id}")]
+        HttpRequestData req, string id)
+        {
+            _logger.LogInformation($"Update course with ID: {id}");
+
+            try
+            {
+                var existingTrainee = await traineeRepository.GetAsync(id);
+                if (existingTrainee == null)
+                {
+                    return req.CreateResponse(HttpStatusCode.NotFound);
+                }
+
+                var updatedTrainee = await JsonSerializer.DeserializeAsync<Trainee>(req.Body);
+                if (updatedTrainee == null)
+                {
+                    return req.CreateResponse(HttpStatusCode.BadRequest);
+                }
+
+                // Update the existing course with the new data
+                existingTrainee.FirstName = updatedTrainee.FirstName;
+                existingTrainee.LastName = updatedTrainee.LastName;
+                existingTrainee.EmailAddress = updatedTrainee.EmailAddress;
+                existingTrainee.WalletAddress = updatedTrainee.WalletAddress;
+
+                var updated = await traineeRepository.UpdateAsync(existingTrainee);
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                await response.WriteAsJsonAsync(updated);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return req.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
     }
 }
