@@ -1,11 +1,55 @@
 import { Typography, Button, Table, Form, Input } from 'antd';
 import { useComponentState } from './state';
+import { DeleteOutlined } from '@ant-design/icons';
+import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 
 export default function TraineesContainer() {
   const { Title } = Typography;
-  const { formik, handleDelete, dataSource, fetchTrainees } =
+  const { formik, handleDelete, dataSource, fetchTrainees,total } =
     useComponentState();
   const { handleSubmit, handleChange, values, errors } = formik;
+
+  const columns = [
+    {
+        key: '1',
+        title: 'First Name',
+        dataIndex: 'FirstName',
+        width: '25%',
+    },
+    {
+        key: '2',
+        title: 'Last Name',
+        dataIndex: 'LastName',
+        width: '25%',
+    },
+    {
+        key: '3',
+        title: 'Email',
+        dataIndex: 'EmailAddress',
+        width: '33%',
+    },
+   
+
+    {
+        key: '4',
+        title: 'Action',
+        render: (data) => {
+            return (
+                <>
+                <DeleteOutlined
+                 onClick={() => {
+                  handleDelete(data.Type,data.Id,);
+                }}
+                  style={{ color: 'red', marginLeft: 4 }}
+                />
+              </>
+            );
+        },
+    },
+];
+  const handlePaginationChange = (pageNumber: number, pageSize: number | undefined) => {
+    fetchTrainees(pageNumber, pageSize ?? DefaultPagination.pageSize);
+  };
   return (
     <div className="p-8 flex justify-center items-center">
       <div className="bg-white p-4 shadow-md rounded-md sm:w-full md:w-full lg:w-2/3 xl:w-2/3">
@@ -109,6 +153,18 @@ export default function TraineesContainer() {
             </button>
           </div>
         </form>
+        <div id="trainee-grid">
+                    <Table
+                        loading={false}
+                        columns={columns}
+                        dataSource={dataSource}
+                        pagination={{
+                            pageSize: DefaultPagination.pageSize,
+                            total: total,
+                            onChange: handlePaginationChange,
+                        }}
+                    ></Table>
+                </div>
       </div>
     </div>
   );
