@@ -23,7 +23,7 @@ function TraineesMain() {
   else if (id) {
       content = <TraineeForm />;
       btnTitle = 'Back';
-      title = 'Edit trainees'
+      title = 'Edit trainee'
       icon = <ArrowLeftOutlined />
   } else {
       content = <TraineesCardView />;
