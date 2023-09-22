@@ -85,9 +85,10 @@ export default function CourseForm() {
             </div>
             <div className='grid grid-cols-2 gap-4 mb-2'>
               <button
+                disabled={!formik.dirty}
                 type="submit"
                 className={`w-full py-2 px-4 rounded-md focus:outline-none ${
-                  formik.isValid ? 'bg-blue-500 text-white font-semibold hover:bg-blue-600' : 'bg-blue-500 text-white font-semibold cursor-not-allowed'
+                  formik.dirty && formik.isValid ? 'bg-blue-500 text-white font-semibold hover:bg-blue-600' : 'opacity-50 bg-blue-500 text-white font-semibold cursor-not-allowed'
                 }`}
               >
                 Submit
@@ -95,7 +96,7 @@ export default function CourseForm() {
               <button
               type="button"
               className="w-full bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none"
-             onClick={handleCancel} disabled= {isCancelDisable}>
+              onClick={handleCancel} disabled= {isCancelDisable}>
               Cancel
             </button>
             </div>
