@@ -60,7 +60,7 @@ export default function TrainersContainer() {
         <div className="p-8 flex justify-center items-center">
             <div className="bg-white p-4 shadow-md rounded-md sm:w-full md:w-full lg:w-2/3 xl:w-2/3">
                 <div id="trainer-add-form">
-                    <Title level={3}>Add Trainer</Title>
+                    <Title level={3}></Title>
                     <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                             <label htmlFor="firstName" className="block text-left font-medium text-gray-800">First Name</label>
