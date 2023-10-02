@@ -17,17 +17,17 @@ function TraineesMain() {
   if (view === 'form') {
       content = <TraineeForm />;
       btnTitle = 'Back';
-      title = 'Add a trainee'
+      title = 'Add a Trainee'
       icon = <ArrowLeftOutlined />
   }
   else if (id) {
       content = <TraineeForm />;
       btnTitle = 'Back';
-      title = 'Edit trainees'
+      title = 'Edit Trainee'
       icon = <ArrowLeftOutlined />
   } else {
       content = <TraineesCardView />;
-      btnTitle = 'Add a trainee';
+      btnTitle = 'Add a Trainee';
       title = 'Trainees'
       icon = <PlusOutlined />
   }
