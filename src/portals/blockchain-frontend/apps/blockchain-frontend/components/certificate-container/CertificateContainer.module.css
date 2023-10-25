@@ -5,75 +5,73 @@
  * .container {
  * }
 */
-.container{
-    position: absolute;
-    top: 20%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* left: 40%;
+.container {
+  position: absolute;
+  top: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* left: 40%;
     right: auto;
     justify-content: center; */
-    width: 80vw;
-    height: 100vh;
+  width: 80vw;
+  height: 100vh;
 }
 
-.container .content{
-    display: flex;
-    position: absolute;
-    width: 300px;
-    /* background-color: rgba(0, 0, 0, 0.05) ; */
+.container .content {
+  display: flex;
+  position: absolute;
+  width: 300px;
+  /* background-color: rgba(0, 0, 0, 0.05) ; */
 }
 
-.container .content .Meta{
-    position: absolute;
-    height: 100px;
-    top:0;
-    left:80%;
+.container .content .Meta {
+  position: absolute;
+  height: 100px;
+  top: 0;
+  left: 80%;
 }
-
 
 .container .content .Meta .certificateWrapper {
-    box-shadow: 0 0 5px #000;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-  }
-  .container .content .Meta .certificateWrapper img {
-    display: block;
-  }
-  .container .content .Meta .certificateWrapper .p1 {
-    font-family: "Staatliches", cursive;
-    margin: 0;
-    position: absolute;
-    left: 210px;
-    top: 250px;
-    font-size: 20pt;
-  }
-  .container .content .Meta .certificateWrapper .p2 {
-    font-family: "Staatliches", cursive;
-    margin: 0;
-    position: absolute;
-    left: 200px;
-    top: 200px;
-    font-size: 20pt;
-  }
-  .container .content .Meta .certificateWrapper .p3 {
-    font-family: "Staatliches", cursive;
-    margin: 0;
-    position: absolute;
-    left: 380px;
-    top: 440px;
-    font-size: 10pt;
-  }
-.register{
+  box-shadow: 0 0 5px #000;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.container .content .Meta .certificateWrapper img {
+  display: block;
+}
+.container .content .Meta .certificateWrapper .p1 {
+  font-family: 'Staatliches', cursive;
+  margin: 0;
+  position: absolute;
+  left: 210px;
+  top: 250px;
+  font-size: 20pt;
+}
+.container .content .Meta .certificateWrapper .p2 {
+  font-family: 'Staatliches', cursive;
+  margin: 0;
+  position: absolute;
+  left: 300px;
+  top: 230px;
+  font-size: 20pt;
+}
+.container .content .Meta .certificateWrapper .p3 {
+  font-family: 'Staatliches', cursive;
+  margin: 0;
+  position: absolute;
+  left: 380px;
+  top: 440px;
+  font-size: 10pt;
+}
+.register {
   text-align: center;
 }
 
-.certificateUrl{
-margin-top: -20%;
+.certificateUrl {
+  margin-top: -20%;
 }
-
 
 .loading::before {
   content: '';
