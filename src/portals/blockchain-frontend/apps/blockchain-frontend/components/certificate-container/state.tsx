@@ -23,8 +23,6 @@ import { decryptData } from '../utils';
 export function usePageState() {
   const [api, contextHolder] = notification.useNotification();
   const { state } = useEth();
-  const [dataSource, setDataSource] = useState([]);
-  const [loading, setLoading] = useState(true);
   const { contract, accounts } = state;
   const [courseData, setCourseData] = useState([]);
   const [trainerData, setTrainerData] = useState([]);
@@ -181,61 +179,6 @@ export function usePageState() {
       console.error(error);
     }
   };
-
-  const fetchAllCourses = async (pageNumber: number, pageSize: number) => {
-    setLoading(true);
-    let response: PaginationResponse = await getTrainees(pageNumber, pageSize);
-    let trainerRes = response.Items;
-    setTotal(response.Total);
-    if (Array.isArray(trainerRes)) {
-      trainerRes = trainerRes.flat();
-    }
-    const formattedData = trainerRes.map((item) => {
-      return { ...item, key: item.Id };
-    });
-    setLoading(false);
-    setDataSource(formattedData);
-  };
-
-  /*
-  const isMetaMaskInstalled = () => {
-    console.log('MetaMask is installed');
-    return typeof (window as any).ethereum !== 'undefined';
-  };
-
-
-  const getUser = async () => {
-    try {
-      if (isMetaMaskInstalled()) {
-        const userDetail = await contract.methods.getUser(accounts[0]).call();
-        if (
-          userDetail[0] !== '0' &&
-          Number(userDetail[1]) === UserType.Issuer
-        ) {
-          setIRegister(true);
-          api.open({
-            key: 'updatable',
-            message: 'Login successful',
-            description: 'Login successful',
-          });
-        } else {
-          setIRegister(false);
-          api.open({
-            key: 'updatable',
-            message: 'Error',
-            description: 'Invalid user',
-          });
-        }
-      } else {
-        console.log('MetaMask is not installed');
-        // You can show a message or take appropriate action here.
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
- */
 
   const registerIssuer = async () => {
     try {

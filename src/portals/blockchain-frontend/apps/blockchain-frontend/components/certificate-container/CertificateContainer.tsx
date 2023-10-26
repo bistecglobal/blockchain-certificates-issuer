@@ -1,57 +1,45 @@
 import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
 import styles from '../trainees-container/TraineesContainer.module.css';
 import { useComponentState } from '../trainees-container/state';
-import { DeleteOutlined } from '@ant-design/icons';
-import { PlusOutlined } from '@ant-design/icons/lib/icons';
+import { usePageState } from './state';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 
 export default function CertificateContainer() {
   const { Title } = Typography;
-  const { formik, handleDelete, dataSource, fetchTrainees } =
-    useComponentState();
-  const { handleSubmit, handleChange, values, errors } = formik;
+  const { formik, dataSource, fetchTrainees } = useComponentState();
+  //const { fetchAllCourses, dataSource } = usePageState();
+  //const { handleSubmit, handleChange, values, errors } = formik;
   const columns = [
     {
       key: '1',
       title: 'Course Name',
-      dataIndex: 'FirstName',
+      dataIndex: 'Course',
     },
     {
       key: '2',
       title: 'Trainee',
-      dataIndex: 'LastName',
+      dataIndex: 'Trainee.FirstName',
     },
     {
       key: '3',
       title: 'Trainer',
-      dataIndex: 'EmailAddress',
+      dataIndex: 'Trainer',
     },
     {
       key: '4',
       title: 'Time Period',
-      dataIndex: 'EmailAddress',
+      dataIndex: 'CertificateIssueDate',
     },
     {
       key: '4',
       title: 'Certificate',
-      dataIndex: 'EmailAddress',
+      dataIndex: 'Id',
     },
 
     {
       key: '5',
       title: 'Action',
-      render: (data) => {
-        return (
-          <>
-            <DeleteOutlined
-              onClick={() => {
-                handleDelete(data.Type, data.Id);
-              }}
-              style={{ color: 'red', marginLeft: 4 }}
-            />
-          </>
-        );
-      },
+      dataIndex: 'EmailAddress',
     },
   ];
 

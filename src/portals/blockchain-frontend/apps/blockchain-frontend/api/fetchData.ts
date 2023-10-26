@@ -418,7 +418,6 @@ export async function getUserCertificateById(certificateId: any): Promise<any> {
     return null;
   }
 }
-
 export async function getCourseById(courseId: any): Promise<CourseResponse> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
