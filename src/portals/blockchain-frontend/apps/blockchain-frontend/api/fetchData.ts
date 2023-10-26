@@ -109,7 +109,9 @@ export async function createCourse(
   }
 }
 
-export async function getCourse(pageNumber: number, pageSize: number
+export async function getCourse(
+  pageNumber: number,
+  pageSize: number
 ): Promise<PaginationResponse> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
@@ -170,7 +172,9 @@ export async function createTrainer(
   }
 }
 
-export async function getTrainers(pageNumber: number, pageSize: number
+export async function getTrainers(
+  pageNumber: number,
+  pageSize: number
 ): Promise<PaginationResponse> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
@@ -231,7 +235,9 @@ export async function createTrainee(
   }
 }
 
-export async function getTrainees(pageNumber: number, pageSize: number
+export async function getTrainees(
+  pageNumber: number,
+  pageSize: number
 ): Promise<PaginationResponse> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
@@ -261,6 +267,37 @@ export async function getTrainees(pageNumber: number, pageSize: number
   }
 }
 
+export async function getAllCertificates(
+  pageNumber: number,
+  pageSize: number
+): Promise<PaginationResponse> {
+  let myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+
+  let requestOptions: RequestInit = {
+    method: 'Get',
+    headers: myHeaders,
+  };
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}api/certificates?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      requestOptions
+    );
+    if (response.status === 500) {
+      console.error('Internal Server Error');
+      return null;
+    }
+    if (!response.ok) {
+      console.error('Unspecified error occured!');
+      return null;
+    }
+
+    return (await response.json()) as PaginationResponse;
+  } catch (error) {
+    console.error('Oh no, Error occured in getCourse()!', error);
+    return null;
+  }
+}
 
 export async function createCertificate(
   certificateReq: CertificateRequest
@@ -293,7 +330,9 @@ export async function createCertificate(
   }
 }
 
-export async function getCertificateById(certificateId: any): Promise<CertificateResponse> {
+export async function getCertificateById(
+  certificateId: any
+): Promise<CertificateResponse> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
 
@@ -321,7 +360,10 @@ export async function getCertificateById(certificateId: any): Promise<Certificat
     return null;
   }
 }
-export async function deleteById(id: string, itemName: string): Promise<boolean> {
+export async function deleteById(
+  id: string,
+  itemName: string
+): Promise<boolean> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
   let requestOptions: RequestInit = {
@@ -348,13 +390,13 @@ export async function deleteById(id: string, itemName: string): Promise<boolean>
   }
 }
 
-export async function getUserCertificateById(certificateId:any): Promise<any> {
+export async function getUserCertificateById(certificateId: any): Promise<any> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
 
-  let  requestOptions: RequestInit = {
+  let requestOptions: RequestInit = {
     method: 'Get',
-    headers: myHeaders,   
+    headers: myHeaders,
   };
   try {
     const response = await fetch(
@@ -369,14 +411,14 @@ export async function getUserCertificateById(certificateId:any): Promise<any> {
       console.error('Unspecified error occured!');
       return null;
     }
-    
-    return (await response.json());
+
+    return await response.json();
   } catch (error) {
     console.error('Oh no, Error occured in getCertificate!', error);
     return null;
   }
-  
 }
+
 export async function getCourseById(courseId: any): Promise<CourseResponse> {
   let myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
@@ -436,7 +478,8 @@ export async function getTraineeById(traineeId: any): Promise<TraineeResponse> {
 }
 
 export async function updateTrainee(
-  traineeReq: TraineeRequest,traineeId:any
+  traineeReq: TraineeRequest,
+  traineeId: any
 ): Promise<TraineeResponse> {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
@@ -467,7 +510,8 @@ export async function updateTrainee(
 }
 
 export async function updateCourse(
-  courseReq: CourseRequest,courseId:any
+  courseReq: CourseRequest,
+  courseId: any
 ): Promise<CourseResponse> {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'application/json');
