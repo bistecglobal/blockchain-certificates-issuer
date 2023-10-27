@@ -2,11 +2,12 @@ import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
 import styles from '../trainees-container/TraineesContainer.module.css';
 import { useComponentState } from '../trainees-container/state';
 import { usePageState } from './state';
+import { useComponentStates } from '../trainees-container/states';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 
 export default function CertificateContainer() {
   const { Title } = Typography;
-  const { formik, dataSource, fetchTrainees } = useComponentState();
+  const { formik, dataSource, fetchCertificates } = useComponentStates();
   //const { fetchAllCourses, dataSource } = usePageState();
   //const { handleSubmit, handleChange, values, errors } = formik;
   const columns = [
@@ -18,7 +19,7 @@ export default function CertificateContainer() {
     {
       key: '2',
       title: 'Trainee',
-      dataIndex: 'Trainee.FirstName',
+      dataIndex: 'trainee.firstName',
     },
     {
       key: '3',
@@ -39,7 +40,6 @@ export default function CertificateContainer() {
     {
       key: '5',
       title: 'Action',
-      dataIndex: 'EmailAddress',
     },
   ];
 
@@ -47,7 +47,7 @@ export default function CertificateContainer() {
     pageNumber: number,
     pageSize: number | undefined
   ) => {
-    fetchTrainees(pageNumber, pageSize ?? DefaultPagination.pageSize);
+    fetchCertificates(pageNumber, pageSize ?? DefaultPagination.pageSize);
   };
   return (
     <div className={styles['container']}>
