@@ -1,8 +1,8 @@
 import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
 import styles from '../trainees-container/TraineesContainer.module.css';
 import { useComponentState } from '../trainees-container/state';
-import { usePageState } from './state';
-import { useComponentStates } from '../trainees-container/states';
+//import { usePageState } from './state';
+import { useComponentStates } from './states';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 
 export default function CertificateContainer() {
@@ -13,14 +13,21 @@ export default function CertificateContainer() {
   const columns = [
     {
       key: '1',
+      title: 'Certificate ID',
+      dataIndex: 'Id',
+    },
+    {
+      key: '1',
       title: 'Course Name',
       dataIndex: 'Course',
     },
-    {
+    /*
+        {
       key: '2',
       title: 'Trainee',
-      dataIndex: 'trainee.firstName',
+      dataIndex: 'Trainee.FirstName',
     },
+    */
     {
       key: '3',
       title: 'Trainer',
@@ -28,18 +35,17 @@ export default function CertificateContainer() {
     },
     {
       key: '4',
-      title: 'Time Period',
+      title: 'Isued Date',
       dataIndex: 'CertificateIssueDate',
-    },
-    {
-      key: '4',
-      title: 'Certificate',
-      dataIndex: 'Id',
     },
 
     {
-      key: '5',
-      title: 'Action',
+      key: '4',
+      title: 'View Certificate',
+      dataIndex: 'Id',
+      render: (text, record) => (
+        <a href={`/admin-view-certificate?view=${record.Id}`}>View</a>
+      ),
     },
   ];
 
@@ -52,6 +58,7 @@ export default function CertificateContainer() {
   return (
     <div className={styles['container']}>
       <div className={styles['content']}>
+        {/*
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
           <input
             type="search"
@@ -61,7 +68,7 @@ export default function CertificateContainer() {
             aria-describedby="button-addon2"
           />
 
-          {/* <!--Search icon--> */}
+          
           <span
             className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
             id="basic-addon2"
@@ -80,6 +87,8 @@ export default function CertificateContainer() {
             </svg>
           </span>
         </div>
+        */}
+
         <div id="trainer-grid">
           <Table
             loading={false}
