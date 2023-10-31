@@ -167,6 +167,17 @@ export function useComponentStates() {
     });
   };
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchInputChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+  };
+
+  const filteredDataSource = dataSource.filter((item) => {
+    return item.Id.includes(searchQuery) || item.Course.includes(searchQuery);
+  });
+
   useEffect(() => {
     fetchCertificates(DefaultPagination.pageNumber, DefaultPagination.pageSize);
     if (id) {
@@ -186,7 +197,8 @@ export function useComponentStates() {
     fetchCertificates,
     handlePaginationChange,
     total,
-
+    handleSearchInputChange,
+    filteredDataSource,
     isDeleteModalOpen,
     view,
     id,
