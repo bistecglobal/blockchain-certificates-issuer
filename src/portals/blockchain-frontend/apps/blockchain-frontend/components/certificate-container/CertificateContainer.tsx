@@ -1,15 +1,30 @@
-import { Typography, Button, Table, DatePicker, Form, Input } from 'antd';
-import styles from '../trainees-container/TraineesContainer.module.css';
-import { useComponentState } from '../trainees-container/state';
-//import { usePageState } from './state';
-import { useComponentStates } from './states';
+import { Typography, Button, Table, Form, Input } from 'antd';
+//import { useComponentState } from './state';
+import { DeleteOutlined } from '@ant-design/icons';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
+import { useComponentStates } from '../certificate-container/states';
+import { useState } from 'react';
 
-export default function CertificateContainer() {
+export default function TraineesContainerx() {
   const { Title } = Typography;
-  const { formik, dataSource, fetchCertificates } = useComponentStates();
-  //const { fetchAllCourses, dataSource } = usePageState();
-  //const { handleSubmit, handleChange, values, errors } = formik;
+  const { formik, handleDelete, dataSource, fetchCertificates, total } =
+    useComponentStates();
+  const { handleSubmit, handleChange, values, errors } = formik;
+  // State variables for search query and filtered data source
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Function to handle search input changes
+  const handleSearchInputChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+  };
+
+  // Filter the data source based on the search query
+  const filteredDataSource = dataSource.filter((item) => {
+    // Filter by the 'Id' value
+    return item.Id.includes(searchQuery) || item.Course.includes(searchQuery);
+  });
+
   const columns = [
     {
       key: '1',
@@ -40,7 +55,7 @@ export default function CertificateContainer() {
     },
 
     {
-      key: '4',
+      key: '5',
       title: 'View Certificate',
       dataIndex: 'Id',
       render: (text, record) => (
@@ -48,7 +63,6 @@ export default function CertificateContainer() {
       ),
     },
   ];
-
   const handlePaginationChange = (
     pageNumber: number,
     pageSize: number | undefined
@@ -56,47 +70,21 @@ export default function CertificateContainer() {
     fetchCertificates(pageNumber, pageSize ?? DefaultPagination.pageSize);
   };
   return (
-    <div className={styles['container']}>
-      <div className={styles['content']}>
-        {/*
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <input
-            type="search"
-            className="relative m-0 block flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-            placeholder="Search"
-            aria-label="Search"
-            aria-describedby="button-addon2"
-          />
-
-          
-          <span
-            className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
-            id="basic-addon2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </span>
-        </div>
-        */}
-
-        <div id="trainer-grid">
+    <div className="p-8 flex justify-center items-center">
+      <div className="bg-white p-4 shadow-md rounded-md sm:w-full md:w-full lg:w-2/3 xl:w-2/3">
+        <Input
+          placeholder="Search..."
+          onChange={handleSearchInputChange}
+          style={{ marginBottom: '10px' }}
+        />
+        <div id="trainee-grid">
           <Table
             loading={false}
             columns={columns}
-            dataSource={dataSource}
+            dataSource={filteredDataSource}
             pagination={{
               pageSize: DefaultPagination.pageSize,
-              total: DefaultPagination.pageNumber,
+              total: total,
               onChange: handlePaginationChange,
             }}
           ></Table>

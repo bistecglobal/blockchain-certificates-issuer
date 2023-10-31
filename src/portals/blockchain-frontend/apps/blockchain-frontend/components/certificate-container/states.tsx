@@ -147,33 +147,6 @@ export function useComponentStates() {
     });
   };
 
-  const openDeleteModal = (id, type) => {
-    setDeleteItemId(id);
-    setDeleteItemType(type);
-    setIsDeleteModalOpen(true);
-  };
-
-  const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false);
-  };
-
-  const confirmDelete = () => {
-    if (deleteItemId) {
-      deleteById(deleteItemId, deleteItemType).then((success) => {
-        if (success) {
-          message.success(`${deleteItemType} deleted successfully`);
-          fetchCertificates(
-            DefaultPagination.pageNumber,
-            DefaultPagination.pageSize
-          );
-        } else {
-          message.error(`Failed to delete ${deleteItemType}`);
-        }
-      });
-    }
-    closeDeleteModal();
-  };
-
   const fetchTraineeById = async (id: any) => {
     let traineeRes: TraineeResponse[] = [await getTraineeById(id)];
     if (traineeRes[0]) {
@@ -213,11 +186,9 @@ export function useComponentStates() {
     fetchCertificates,
     handlePaginationChange,
     total,
-    openDeleteModal,
+
     isDeleteModalOpen,
     view,
     id,
-    closeDeleteModal,
-    confirmDelete,
   };
 }

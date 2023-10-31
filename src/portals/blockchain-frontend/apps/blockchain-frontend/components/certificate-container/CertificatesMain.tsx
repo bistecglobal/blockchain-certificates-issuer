@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useComponentState } from '../trainees-container/state';
-import TraineeForm from '../trainees-container/TraineeForm';
+import TraineeFormx from '../certificate-container/CertificateContainer';
 import CertificateContainer from './CertificateContainer';
 import CertificateForm from './CertificateForm';
 import { PlusOutlined, ArrowLeftOutlined } from '@ant-design/icons';
@@ -43,7 +43,7 @@ function CertificatesMain() {
     title = 'Edit Trainee';
     icon = <ArrowLeftOutlined />;
   } else {
-    content = <CertificateContainer />;
+    content = <TraineeFormx />;
     btnTitle = 'Issue a certificate';
     title = 'Issued Certificates';
     icon = <PlusOutlined />;
