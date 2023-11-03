@@ -2,6 +2,7 @@ using System.Net;
 using System.Text.Json;
 using BlockchainCertificatesIssuer.API.Models;
 using BlockchainCertificatesIssuer.API.Validations;
+using BlockchainCertificatesIssuer.API.ViewModels;
 using Microsoft.Azure.CosmosRepository;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -45,8 +46,15 @@ namespace BlockchainCertificatesIssuer.API.Functions
                 if (existingUser.Any()) return req.CreateResponse(HttpStatusCode.Conflict);
 
                 var created = await userRepository.CreateAsync(newUser);
+
+                var userdto = new UserVM
+                {
+                    Email = created.Email,
+                    Id = created.Id,
+                };
+
                 var response = req.CreateResponse(HttpStatusCode.OK);
-                await response.WriteAsJsonAsync(created);
+                await response.WriteAsJsonAsync(userdto);
                 return response;
             }
             catch (Exception ex)
@@ -80,10 +88,15 @@ namespace BlockchainCertificatesIssuer.API.Functions
 
                 var loggedInUser = existingUsers.FirstOrDefault(x => x.Password == userLogin.Password);
                 if(loggedInUser == null) return req.CreateResponse(HttpStatusCode.Unauthorized);
-                
+
+                var userdto = new UserVM
+                {
+                    Email = loggedInUser.Email,
+                    Id = loggedInUser.Id,
+                };
 
                 var response = req.CreateResponse(HttpStatusCode.OK);
-                await response.WriteAsJsonAsync(loggedInUser);
+                await response.WriteAsJsonAsync(userdto);
                 return response;
             }
             catch(Exception ex)
