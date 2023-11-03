@@ -43,13 +43,24 @@ export function useComponentState() {
       if (!values.firstName) {
         errors.firstName = 'First Name is required';
       } 
+      if(/[0-9!@#$%^&*(),.?":{}|<>]/.test(values.firstName)){
+        errors.firstName = 'Please enter a valid input without numbers or special characters.';
+      }
   
       if (!values.lastName) {
         errors.lastName = 'Last Name is required';
       }
+      if(/[0-9!@#$%^&*(),.?":{}|<>]/.test(values.lastName)){
+        errors.lastName = 'Please enter a valid input without numbers or special characters.';
+      }
   
       if (!values.emailAddress) {
         errors.emailAddress = 'Email is required';
+      }
+
+      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      if (!emailRegex.test(values.emailAddress)) {
+        errors.emailAddress = 'Please enter a valid email address.';
       }
   
       setIsCancelDisable(false);
