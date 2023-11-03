@@ -2,15 +2,13 @@ import {
   createCertificate,
   getCourse,
   getTrainees,
+  getAllCertificates,
   getTrainers,
 } from '../../api/fetchData';
 import {
   CertificateRequest,
   CertificateResponse,
-  CourseResponse,
   PaginationResponse,
-  TraineeResponse,
-  TrainerResponse,
 } from '../../interfaces/viewModels';
 import { useFormik } from 'formik';
 import { notification } from 'antd';
@@ -35,6 +33,8 @@ export function usePageState() {
   const [isIssue, setIssue] = useState(false);
   const [isLording, setIsLording] = useState(true);
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [dataSource, setDataSource] = useState([]);
 
   const createNewCertificate = async (values) => {
     const currentDate = new Date().toISOString().slice(0, 10);
@@ -202,6 +202,47 @@ export function usePageState() {
       setIsLording(false);
     }
   }, [accounts]);
+
+  const handlePaginationChange = (
+    pageNumber: number,
+    pageSize: number | undefined
+  ) => {
+    fetchCertificates(pageNumber, pageSize ?? DefaultPagination.pageSize);
+  };
+
+  const fetchCertificates = async (pageNumber: number, pageSize: number) => {
+    setLoading(true);
+    let response: PaginationResponse = await getAllCertificates(
+      pageNumber,
+      pageSize
+    );
+    let trainerRes = response.Items;
+    setTotal(response.Total);
+    if (Array.isArray(trainerRes)) {
+      trainerRes = trainerRes.flat();
+    }
+    const formattedData = trainerRes.map((item) => {
+      return { ...item, key: item.Id };
+    });
+    setLoading(false);
+    setDataSource(formattedData);
+  };
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchInputChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+  };
+
+  const filteredDataSource = dataSource.filter((item) => {
+    return item.Id.includes(searchQuery) || item.Course.includes(searchQuery);
+  });
+
+  useEffect(() => {
+    fetchCertificates(DefaultPagination.pageNumber, DefaultPagination.pageSize);
+  }, []);
+
   return {
     formik,
     contextHolder,
@@ -213,8 +254,15 @@ export function usePageState() {
     copied,
     isRegister,
     registerIssuer,
+    handleSearchInputChange,
     url,
     isIssue,
     isLording,
+    loading,
+    dataSource,
+    fetchCertificates,
+    handlePaginationChange,
+    total,
+    filteredDataSource,
   };
 }

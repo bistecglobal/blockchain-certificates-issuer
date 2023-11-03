@@ -1,15 +1,14 @@
 import { Typography, Button, Table, Form, Input } from 'antd';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
-import { useComponentStates } from '../certificate-container/states';
+import { usePageState } from './state';
 
 export default function TraineesContainerx() {
   const {
-    fetchCertificates,
+    filteredDataSource,
     total,
     handleSearchInputChange,
-    filteredDataSource,
-  } = useComponentStates();
-
+    fetchCertificates,
+  } = usePageState();
   const columns = [
     {
       key: '1',
