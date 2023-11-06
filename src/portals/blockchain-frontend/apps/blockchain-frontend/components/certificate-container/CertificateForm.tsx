@@ -6,7 +6,7 @@ import { DownloadOutlined, CopyOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { usePageState } from './state';
 
-export default function CertificateContainer() {
+export default function CertificateForm() {
   const {
     formik,
     contextHolder,

@@ -9,10 +9,9 @@
   position: absolute;
   top: 20%;
   display: flex;
+  margin-left: 5px;
   flex-direction: column;
   align-items: left;
-  margin-left: 5px;
-  margin-top: 100px;
   /* left: 40%;
     right: auto;
     justify-content: center; */
@@ -23,7 +22,7 @@
 .container .content {
   display: flex;
   position: absolute;
-  width: 300px;
+  width: 360px;
   /* background-color: rgba(0, 0, 0, 0.05) ; */
 }
 
@@ -36,7 +35,7 @@
 
 .container .content .Meta .certificateWrapper {
   box-shadow: 0 0 5px #000;
-  border-radius: 10px;
+  border-radius: 0px;
   overflow: hidden;
   position: relative;
 }
@@ -52,7 +51,7 @@
   font-size: 20pt;
 }
 .container .content .Meta .certificateWrapper .p2 {
-  font-family: 'Staatliches', cursive;
+  font-family: 'Times New Roman', Times, serif;
   margin: 0;
   position: absolute;
   left: 300px;
@@ -67,12 +66,13 @@
   top: 440px;
   font-size: 10pt;
 }
-.register {
+.viewCertificate {
   text-align: center;
 }
 
-.certificateUrl {
-  margin-top: -20%;
+.title {
+  position: absolute;
+  margin-top: -25%;
 }
 
 .loading::before {
@@ -104,7 +104,6 @@
     transform: rotate(360deg);
   }
 }
-
 .certificateWrapper img {
   max-width: none !important;
   height: 500px !important;
