@@ -187,5 +187,9 @@ namespace BlockchainCertificatesIssuer.API.Functions
                 return req.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+<<<<<<< Updated upstream
     }
+=======
+}
+>>>>>>> Stashed changes
 }

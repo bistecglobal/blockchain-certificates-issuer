@@ -4,7 +4,7 @@ import SpinnerContainer from '../shared/spinner/SpinnerContainer';
 import { useComponentState } from './state';
 import PaginationContainer from '../shared/pagination/PaginationContainer';
 
-export default function TrainerCardView() {
+export default function TrainerCardView({ trainersData }) {
   const { dataSource, loading, handleDelete, handlePaginationChange, total } =
     useComponentState();
   return (

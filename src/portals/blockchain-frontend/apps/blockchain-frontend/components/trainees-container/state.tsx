@@ -34,14 +34,14 @@ export function useComponentState() {
   const id = query.id || null;
 
   const createNewTrainee = async (values) => {
-    let trainer: TraineeRequest = {
+    let trainee: TraineeRequest = {
       FirstName: values.firstName,
       LastName: values.lastName,
       EmailAddress: values.emailAddress,
       WalletAddress: values.walletAddress,
     };
     if (!id) {
-      const traineeRes = await createTrainee(trainer);
+      const traineeRes = await createTrainee(trainee);
       if (traineeRes) {
         message.success(`Trainee created successfully`);
         fetchTrainees(DefaultPagination.pageNumber, DefaultPagination.pageSize);
@@ -50,7 +50,7 @@ export function useComponentState() {
         message.success(`Failed to create the trainee`);
       }
     } else {
-      const courseRes = await updateTrainee(trainer, id);
+      const courseRes = await updateTrainee(trainee, id);
       if (courseRes) {
         message.success(`Trainee updated successfully`);
         clearForm();
