@@ -1,13 +1,10 @@
-import { Typography, Button, Table, Form, Input } from 'antd';
-import styles from './TrainersContainer.module.css';
+import { Table } from 'antd';
 import { useComponentState } from './state';
 import { DeleteOutlined } from '@ant-design/icons';
-import { PlusOutlined } from '@ant-design/icons/lib/icons';
 import { DefaultPagination } from 'apps/blockchain-frontend/interfaces/enums';
 import CancelConfirmationModal from '../shared/cancelConfirmation/CancelConfirmationModal';
 
 export default function TrainerForm() {
-  const { Title } = Typography;
   const {
     formik,
     isCancelModalOpen,
@@ -69,7 +66,6 @@ export default function TrainerForm() {
     <div className="p-8 flex justify-center items-center">
       <div className="bg-white p-4 shadow-md rounded-md sm:w-full md:w-full lg:w-2/3 xl:w-2/3">
         <div id="trainer-add-form">
-          <Title level={3}></Title>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
@@ -78,11 +74,11 @@ export default function TrainerForm() {
               >
                 First Name
               </label>
-              <Input
+              <input
                 name="firstName"
                 type="text"
                 placeholder="First Name"
-                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onChange={handleChange}
                 value={values.firstName}
               />
@@ -99,11 +95,11 @@ export default function TrainerForm() {
               >
                 Last Name
               </label>
-              <Input
+              <input
                 name="lastName"
                 type="text"
                 placeholder="Last Name"
-                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onChange={handleChange}
                 value={values.lastName}
               />
@@ -119,11 +115,12 @@ export default function TrainerForm() {
               >
                 Email Address
               </label>
-              <Input
+
+              <input
                 name="emailAddress"
                 type="text"
                 placeholder="Email Address"
-                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onChange={handleChange}
                 value={values.emailAddress}
               />
