@@ -1,4 +1,3 @@
-import { Card } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import SpinnerContainer from '../shared/spinner/SpinnerContainer';
 import { useComponentState } from './state';

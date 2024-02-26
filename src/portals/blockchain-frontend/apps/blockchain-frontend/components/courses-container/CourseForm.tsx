@@ -2,10 +2,15 @@ import { DatePicker } from 'antd';
 import { useComponentState } from './state';
 import CancelConfirmationModal from '../shared/cancelConfirmation/CancelConfirmationModal';
 
-
-
 export default function CourseForm() {
-  const { formik,isCancelModalOpen, closeModalOpen, confirmCancel,handleCancel,isCancelDisable } = useComponentState();
+  const {
+    formik,
+    isCancelModalOpen,
+    closeModalOpen,
+    confirmCancel,
+    handleCancel,
+    isCancelDisable,
+  } = useComponentState();
   const {
     handleSubmit,
     handleChange,
@@ -20,7 +25,12 @@ export default function CourseForm() {
         <div className="bg-white p-4 shadow-md rounded-md sm:w-full md:w-full lg:w-2/3 xl:w-2/3">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="name" className="block text-left font-medium text-gray-800">Course Name</label>
+              <label
+                htmlFor="name"
+                className="block text-left font-medium text-gray-800"
+              >
+                Course Name
+              </label>
               <input
                 type="text"
                 id="title"
@@ -36,7 +46,12 @@ export default function CourseForm() {
             </p>
 
             <div className="mb-6">
-              <label htmlFor="message" className="block text-left font-medium text-gray-800">Description</label>
+              <label
+                htmlFor="message"
+                className="block text-left font-medium text-gray-800"
+              >
+                Description
+              </label>
               <textarea
                 id="description"
                 name="description"
@@ -50,7 +65,10 @@ export default function CourseForm() {
             </p>
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div>
-                <label htmlFor="startDate" className="block text-left font-medium text-gray-800">
+                <label
+                  htmlFor="startDate"
+                  className="block text-left font-medium text-gray-800"
+                >
                   Start date
                 </label>
                 <DatePicker
@@ -58,7 +76,7 @@ export default function CourseForm() {
                   name="startDate"
                   className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                   value={values.startDate}
-                  onChange={(date) => setFieldValue('startDate',  date)}
+                  onChange={(date) => setFieldValue('startDate', date)}
                   onBlur={handleBlur}
                 />
                 <p className="text-left text-red-500 mb-2">
@@ -67,7 +85,10 @@ export default function CourseForm() {
               </div>
 
               <div>
-                <label htmlFor="endDate" className="block text-left font-medium text-gray-800">
+                <label
+                  htmlFor="endDate"
+                  className="block text-left font-medium text-gray-800"
+                >
                   End date
                 </label>
                 <DatePicker
@@ -79,29 +100,37 @@ export default function CourseForm() {
                   onBlur={handleBlur}
                 />
                 <p className="text-left text-red-500 mb-2">
-                  { errors.endDate ? `${errors.endDate}` : null}
+                  {errors.endDate ? `${errors.endDate}` : null}
                 </p>
               </div>
             </div>
-            <div className='grid grid-cols-2 gap-4 mb-2'>
+            <div className="grid grid-cols-2 gap-4 mb-2">
               <button
                 disabled={!formik.dirty}
                 type="submit"
                 className={`w-full py-2 px-4 rounded-md focus:outline-none ${
-                  formik.dirty && formik.isValid ? 'bg-blue-500 text-white font-semibold hover:bg-blue-600' : 'opacity-50 bg-blue-500 text-white font-semibold cursor-not-allowed'
+                  formik.dirty && formik.isValid
+                    ? 'bg-blue-500 text-white font-semibold hover:bg-blue-600'
+                    : 'opacity-50 bg-blue-500 text-white font-semibold cursor-not-allowed'
                 }`}
               >
                 Submit
               </button>
               <button
-              type="button"
-              className="w-full bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none"
-              onClick={handleCancel} disabled= {isCancelDisable}>
-              Cancel
-            </button>
+                type="button"
+                className="w-full bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none"
+                onClick={handleCancel}
+                disabled={isCancelDisable}
+              >
+                Cancel
+              </button>
             </div>
           </form>
-          <CancelConfirmationModal isOpen={isCancelModalOpen} onCancel={closeModalOpen} onConfirm={confirmCancel} />
+          <CancelConfirmationModal
+            isOpen={isCancelModalOpen}
+            onCancel={closeModalOpen}
+            onConfirm={confirmCancel}
+          />
         </div>
       </div>
     </>
