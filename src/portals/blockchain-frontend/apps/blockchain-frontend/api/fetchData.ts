@@ -47,7 +47,7 @@ export async function GetUserByEmail(
 
 export async function submitData(data: any): Promise<any> {
   try {
-    const url = `${process.env.NEXT_PUBLIC_CREATE_CREDENTIAL_URL}/api/issuer/issuance-request`;
+    const url = `${process.env.NEXT_PUBLIC_CREATE_CREDENTIAL_URL}api/issuer/issuance-request`;
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
