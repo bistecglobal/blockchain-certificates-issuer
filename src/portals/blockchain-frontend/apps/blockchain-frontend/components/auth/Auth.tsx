@@ -40,7 +40,7 @@ export default function Auth() {
             </a>
           </p>
           <a
-            href="https://razor-certificate-app.azurewebsites.net/verifier"
+            href={`${process.env.NEXT_PUBLIC_CREATE_CREDENTIAL_URL}verifier`}
             target="_blank"
             rel="noopener noreferrer"
           >
