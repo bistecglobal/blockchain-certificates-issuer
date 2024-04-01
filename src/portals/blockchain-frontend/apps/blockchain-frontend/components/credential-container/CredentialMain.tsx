@@ -1,5 +1,7 @@
 import { useCredentialState } from './state';
 import QRCode from 'qrcode.react';
+import { message } from 'antd';
+import { submitData } from 'apps/blockchain-frontend/api/fetchData';
 
 export default function CredentialMain() {
   const { formData, previewUrl, setPreviewUrl, handleChange } =
@@ -12,24 +14,15 @@ export default function CredentialMain() {
       const response = await submitData(formData);
       console.log('Form data submitted successfully:', response);
 
-      setPreviewUrl(response.url); // Set preview URL from response
+      setPreviewUrl(response.url);
+      message.success('Credential created successfully');
     } catch (error) {
       console.error('Error submitting form:', error);
+      message.error('Error submitting form. Please try again.');
     }
   };
 
   // Server Action (sends data to the provided URL)
-  async function submitData(data: any) {
-    const url =
-      'https://razor-certificate-app.azurewebsites.net/api/issuer/issuance-request';
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    return await response.json();
-  }
 
   return (
     <div className="container p-10 ">

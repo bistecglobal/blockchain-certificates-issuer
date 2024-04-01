@@ -45,6 +45,26 @@ export async function GetUserByEmail(
   }
 }
 
+export async function submitData(data: any): Promise<any> {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_CREATE_CREDENTIAL_URL}`;
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error occurred in submitData!', error);
+    throw error;
+  }
+}
+
 export async function CreateUserByEmail(
   userReq: UserRequest
 ): Promise<UserResponse> {
