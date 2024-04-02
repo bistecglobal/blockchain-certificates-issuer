@@ -1,0 +1,1 @@
+This directory is created to setup entra-id-razor-pages app
