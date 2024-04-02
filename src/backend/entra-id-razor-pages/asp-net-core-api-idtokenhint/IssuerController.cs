@@ -24,7 +24,7 @@ using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http;
 
-namespace web_api
+namespace AspNetCoreVerifiableCredentials
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

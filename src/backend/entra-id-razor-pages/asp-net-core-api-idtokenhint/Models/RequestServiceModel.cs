@@ -20,6 +20,8 @@ namespace AspNetCoreVerifiableCredentials
         public Pin pin { get; set; }
         [JsonProperty( NullValueHandling = NullValueHandling.Ignore )]
         public Dictionary<string, string> claims;
+        internal object course_name;
+
         [JsonProperty( NullValueHandling = NullValueHandling.Ignore )]
         public string expirationDate { get; set; } // format "2024-10-20T14:52:39.043Z"
     }

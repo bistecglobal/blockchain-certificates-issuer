@@ -1,0 +1,24 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+            <div style="text-align: center;">
+    <img src="https://bistecglobal.com/wp-content/uploads/2023/01/logo.png" height=200px; />
+    <h1>Course Completion Certificate Issuance and Verifier </h1>
+        
+                <button type="button" id="idIssue" class="button">Issue Credential</button>
+                <button type="button" id="idVerify" class="button">Verify Credential</button>
+                <script>
+                        var idIssue = document.getElementById('idIssue');
+                        var idVerify = document.getElementById('idVerify');
+
+                        idIssue.addEventListener('click', () => {
+                            window.location = "issuer";
+                        })
+                        idVerify.addEventListener('click', () => {
+                            window.location = "verifier";
+                        })
+                    </script>
+            </div>
