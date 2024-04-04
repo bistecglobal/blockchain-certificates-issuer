@@ -50,7 +50,7 @@ export default function CredentialMain() {
             Date:
           </label>
           <input
-            type="text"
+            type="date"
             id="date"
             name="date"
             value={formData.date}
