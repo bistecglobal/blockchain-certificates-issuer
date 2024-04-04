@@ -40,7 +40,7 @@ export default function Auth() {
             </a>
           </p>
           <a
-            href={`${process.env.NEXT_PUBLIC_CREATE_CREDENTIAL_URL}verifier`}
+            href={`${process.env.NEXT_PUBLIC_CREATE_CREDENTIAL_URL}`}
             target="_blank"
             rel="noopener noreferrer"
           >
