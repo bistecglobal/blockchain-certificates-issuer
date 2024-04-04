@@ -1,0 +1,54 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+<style>
+    .two-sided-div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 20px;
+    }
+
+    .sample-text {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+</style>
+
+            <div style="text-align: center;">
+    <img src="https://bistecglobal.com/wp-content/uploads/2023/01/logo.png" height=200px; />
+    <h1>Course Completion Certificate Verifier Portal</h1>
+    <div>
+        <ul>
+          
+        </ul>
+    </div>
+</div>
+    <div class="two-sided-div">
+        <div class="sample-text">
+        <h4>To verify a Course Completion Credential, follow these steps:</h4>
+            <ol>
+                <li>Follow up with the button and create a QR request.</li>
+                <li>Send the QR code to the Credential Holder.</li>
+                <li>When the holder scans the QR code, the verifier portal will show up, verifying the details in real-time.</li>
+            </ol>
+
+        </div>
+        <button type="button" id="idVerify" class="button">Verify Credential</button>
+   
+        
+                
+                <script>
+
+                        var idVerify = document.getElementById('idVerify');
+                        idVerify.addEventListener('click', () => {
+                            window.location = "verifier";
+                        })
+                    </script>
+            </div>

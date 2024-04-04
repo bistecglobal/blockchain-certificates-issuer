@@ -1,0 +1,55 @@
+﻿@page
+@model AspNetCoreVerifiableCredentials.Pages.VerifierModel
+@{
+    ViewData["Title"] = "Verifier";
+}
+<style>
+    #message {
+        padding: 5px 10px;
+        background-color: #28a745; /* Green background color */
+        color: #fff; /* White text color */
+        border-radius: 20px;
+    }
+</style>
+<div id="wrap">
+    <div style="text-align: center;">
+        <img src="https://bistecglobal.com/wp-content/uploads/2023/01/logo.png" height=200px; />
+        <h1 id="idTitle"></h1>
+        <h2 id="idSubTitle">Verifiable Credential Presentation - @ViewData["CredentialType"]</h2>
+        <!--<h3 id="idSub3Title">Accepted issuers: @string.Join(", ", (string[])ViewData["acceptedIssuers"])</h3>-->
+
+        <div id="message-wrapper" class="margin-bottom-75">
+            <i class="fas fa-user-check green icon-text-large margin-bottom-25"></i>
+            <h3 id="message">@ViewData["Message"] </h3>
+   
+        </div>
+
+        <button type="button" id="verify-credential" class="button">Create a Request</button>
+        <button type="button" id="check-result" class="button" style="display:none">Check Result</button>
+
+ 
+
+        <div id="qrcode" style="text-align:center;display:none"></div>
+
+        <script src="qrcode.min.js"></script>
+        <script src="verifiedid.requestservice.client.js"></script>
+        <script src="verifiedid.uihandler.js"></script>
+
+        <script>
+            var qrcode = new QRCode("qrcode", { width: 150, height: 150 });
+           
+
+            document.getElementById('verify-credential').addEventListener('click', () => {
+                     
+                requestService.apiCreatePresentationRequest;
+                requestService.createPresentationRequest();
+            });
+
+            document.getElementById('check-result').addEventListener('click', () => {
+                requestService.pollRequestStatus(requestService.request.id);
+            });
+            
+        </script>
+    </div>
+
+</div>
