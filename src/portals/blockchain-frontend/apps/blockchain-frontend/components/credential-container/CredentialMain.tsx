@@ -37,9 +37,12 @@ export default function CredentialMain() {
   return (
     <div className="container p-10">
       <form onSubmit={handleSubmit} className="flex flex-col space-y-3 mt-10">
-        <h2 className="text-2xl font-semibold mb-4">Certificate Issuer</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label htmlFor="courseName" className="text-sm font-medium">
+        <h2 className="text-2xl font-semibold mb-4">Generate a Certificate</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-64 min-w-fit">
+          <label
+            htmlFor="courseName"
+            className="block text-left font-medium text-gray-800"
+          >
             Course Name:
           </label>
           <input
@@ -51,7 +54,10 @@ export default function CredentialMain() {
             required
             className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
-          <label htmlFor="date" className="text-sm font-medium">
+          <label
+            htmlFor="date"
+            className="block text-left font-medium text-gray-800"
+          >
             Date:
           </label>
           <input
@@ -63,7 +69,10 @@ export default function CredentialMain() {
             required
             className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
-          <label htmlFor="trainee" className="text-sm font-medium">
+          <label
+            htmlFor="trainee"
+            className="block text-left font-medium text-gray-800"
+          >
             Trainee:
           </label>
           <input
@@ -75,7 +84,10 @@ export default function CredentialMain() {
             required
             className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
-          <label htmlFor="trainer" className="text-sm font-medium">
+          <label
+            htmlFor="trainer"
+            className="block text-left font-medium text-gray-800"
+          >
             Trainer:
           </label>
           <input
@@ -91,7 +103,7 @@ export default function CredentialMain() {
 
         <button
           type="submit"
-          className={`bg-blue-500 text-white rounded-md px-4 py-2 ${
+          className={`bg-blue-500 text-white rounded-md px-4 py-2 inline-block w-32 max-w-px${
             submitting || submitted
               ? 'cursor-not-allowed opacity-50'
               : 'hover:bg-blue-700'
@@ -104,19 +116,8 @@ export default function CredentialMain() {
 
       {previewUrl && (
         <div className="mt-8">
-          <div className="flex items-center space-x-4">
-            Preview URL:
-            <a
-              href={previewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 underline"
-            >
-              {previewUrl}
-            </a>
-          </div>
           <div className="mt-2">
-            <QRCode value={previewUrl} size={128} level="L" />
+            <QRCode value={previewUrl} size={164} level="L" />
           </div>
         </div>
       )}
