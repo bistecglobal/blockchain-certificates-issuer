@@ -3,6 +3,28 @@
 @{
     ViewData["Title"] = "Verifier";
 }
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
 <div id="wrap">
     <div style="text-align: center;">
         <img src="https://bistecglobal.com/wp-content/uploads/2023/01/logo.png" height=200px; />
@@ -56,8 +78,17 @@
                 if (Object.keys(claims).length > 0) {
                     var tbodyRef = document.getElementById('claims').getElementsByTagName('tbody')[0];
                     var idx = 0;
+                    var customLabels = {
+                        courseName: "Course Name",
+                        trainee: "Trainee",
+                        trainer: "Trainer",
+                        date: "Issuance Date"
+                    };
                     for (idx = Object.keys(claims).length - 1; idx >= 0; idx--) {
                         var claimName = Object.keys(claims)[idx];
+                        if (customLabels.hasOwnProperty(claimName)) {
+                            claimName = customLabels[claimName];
+                        }
                         if (claimName == "photo" || claimName == "picture") {
                             var img = document.createElement('img');
                             img.width = 100;
@@ -70,6 +101,8 @@
                     }
                 }
             }
+            /*
+
             function drawVcInfoTable(respMsg, payload) {
                 if (Object.keys(payload).length > 0) {
                     var tbodyRef = document.getElementById('vcinfo').getElementsByTagName('tbody')[0];
@@ -100,7 +133,19 @@
                         addTableRow(tbodyRef, "faceCheck matchConfidenceScore", respMsg.matchConfidenceScore);
                     }
                 }
+            }*/
+            
+            function drawVcInfoTable(respMsg, payload) {
+                if (Object.keys(payload).length > 0) {
+                    var tbodyRef = document.getElementById('vcinfo').getElementsByTagName('tbody')[0];
+                    addTableRow(tbodyRef, "Credential State", payload.credentialState.revocationStatus);
+                    addTableRow(tbodyRef, "Issuer DID", payload.issuer);
+                    addTableRow(tbodyRef, "Issued Domain", payload.domainValidation.url);
+                    //addTableRow(tbodyRef, "Exp Date", payload.expirationDate);
+                }
             }
+
+
             function getPresentationResult(requestId) {
                 fetch(`${requestService.apiPollPresentationRequest}?id=${requestId}`)
                     .then(response => response.text())
@@ -110,7 +155,7 @@
                             console.log(response)
                             respMsg = JSON.parse(response);
                             if (respMsg.status == 'presentation_verified') {
-                                document.getElementById('vcType').innerText = respMsg.type[1] + " " + respMsg.message;
+                                document.getElementById('vcType').innerText = "Course Completion Certificate " + respMsg.message;
                                 document.getElementById('message').innerHTML = "";
                                 drawClaimsTable(respMsg.payload[0].claims);
                                 drawVcInfoTable(respMsg, respMsg.payload[0]);

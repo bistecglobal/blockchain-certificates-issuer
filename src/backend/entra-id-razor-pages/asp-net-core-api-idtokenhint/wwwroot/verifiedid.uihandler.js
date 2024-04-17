@@ -44,9 +44,9 @@ function navigateToDeepLink(requestType, id, url) {
 function requestRetrieved(requestType) {
     dimQRCode();
     if (requestType == "presentation") {
-        displayMessage("QR code scanned. Waiting for Verified ID credential to be shared from wallet...");
+        displayMessage("QR code scanned. Waiting for Verified ID credential to be shared from credential holder");
     } else {
-        displayMessage("QR code scanned. Waiting for Verified ID credential to be added to wallet...");
+        displayMessage("QR code scanned. Waiting for Verified ID credential to be added to Authenticator app");
     }
 }
 function presentationVerified(id, response) {
