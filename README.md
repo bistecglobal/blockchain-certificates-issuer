@@ -8,23 +8,24 @@
 [https://bistecglobal.github.io/blockchain-certificates-issuer/](https://bistecglobal.github.io/blockchain-certificates-issuer)
 
 ## About
-This innovative project utilizes blockchain technology to offer a comprehensive solution for online certificate validation. In response to the prevalent issue of counterfeit certificates, this approach acts as a robust remedy, guaranteeing the authenticity of certificates through a powerful authentication system.
-The project streamlines the entire lifecycle of certificates, handling everything from initial issuance to validation and secure sharing. By integrating blockchain, it ensures certificates are tamper-proof and traceable, thereby strengthening their legitimacy and trustworthiness.
-This modern solution presents a hassle-free method of certificate management and verification, reducing administrative burdens and potential errors. With its user-friendly interface and seamless process, individuals and organizations can confidently manage their certificates while facilitating quick and reliable verification.
-In a world increasingly reliant on digital credentials, this blockchain-based project emerges as a pioneering force, tackling the challenges of counterfeit certificates and elevating the standards of certificate validation in the digital age.
 
+This innovative project utilizes Microsoft Entra Verified ID and Self-Sovereign Identity (SSI) principles to offer a comprehensive solution for online certificate validation. In response to the prevalent issue of counterfeit certificates, this approach acts as a robust remedy, guaranteeing the authenticity of certificates through a powerful authentication system.
+The project streamlines the entire lifecycle of certificates, handling everything from initial issuance to validation and secure sharing. By integrating Microsoft Entra Verified ID and SSI, it ensures certificates are tamper-proof, traceable, and under the control of the certificate holder, thereby strengthening their legitimacy and trustworthiness.
+This modern solution presents a hassle-free method of certificate management and verification, reducing administrative burdens and potential errors. With its user-friendly interface and seamless process, individuals and organizations can confidently manage their certificates while facilitating quick and reliable verification.
+In a world increasingly reliant on digital credentials, this Microsoft Entra Verified ID and SSI-based project emerges as a pioneering force, tackling the challenges of counterfeit certificates and elevating the standards of certificate validation in the digital age.
 
 ## Insight
 
-**Security**: Our certificates are stored on the blockchain, which is a tamper-proof and decentralized ledger. This means that our certificates are safe from hackers and other malicious actors.
+**Security**: Self-Sovereign Identity (SSI) and Microsoft Entra Verified ID ensure that certificates are tamper-proof and under the control of the certificate holder. This enhances security by reducing the risk of unauthorized access and fraud.
 
-**Transparency**: The code of our smart contract is open source, so anyone can view it and verify that it is fair and accurate. This ensures that the certificate issuance process is transparent and auditable.
+**Transparency**: SSI principles promote transparency by allowing individuals to manage and share their own identity information. This reduces the reliance on central authorities and increases trust in the verification process.
 
-**Scalability**: Azure Functions is a serverless platform, so we only pay for the resources that we use. This makes our application scalable and cost-effective, even if we have a large number of users.
+**Privacy**: SSI and Microsoft Entra Verified ID prioritize user privacy by allowing individuals to selectively disclose information. This means that only relevant information is shared, protecting sensitive data.
 
-**Reliability**: CosmosDB is a scalable and distributed database that is designed to handle high volumes of traffic. This makes our application reliable and durable, even if there is a spike in demand.
+**Control**: SSI empowers individuals to have full control over their identity information. This reduces the risk of identity theft and gives individuals the ability to manage their digital identity as they see fit.
 
-**Ease of use**: Metamask is a browser extension that makes it easy for users to connect to our application. This means that users can start issuing and managing certificates quickly and easily
+**Interoperability**: SSI and Microsoft Entra Verified ID are built on open standards, making them interoperable with a wide range of systems and applications. This ensures that certificates issued through this system can be easily verified and accepted by various parties.
+
 
 ## Installation
 ### Prerequisites
@@ -106,81 +107,29 @@ Replace the following keys in"**_local.settings.json_**" with active values:
 2. Run the backend by executing the necessary tasks or launching the application
 
 ***
+### Verified ID Configuration
 
-**Blockchain**(optional)
-### MetaMask
+**Configure Local Settings**
 
-<p align="center">
-  <img src="https://i.ibb.co/sKBVvs6/meta.jpg" alt="logo">
-</p>
+Locate the file "**appsettings-Copy.json**" in the src\backend\entra-id-razor-pages\asp-net-core-api-idtokenhint directory.
+Rename "**appsettings-Copy.json**" to "**appsettings.json**".
 
-**Step 1**: Install MetaMask:
-Install the MetaMask extension for your preferred browser (Chrome, Firefox, or Brave) from the respective extension store.
-Follow the installation prompts to add MetaMask to your browser.
+**Update Connection Details:**
+Open the "**_appsettings.json_**" file.
+Replace the following keys in"**_appsettings.json_**" with active values:
 
-**Step 2**: Set Up MetaMask:
-Click the MetaMask icon in your browser's extensions toolbar.
-Click "**Get Started**" to create a new wallet.
-Choose "**Create a Wallet**" and follow the instructions to create a new wallet with a strong password. Keep this password safe.
-Agree to the terms of use and backup your secret backup phrase. Store this phrase securely offline.
-
-**Step 3**: Access Networks:
-Click on the network dropdown at the top of the MetaMask interface.
-Choose " **Add a network manually** " at the bottom of the network list.
-
-**Step 4**: Add Sepolia Network:
-In the " **Add a network manually** " section, fill in the following details:
-
-``` sh
-Network Name: Sepolia
-New RPC URL: "https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID" (replace "YOUR_INFURA_PROJECT_ID" with your actual Infura project ID)
-Chain ID: 11155111
-Symbol (optional): ETH
+```
+"TenantId": "YOURTENANTID",
+"ClientId": "APP CLIENT ID",
+"ClientSecret": "cCLIENT SECRET",
+"DidAuthority": "YOUR DID",
+"CredentialType": "CourseCompletionCertificate",
+"CredentialManifest": "URL to the credential manifest",
 ```
 
-**Step 5**: Save and Switch:
-Click "**Save**" to add the Sepolia network.
-After saving, select the Sepolia network from the network dropdown in MetaMask.
+**Run the Backend:**
+1. Open the solution in Visual Studio.
+2. Run the backend by executing the necessary tasks or launching the application
 
-**Step 6**: Get Sepolia Ether:
-To get Sepolia Ether for testing, you can use a Sepolia Faucet[ https://sepoliafaucet.com/](https://sepoliafaucet.com/)
+***
 
-### Truffle
-
-<p align="center">
-  <img src="https://i.ibb.co/16JQnV5/trfull.jpg" alt="logo">
-</p>
-
-
-**Step 1**: Install Truffle:
-Install Truffle globally on your machine if you haven't already:
-`npm install -g truffle `
-
-**Step 2**: Update Truffle Configuration:
-
-Navigate to Truffle directory (src\portals\truffle)
-Locate the **truffle-config.js** or **truffle.js** configuration file.
-Open the configuration file in a text editor.
-Step 3: Configure Sepolia Network:
-Find the networks section in the configuration file.
-Replace below configuration for the Sepolia  network. 
-Replace "YOUR_INFURA_PROJECT_ID" with your actual Infura project ID:
-
-```sh 
-sepolia : { provider: () => new HDWalletProvider(MNEMONIC, https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID),
-network_id: 11155111,
-confirmations: 2, // Number of confirmations to wait between deployments
-timeoutBlocks: 200, // Timeout in blocks for transactions
-skipDryRun: true // Skip dry run before migrations? (default: false for public nets )
-} } 
-```
-
-**Step 4**: Obtain Sepolia  Ether:
-Get Sepolia  Ether for testing from a Sepolia Faucet like [https://sepoliafaucet.com/](https://sepoliafaucet.com/)
-
-**Step 5**: Deploy to Sepolia :
-Open a terminal in the src/portals/truffle folder.
-Run the following command to deploy your contracts to the Sepoli  network:
-```sh
-truffle migrate --network sepolia
-```
