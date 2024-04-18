@@ -44,26 +44,30 @@ export async function GetUserByEmail(
     console.error('Oh no, Error occured in fetchLogin()!', error);
   }
 }
-
-export async function submitData(data: any): Promise<any> {
+export const createCredential = async (requestData) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_CREATE_CREDENTIAL_URL}api/issuer/issuance-request`;
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_CREATE_CREDENTIAL_URL}api/issuer/issuance-request`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      }
+    );
 
     if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      throw new Error('Failed to issue certificate');
     }
 
-    return await response.json();
+    const responseData = await response.json();
+    return responseData.url;
   } catch (error) {
-    console.error('Error occurred in submitData!', error);
-    throw error;
+    console.error('Error issuing certificate:', error);
+    throw new Error('Error issuing certificate. Please try again.');
   }
-}
+};
 
 export async function CreateUserByEmail(
   userReq: UserRequest

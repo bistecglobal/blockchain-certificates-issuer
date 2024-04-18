@@ -158,7 +158,7 @@ namespace AspNetCoreVerifiableCredentials
                         callback = JsonConvert.DeserializeObject<CallbackEvent>(reqState["callback"].ToString() );
                         JObject resp = JObject.Parse( JsonConvert.SerializeObject( new {
                                                                                     status = requestStatus,
-                                                                                    message = "Presentation verified",
+                                                                                    message = "Presentation Verified",
                                                                                     type = callback.verifiedCredentialsData[0].type,
                                                                                     claims = callback.verifiedCredentialsData[0].claims,
                                                                                     subject = callback.subject,
@@ -189,7 +189,7 @@ namespace AspNetCoreVerifiableCredentials
                         break;
                 }
             } else {
-                result = JObject.FromObject( new { status = "request_not_created", message = "No data" } );
+                result = JObject.FromObject(new { message = "No Data" });
                 rc = false;
             }
             return rc;
