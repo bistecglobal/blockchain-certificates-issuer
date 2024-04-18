@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
 import { Select, Form, Button, DatePicker, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons/lib/icons';
-import React, { useState } from 'react';
 import QRCode from 'qrcode.react';
 import { usePageState } from './state';
 import { createCredential } from '../../api/fetchData';
@@ -27,7 +27,7 @@ export default function CredentialMain() {
 
       const url = await createCredential(requestData);
 
-      console.log('Certificate issued successfully');
+      message.success('Certificate issued successfully');
       console.log('Response URL:', url);
       setIsSubmitting(true);
       setIssuedUrl(url);
@@ -39,6 +39,9 @@ export default function CredentialMain() {
     }
   };
 
+  const handleFormValuesChange = () => {
+    setIsSubmitting(false);
+  };
   return (
     <div className="container p-20">
       {contextHolder}
@@ -49,7 +52,10 @@ export default function CredentialMain() {
               Generate a Certificate
             </h2>
 
-            <Form onFinish={handleSubmit}>
+            <Form
+              onFinish={handleSubmit}
+              onValuesChange={handleFormValuesChange}
+            >
               <Form.Item
                 name="course"
                 label="Course"
@@ -124,9 +130,7 @@ export default function CredentialMain() {
                   style={{ backgroundColor: '#4096ff' }}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting
-                    ? 'Issuing Certificate...'
-                    : 'Issue Certificate'}
+                  {isSubmitting ? 'Issued' : 'Issue Certificate'}
                 </Button>
               </Form.Item>
             </Form>
