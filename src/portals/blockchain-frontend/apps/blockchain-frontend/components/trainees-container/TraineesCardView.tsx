@@ -1,10 +1,5 @@
 import React from 'react';
-import { Card } from 'antd';
-import {
-  DeleteOutlined,
-  ArrowsAltOutlined,
-  EditOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import PaginationContainer from '../shared/pagination/PaginationContainer';
 import { useComponentState } from './state';
 import { TraineeResponse } from 'apps/blockchain-frontend/interfaces/viewModels';
